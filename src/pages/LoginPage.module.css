@@ -1,0 +1,129 @@
+.closeBtn {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.closeBtn:hover {
+  color: red;
+}
+
+.loginModal {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: calc(62vh - 4rem);
+  background-color: #ffffff;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: "__Inter_ecbec9", Inter, sans-serif !important;
+  border-radius: 8px;
+  outline: none;
+}
+
+.modalLeft {
+  max-width: 50%;
+  background-color: #ffeee8;
+  border-radius: 8px 0px 0px 8px;
+}
+
+.modalRight {
+  padding: 2rem 2rem 0 2rem;
+}
+
+.img {
+  max-width: fit-content;
+}
+
+.form h2 {
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: -1.5rem;
+}
+.form input {
+  height: 40px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  font-size: 17px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+.form input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+.form a {
+  font-size: 16px;
+  color: #009579;
+  text-decoration: none;
+}
+.form a:hover {
+  text-decoration: underline;
+}
+.form input.button {
+  color: #fff;
+  background: #009579;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 1.7rem;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.form input.button:hover {
+  background: #006653;
+}
+.signup {
+  font-size: 17px;
+  text-align: center;
+}
+.signup button {
+  color: #009579;
+  cursor: pointer;
+}
+.signup button:hover {
+  text-decoration: underline;
+}
+.button {
+  margin-top: -1rem;
+}
+
+@media screen and (min-width: 300px) {
+  .modalLeft > img {
+    display: none;
+  }
+  .loginModal {
+    top: 50%;
+    left: 50%;
+    /* width: 90vw; */
+  }
+}
+@media screen and (min-width: 600px) {
+  .loginModal {
+    width: 60vw;
+  }
+}
+@media screen and (min-width: 900px) {
+  .loginModal {
+    width: 50vw;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .modalLeft > img {
+    display: inline-block;
+  }
+  .loginModal {
+    width: 52vw;
+    height: 62vh;
+  }
+}
