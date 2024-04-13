@@ -1,14 +1,20 @@
+import AboutSite from "../components/AboutSite";
 import Navbar from "../components/Navbar";
 import OffersCarousel from "../components/OffersCarousel";
 import SideNavbar from "../components/SideNavbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 function Home() {
   return (
-    <section className="flex max-sm:flex-col max-sm:gap-4  gap-8 px-20 max-sm:px-2 mt-10 bg-white">
+    <section className="home overflow-x-hidden flex max-sm:flex-col max-sm:gap-4 gap-20 px-10 max-sm:px-2 mt-10 bg-white">
       <SideNavbar />
-      <Outlet />
-      <OffersCarousel />
+      <div className="flex flex-col w-min max-sm:w-full">
+        <div className="outlet-offer flex gap-6 max-sm:flex-col">
+          <Outlet />
+          <OffersCarousel />
+        </div>
+        <AboutSite />
+      </div>
     </section>
   );
 }

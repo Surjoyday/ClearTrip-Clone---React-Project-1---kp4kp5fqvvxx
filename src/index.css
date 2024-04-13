@@ -10,3 +10,7 @@
   background-color: #d5e7fc;
   transition: all 0.4s;
 }
+
+.slick-disabled {
+  display: none;
+}

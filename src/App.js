@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Hotels from "./components/Hotels";
 import Offers from "./components/Offers";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -26,6 +27,8 @@ export default function App() {
               <Route path="offers" element={<Offers />} />
             </Route>
           </Routes>
+
+          <Footer />
         </BrowserRouter>
         <ToastContainer position="top-center" autoClose={2000} />
       </AuthProvider>

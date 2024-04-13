@@ -10,7 +10,8 @@ const carouselSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 1700,
+  arrows: false,
+  autoplaySpeed: 3000,
   pauseOnHover: true,
 };
 
@@ -21,14 +22,15 @@ const carouselSettingsForMoreOffers = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 2000,
+  arrows: false,
+  autoplaySpeed: 3500,
   pauseOnHover: true,
 };
 
 export default function OffersCarousel() {
   return (
-    <div className="flex flex-col gap-20">
-      <div className="card border-stone-400  w-[300px] max-sm:w-full">
+    <div className="flex flex-col gap-12 max-sm:items-center mb-5">
+      <div className="card border-stone-400  w-[300px] max-h-max">
         <Slider {...carouselSettings}>
           {offersCardsImages.map((card) => (
             <img
@@ -42,18 +44,22 @@ export default function OffersCarousel() {
           ))}
         </Slider>
       </div>
-      <div className="w-[300px] border border-gray-300 rounded">
-        <Slider {...carouselSettingsForMoreOffers}>
-          {moreOffers.map((offer) => (
-            <div
-              key={offer.id}
-              className=" p-4 mb-4 h-[200px] w-[234px] flex flex-col gap-5 flex-wrap"
-            >
-              <h3 className="font-bold">{offer.title}</h3>
-              <p className="mt-8">{offer.para}</p>
-            </div>
-          ))}
-        </Slider>
+
+      <div className="max-sm:none flex flex-col items-center">
+        <h1 className="text-xl font-semibold mb-4">More Offers</h1>
+        <div className="w-[270px] h-[145px] border border-grey-400 rounded-xl ">
+          <Slider {...carouselSettingsForMoreOffers}>
+            {moreOffers.map((offer) => (
+              <div
+                key={offer.id}
+                className="p-4 pb-2 mt-2 mb-3 h-[120px] flex flex-col"
+              >
+                <h3 className="font-bold">{offer.title}</h3>
+                <p className="mt-4 mb-2">{offer.para}</p>
+              </div>
+            ))}
+          </Slider>
+        </div>
       </div>
     </div>
   );

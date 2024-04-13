@@ -196,7 +196,7 @@ export default function Flight() {
         </div>
 
         {/* FLIGHT BOOKING BOX */}
-        <div className=" flex flex-col px-4 py-4 border-2 rounded-xl shadow-lg shadow-slate-200 my-6 relative">
+        <div className="main-container-booking flex flex-col max-sm:w-full  my-6  px-4 py-14 border-2 rounded-xl shadow-lg shadow-slate-200  relative">
           {/* FLIGHT CLASS AND SEATS */}
 
           <div className="mb-6 flex gap-5 align-middle justify-start pl-4">
@@ -369,6 +369,7 @@ export default function Flight() {
           </div>
         </div>
       </section>
+
       <ToastContainer position="top-center" autoClose={1000} />
     </>
   );

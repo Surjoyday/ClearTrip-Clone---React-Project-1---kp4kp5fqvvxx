@@ -1,14 +1,13 @@
-export const base_URL =
-  "https://academics.newtonschool.co/api/v1/bookingportals";
+const base_URL = "https://academics.newtonschool.co/api/v1/bookingportals";
 
-export const PROJECT_ID = process.env.REACT_APP_PROJECT_ID;
+const PROJECT_ID = process.env.REACT_APP_PROJECT_ID;
 
-export const headers = {
+const headers = {
   "Content-Type": "application/json",
   projectId: process.env.REACT_APP_PROJECT_ID,
 };
 
-export function getCurrentDate() {
+function getCurrentDate() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // ensuring that month have always has 2 digits
@@ -16,7 +15,7 @@ export function getCurrentDate() {
   return `${year}-${month}-${day}`;
 }
 
-export const offersCardsImages = [
+const offersCardsImages = [
   {
     id: crypto.randomUUID(),
     url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_204,dpr_2/offermgmt/images/banner/RR_Hifive_0712.png",
@@ -34,6 +33,16 @@ export const offersCardsImages = [
   },
   {
     id: crypto.randomUUID(),
+    url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_204,dpr_2/offermgmt/images/banner/RR_FEDEMI_H_1001.jpg",
+    alt: "RR_FEDEMI_H_1001",
+  },
+  {
+    id: crypto.randomUUID(),
+    url: "  https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_204,dpr_2/offermgmt/images/banner/RR_One%20Card_H_0201.jpg",
+    alt: "RR_One%20Card_H_0201",
+  },
+  {
+    id: crypto.randomUUID(),
     url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR%20HDFCEMI.jpg",
     alt: "RR%20HDFCEMI",
   },
@@ -44,15 +53,10 @@ export const offersCardsImages = [
   },
 ];
 
-export const moreOffers = [
+const moreOffers = [
   {
     id: crypto.randomUUID(),
     title: "No Cost EMI Offers!",
-    para: "Pay Interest Free EMI with HDFC, ICICI, SBI, AXIS, KOTAK Bank Cards!",
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Extra savings with Flipkart Axis bank cards!",
     para: "Pay Interest Free EMI with HDFC, ICICI, SBI, AXIS, KOTAK Bank Cards!",
   },
   {
@@ -66,3 +70,57 @@ export const moreOffers = [
     para: "Upto 40% off on Hotels for check-ins today & tomorrow",
   },
 ];
+
+const popularDestinationsImages = [
+  {
+    src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/goa.jpg",
+    alt: "goa-popular-destination-img",
+    place: "Goa",
+    properties: "3051", //fights to the destination that are available through the Cleartrip API.
+    id: crypto.randomUUID(),
+  },
+  {
+    src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/bangalore.jpg",
+    alt: "bangalore-popular-destination-img",
+    place: "Bangalore",
+    properties: "2500",
+    id: crypto.randomUUID(),
+  },
+  {
+    src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/Jaipur.png",
+    alt: "Jaipur-popular-destination-img",
+    place: "Jaipur",
+    properties: "920",
+    id: crypto.randomUUID(),
+  },
+  {
+    src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/delhi.jpg",
+    alt: "delhi-popular-destination-img",
+    place: "Delhi",
+    properties: "2435",
+    id: crypto.randomUUID(),
+  },
+  {
+    src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/Pattaya.png",
+    alt: "Pattaya-popular-destination-img",
+    place: "Pattaya",
+    properties: "1805",
+    id: crypto.randomUUID(),
+  },
+];
+
+const appOfferImage = {
+  src: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_983,h_247,dpr_2/offermgmt/images/desktop_flights_cmahi-new.png",
+  alt: "App-Offer-Img",
+};
+
+export {
+  base_URL,
+  headers,
+  PROJECT_ID,
+  getCurrentDate,
+  offersCardsImages,
+  moreOffers,
+  appOfferImage,
+  popularDestinationsImages,
+};
