@@ -14,7 +14,12 @@ import { LuMinusCircle, LuPlusCircle } from "react-icons/lu";
 import { MdFlightTakeoff, MdFlightLand } from "react-icons/md";
 import { PiArrowsLeftRightBold } from "react-icons/pi";
 
-import { base_URL, headers, getCurrentDate } from "../assets/helper";
+import {
+  base_URL,
+  headers,
+  getCurrentDate,
+  offersCardsImages,
+} from "../assets/helper";
 
 const initialState = {
   fromInput: null,
@@ -183,16 +188,16 @@ export default function Flight() {
   return (
     <>
       <section>
-        <div>
+        <div className="flight-headings">
           <h1 className="text-3xl font-medium mt-1">Serch Flights</h1>
           <h2 className="font-medium text-base mt-1 text-stone-700">
             Enjoy hassle free bookings with Cleartrip
           </h2>
         </div>
 
-        {/* /// BOOKING BOX */}
+        {/* FLIGHT BOOKING BOX */}
         <div className=" flex flex-col px-4 py-4 border-2 rounded-xl shadow-lg shadow-slate-200 my-6 relative">
-          {/* /// FLIGHT CLASS AND SEATS */}
+          {/* FLIGHT CLASS AND SEATS */}
 
           <div className="mb-6 flex gap-5 align-middle justify-start pl-4">
             <div>
@@ -234,14 +239,13 @@ export default function Flight() {
             </div>
           </div>
 
-          {/* /// SEARCH CONTAINER*/}
+          {/* SEARCH CONTAINER*/}
           <div className="search-field flex flex-col gap-4 px-4">
             {/* FROM - TO CONTAINER */}
             <div className="from-to-container flex max-sm:flex-col gap-2 items-center border rounded-md mb-4 px-4 py-2">
               {/* FROM CONTAINER*/}
               <div className="from-container flex items-center">
-                {/* <MdFlightTakeoff className="text-2xl max-sm:hidden text-stone-400" /> */}
-                {/* FROM INPUT CONTAINER */}
+                {/* ROM INPUT CONTAINER */}
                 <div className="from-input-container">
                   <Autocomplete
                     forcePopupIcon={false}
@@ -286,12 +290,11 @@ export default function Flight() {
                 </div>
               </div>
               {/* ICON LEFT-RIGHT ARROW */}
-              <div className="left-right-arrow text-blue-500 rounded-full border-2  border-blue-500 p-1 mr-1 max-sm:hidden">
+              <div className="left-right-arrow text-blue-500 rounded-full border-2  border-blue-500 p-1  max-sm:hidden">
                 <PiArrowsLeftRightBold size={24} />
               </div>
               {/* TO CONTAINER*/}
               <div className="to-container flex items-center">
-                {/* <MdFlightLand className="text-2xl max-sm:hidden text-stone-400" /> */}
                 {/* TO INPUT CONTAINER */}
                 <div className="to-input-container ">
                   <Autocomplete
