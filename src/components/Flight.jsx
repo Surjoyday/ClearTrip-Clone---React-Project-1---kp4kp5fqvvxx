@@ -14,18 +14,13 @@ import { LuMinusCircle, LuPlusCircle } from "react-icons/lu";
 import { MdFlightTakeoff, MdFlightLand } from "react-icons/md";
 import { PiArrowsLeftRightBold } from "react-icons/pi";
 
-import {
-  base_URL,
-  headers,
-  getCurrentDate,
-  offersCardsImages,
-} from "../assets/helper";
+import { base_URL, headers, getCurrentDate } from "../assets/helper";
 
 const initialState = {
   fromInput: null,
   toInput: null,
   airportData: [],
-  offers: [],
+  // offers:[],
   dateInput: "",
   travelClass: "Economy",
   seats: 1,
@@ -38,8 +33,8 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "SET_OFFERS":
-      return { ...state, offers: action.payload };
+    // case "SET_OFFERS":
+    //   return { ...state, offers: action.payload };
 
     case "SET_AIRPORT_DATA":
       return { ...state, airportData: action.payload };
@@ -115,19 +110,19 @@ export default function Flight() {
     getAllAirportsData();
   }, []);
 
-  // GETING ALL FLIGHTS OFFERS ON INITIAL RENDER
-  async function getAllFlightOffers() {
-    const res = fetch(`${base_URL}/offers?filter={"type":"FLIGHTS"}`, {
-      method: "GET",
-      headers,
-    });
+  // // GETING ALL FLIGHTS OFFERS ON INITIAL RENDER
+  // async function getAllFlightOffers() {
+  //   const res = fetch(`${base_URL}/offers?filter={"type":"FLIGHTS"}`, {
+  //     method: "GET",
+  //     headers,
+  //   });
 
-    const resData = await res.json();
+  //   const resData = await res.json();
 
-    const offers = resData.data.offers;
+  //   const offers = resData.data.offers;
 
-    dispatch({ type: "SET_OFFERS", payload: offers });
-  }
+  //   dispatch({ type: "SET_OFFERS", payload: offers });
+  // }
 
   // GETING ALL AIRPORTS DATA ON INITIAL RENDER
   async function getAllAirportsData() {
@@ -291,7 +286,7 @@ export default function Flight() {
               </div>
               {/* ICON LEFT-RIGHT ARROW */}
               <div className="left-right-arrow text-blue-500 rounded-full border-2  border-blue-500 p-1  max-sm:hidden">
-                <PiArrowsLeftRightBold size={24} />
+                <PiArrowsLeftRightBold size={20} />
               </div>
               {/* TO CONTAINER*/}
               <div className="to-container flex items-center">

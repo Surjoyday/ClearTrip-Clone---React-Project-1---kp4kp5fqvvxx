@@ -1,4 +1,4 @@
-import Logo from "./Logo";
+import { Logo } from "./Logo";
 import styles from "./Navbar.module.css";
 
 import { useEffect } from "react";
