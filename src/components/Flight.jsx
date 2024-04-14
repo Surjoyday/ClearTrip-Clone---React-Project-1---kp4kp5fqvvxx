@@ -5,29 +5,28 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import { Box } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 
-import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { LuMinusCircle, LuPlusCircle } from "react-icons/lu";
 import { MdFlightTakeoff, MdFlightLand } from "react-icons/md";
-import { PiArrowsLeftRightBold } from "react-icons/pi";
 
-import { base_URL, headers, getCurrentDate } from "../assets/helper";
+import { base_URL, HEADERS, getCurrentDate } from "../assets/helper";
+import { RightLeftArrow } from "../assets/icons";
 
 const initialState = {
   fromInput: null,
   toInput: null,
   airportData: [],
   // offers:[],
-  dateInput: "",
+  dateInput: getCurrentDate(),
   travelClass: "Economy",
   seats: 1,
   errors: {
     fromInError: "",
     toInError: "",
-    dateInError: "",
   },
 };
 
@@ -72,7 +71,6 @@ function reducer(state, action) {
       return {
         ...state,
         dateInput: action.payload,
-        errors: { ...state.errors, dateInError: "" },
       };
 
     case "SET_ERRORS":
@@ -80,7 +78,7 @@ function reducer(state, action) {
       return { ...state, errors: { ...state.errors, [type]: errorMsg } };
 
     default:
-      throw new Error("Unkown action");
+      throw new Error("Unknown action");
   }
 }
 
@@ -98,13 +96,15 @@ export default function Flight() {
     seats,
   } = state;
 
+  // console.log(airportData);
+
   // console.log(typeof fromInput === "string");
 
   // console.log("EQUAL", toInput === fromInput);
   // console.log(errors.fromInError);
-  console.log(dateInput);
-  console.log(fromInput);
-  console.log(toInput);
+  // console.log(dateInput);
+  // console.log(fromInput);
+  // console.log(toInput);
 
   useEffect(function () {
     getAllAirportsData();
@@ -128,7 +128,7 @@ export default function Flight() {
   async function getAllAirportsData() {
     const res = await fetch(`${base_URL}/airport?search={"city":""}&limit=30`, {
       method: "GET",
-      headers,
+      headers: HEADERS,
     });
 
     const resData = await res.json();
@@ -150,7 +150,7 @@ export default function Flight() {
   }
 
   function handleNavigate() {
-    if (!fromInput || !toInput || !dateInput) {
+    if (!fromInput || !toInput) {
       if (!fromInput)
         dispatch({
           type: "SET_ERRORS",
@@ -161,12 +161,6 @@ export default function Flight() {
         dispatch({
           type: "SET_ERRORS",
           payload: ["toInError", "Please select an arrival location"],
-        });
-
-      if (!dateInput)
-        dispatch({
-          type: "SET_ERRORS",
-          payload: ["dateInError", "Please select a date"],
         });
 
       return;
@@ -191,7 +185,7 @@ export default function Flight() {
         </div>
 
         {/* FLIGHT BOOKING BOX */}
-        <div className="main-container-booking flex flex-col max-sm:w-full  my-6  px-4 py-14 border-2 rounded-xl shadow-lg shadow-slate-200  relative">
+        <div className="main-container-booking flex flex-col my-6  px-4 py-14 border-2 rounded-xl shadow-lg shadow-slate-200">
           {/* FLIGHT CLASS AND SEATS */}
 
           <div className="mb-6 flex gap-5 align-middle justify-start pl-4">
@@ -252,6 +246,33 @@ export default function Flight() {
                           : airport.country
                       }`
                     }
+                    renderOption={(props, airport) => (
+                      <Box
+                        component="li"
+                        sx={{
+                          "&:hover > div": {
+                            backgroundColor: "#0E6AFF",
+                            padding: ".2em",
+                            borderRadius: "2px",
+                            color: "white",
+                          },
+                          "& > div": {
+                            mr: 2,
+                            flexShrink: 0,
+                            transition: "background-color 0.3s",
+                          },
+                        }}
+                        {...props}
+                        key={airport.id}
+                      >
+                        <div>{airport.cityCode}</div>
+                        {`${airport.cityCode} - ${airport.city}, ${
+                          airport.country.toLowerCase() === "india"
+                            ? "IN"
+                            : airport.country
+                        }`}
+                      </Box>
+                    )}
                     isOptionEqualToValue={(option, value) =>
                       option.id === value.id
                     }
@@ -285,8 +306,8 @@ export default function Flight() {
                 </div>
               </div>
               {/* ICON LEFT-RIGHT ARROW */}
-              <div className="left-right-arrow text-blue-500 rounded-full border-2  border-blue-500 p-1  max-sm:hidden">
-                <PiArrowsLeftRightBold size={20} />
+              <div className="left-right-arrow text-blue-500 max-sm:hidden">
+                <RightLeftArrow />
               </div>
               {/* TO CONTAINER*/}
               <div className="to-container flex items-center">
@@ -302,6 +323,33 @@ export default function Flight() {
                           : airport.country
                       }`
                     }
+                    renderOption={(props, airport) => (
+                      <Box
+                        component="li"
+                        sx={{
+                          "&:hover > div": {
+                            backgroundColor: "#0E6AFF",
+                            padding: ".2em",
+                            borderRadius: "2px",
+                            color: "white",
+                          },
+                          "& > div": {
+                            mr: 2,
+                            flexShrink: 0,
+                            transition: "background-color 0.3s",
+                          },
+                        }}
+                        {...props}
+                        key={airport.id}
+                      >
+                        <div>{airport.cityCode}</div>
+                        {`${airport.cityCode} - ${airport.city}, ${
+                          airport.country.toLowerCase() === "india"
+                            ? "IN"
+                            : airport.country
+                        }`}
+                      </Box>
+                    )}
                     isOptionEqualToValue={(option, value) =>
                       option.id === value.id
                     }
@@ -349,8 +397,6 @@ export default function Flight() {
                   inputProps={{
                     min: getCurrentDate(),
                   }}
-                  error={errors.dateInError !== ""}
-                  helperText={errors.dateInError || ""}
                 />
                 <Button
                   variant="contained"

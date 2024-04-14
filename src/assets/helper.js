@@ -2,7 +2,7 @@ const base_URL = "https://academics.newtonschool.co/api/v1/bookingportals";
 
 const PROJECT_ID = process.env.REACT_APP_PROJECT_ID;
 
-const headers = {
+const HEADERS = {
   "Content-Type": "application/json",
   projectId: process.env.REACT_APP_PROJECT_ID,
 };
@@ -116,7 +116,7 @@ const appOfferImage = {
 
 export {
   base_URL,
-  headers,
+  HEADERS,
   PROJECT_ID,
   getCurrentDate,
   offersCardsImages,

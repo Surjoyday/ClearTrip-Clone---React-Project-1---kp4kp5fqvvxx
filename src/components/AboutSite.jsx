@@ -6,7 +6,7 @@ import { appOfferImage, popularDestinationsImages } from "../assets/helper";
 function AboutSite() {
   const location = useLocation();
 
-  console.log(location);
+  // console.log(location);
   return (
     <aside>
       <div className="popular-destinations my-20 ">
