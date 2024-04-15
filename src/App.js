@@ -14,7 +14,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="app">
+    <div className="app min-h-screen flex flex-col">
       <AuthProvider>
         <BrowserRouter>
           <Navbar />
@@ -24,8 +24,8 @@ export default function App() {
               <Route index element={<Navigate replace to="flights" />} />
               <Route path="flights" element={<Flight />} />
               <Route path="hotels" element={<Hotels />} />
-              <Route path="offers" element={<Offers />} />
             </Route>
+            <Route path="offers" element={<Offers />} />
           </Routes>
 
           <Footer />

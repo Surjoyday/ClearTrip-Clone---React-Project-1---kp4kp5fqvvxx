@@ -2,7 +2,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { moreOffers, offersCardsImages } from "../assets/helper";
-import { useLocation } from "react-router-dom";
 
 const carouselSettings = {
   dots: true,
@@ -29,9 +28,8 @@ const carouselSettingsForMoreOffers = {
 };
 
 export default function OffersCarousel() {
-  const location = useLocation();
   return (
-    <div className={`${location.pathname === "/offers" && "hidden"}`}>
+    <div>
       <div className="flex flex-col gap-12 max-sm:items-center mb-5">
         <div className="card border-stone-400  w-[300px] max-h-max">
           <Slider {...carouselSettings}>

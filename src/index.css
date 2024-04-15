@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* .app {
+  min-height: calc(100vh - 112px);
+}
+
+.footer-content {
+  position: relative;
+  left: 0;
+  bottom: 0;
+} */
+
 .activeSidenav {
   cursor: pointer;
   border: none;

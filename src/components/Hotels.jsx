@@ -44,7 +44,7 @@ function reducer(state, action) {
     case "SET_ERROR_MSG":
       return {
         ...state,
-        errorMsg: "Please select a valid city from the options",
+        errorMsg: "Please select a valid destination",
       };
 
     default:

@@ -176,7 +176,7 @@ export default function Flight() {
 
   return (
     <>
-      <section>
+      <section className="flex-grow">
         <div className="flight-headings">
           <h1 className="text-3xl font-medium mt-1">Serch Flights</h1>
           <h2 className="font-medium text-base mt-1 text-stone-700">
@@ -185,7 +185,7 @@ export default function Flight() {
         </div>
 
         {/* FLIGHT BOOKING BOX */}
-        <div className="main-container-booking flex flex-col my-6  px-4 py-14 border-2 rounded-xl shadow-lg shadow-slate-200">
+        <div className="main-container-booking flex flex-col my-6  px-4 py-10 border-2 rounded-xl shadow-lg shadow-slate-200">
           {/* FLIGHT CLASS AND SEATS */}
 
           <div className="mb-6 flex gap-5 align-middle justify-start pl-4">
@@ -231,7 +231,7 @@ export default function Flight() {
           {/* SEARCH CONTAINER*/}
           <div className="search-field flex flex-col gap-4 px-4">
             {/* FROM - TO CONTAINER */}
-            <div className="from-to-container flex max-sm:flex-col gap-2 items-center border rounded-md mb-4 px-4 py-2">
+            <div className="from-to-container flex max-sm:flex-col gap-2 items-center border rounded-md mb-4 mt-5 px-4 py-2">
               {/* FROM CONTAINER*/}
               <div className="from-container flex items-center">
                 {/* ROM INPUT CONTAINER */}
@@ -254,11 +254,12 @@ export default function Flight() {
                             backgroundColor: "#0E6AFF",
                             padding: ".2em",
                             borderRadius: "2px",
+                            color: "white",
                           },
                           "& > div": {
                             mr: 2,
                             flexShrink: 0,
-                            transition: "background-color 0.3s",
+                            transition: "background-color .4s",
                           },
                         }}
                         {...props}
@@ -285,11 +286,13 @@ export default function Flight() {
                     renderInput={(params) => (
                       <TextField
                         {...params}
+                        variant="standard"
                         InputProps={{
                           ...params.InputProps,
+
                           startAdornment: (
                             <InputAdornment position="start">
-                              <MdFlightTakeoff className="text-2xl text-stone-400" />
+                              <MdFlightTakeoff className="text-2xl ml-4  text-stone-400" />
                             </InputAdornment>
                           ),
                         }}
@@ -362,11 +365,12 @@ export default function Flight() {
                     renderInput={(params) => (
                       <TextField
                         {...params}
+                        variant="standard"
                         InputProps={{
                           ...params.InputProps,
                           startAdornment: (
                             <InputAdornment position="start">
-                              <MdFlightLand className="text-2xl text-stone-400" />
+                              <MdFlightLand className="text-2xl ml-4 text-stone-400" />
                             </InputAdornment>
                           ),
                         }}
@@ -388,6 +392,7 @@ export default function Flight() {
                 {/* DATE */}
                 <TextField
                   type="date"
+                  label="Select Date"
                   size="small"
                   value={dateInput}
                   onChange={(e) =>

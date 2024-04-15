@@ -47,7 +47,7 @@ export default function AboutSite() {
 
 function AboutFlight() {
   return (
-    <div className="text-justify p-2 max-sm:hidden">
+    <div className="text-justify p-2 max-sm:hidden mb-8">
       <div className="cleartrip-flight-info ">
         <h3 className=" font-bold text-base py-3">Why Cleartrip?</h3>
         <p>
@@ -216,7 +216,7 @@ function AboutFlight() {
 
 function AboutHotels() {
   return (
-    <div className="grid grid-cols-1 gap-y-8 text-justify max-sm:hidden">
+    <div className="grid grid-cols-1 gap-y-8 text-justify max-sm:hidden mb-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
         <div className="p-4 bg-white rounded-lg">
           <p className="text-neutral-900 text-xl font-semibold">

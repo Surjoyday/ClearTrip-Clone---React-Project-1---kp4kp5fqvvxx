@@ -13,9 +13,11 @@ export default function SideNavbar() {
       <ul className="list-none flex flex-col gap-8 max-sm:flex-row">
         <li>
           <NavLink
-            to={"/flights"}
+            to={"flights"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 ${isActive ? "activeSidenav" : ""}`
+              `flex gap-1 p-1 pr-10 max-sm:pr-2 hover:bg-[#d5e7fc] hover:rounded-[4px] transition transition-duration:1s ${
+                isActive ? "activeSidenav" : ""
+              }`
             }
           >
             {loaction.pathname === "/flights" ? (
@@ -32,9 +34,11 @@ export default function SideNavbar() {
         </li>
         <li>
           <NavLink
-            to={"/hotels"}
+            to={"hotels"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 ${isActive ? "activeSidenav" : ""}`
+              `flex gap-1 p-1 pr-10 max-sm:pr-0 hover:bg-[#d5e7fc] hover:rounded-[4px] transition transition-duration:1s ${
+                isActive ? "activeSidenav" : ""
+              }`
             }
           >
             {loaction.pathname === "/hotels" ? (
@@ -51,9 +55,11 @@ export default function SideNavbar() {
         </li>
         <li>
           <NavLink
-            to={"/offers"}
+            to={"offers"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 ${isActive ? "activeSidenav" : ""}`
+              `flex gap-1 p-1 pr-10 max-sm:pr-0 hover:bg-[#d5e7fc] hover:rounded-[4px]  transition transition-duration:1s ${
+                isActive ? "activeSidenav" : ""
+              }`
             }
           >
             {loaction.pathname === "/offers" ? (
