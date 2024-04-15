@@ -4,13 +4,8 @@
 
 .activeSidenav {
   cursor: pointer;
-  padding: 0.5em;
   border: none;
   border-radius: 4px;
   background-color: #d5e7fc;
-  transition: all 0.4s;
-}
-
-.slick-disabled {
-  display: none;
+  transition: all 1s;
 }

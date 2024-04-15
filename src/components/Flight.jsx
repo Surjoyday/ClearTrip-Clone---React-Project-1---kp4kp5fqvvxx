@@ -254,7 +254,6 @@ export default function Flight() {
                             backgroundColor: "#0E6AFF",
                             padding: ".2em",
                             borderRadius: "2px",
-                            color: "white",
                           },
                           "& > div": {
                             mr: 2,

@@ -6,7 +6,7 @@ import { BsLinkedin } from "react-icons/bs";
 
 function Footer() {
   return (
-    <footer className="p-5 bg-[#F7F7F7] mt-20 flex justify-evenly max-sm:w-full">
+    <footer className="p-4 bg-[#F7F7F7] mt-20  flex justify-evenly max-sm:w-full">
       <div className="max-sm:hidden">
         <FooterLogo />
       </div>
@@ -32,17 +32,18 @@ function Footer() {
 
           <div className="ml-7 flex items-center gap-3 text-stone-500 max-sm:flex-wrap ">
             <span className=" text-stone-400">Connect</span>
-            <a href="https://www.facebook.com/cleartrip">
+            <a href="https://www.facebook.com/cleartrip" target="_blank">
               <FaFacebook size={15} />
             </a>
-            <a href="https://www.instagram.com/cleartrip/">
+            <a href="https://www.instagram.com/cleartrip/" target="_blank">
               <AiFillInstagram size={15} />
             </a>
-            <a href="https://twitter.com/cleartrip">
+            <a href="https://twitter.com/cleartrip" target="_blank">
               <AiFillTwitterCircle size={15} />
             </a>
             <a
               href="https://www.linkedin.com/company/cleartrip/?original_referer="
+              target="_blank"
               className="border rounded-xl"
             >
               <BsLinkedin size={15} className="rounded-lg" />

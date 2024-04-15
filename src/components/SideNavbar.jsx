@@ -15,7 +15,7 @@ export default function SideNavbar() {
           <NavLink
             to={"/flights"}
             className={({ isActive }) =>
-              `flex gap-1 ${isActive ? "activeSidenav" : ""}`
+              `flex gap-1 p-1 ${isActive ? "activeSidenav" : ""}`
             }
           >
             {loaction.pathname === "/flights" ? (
@@ -34,7 +34,7 @@ export default function SideNavbar() {
           <NavLink
             to={"/hotels"}
             className={({ isActive }) =>
-              `flex gap-1 ${isActive ? "activeSidenav" : ""}`
+              `flex gap-1 p-1 ${isActive ? "activeSidenav" : ""}`
             }
           >
             {loaction.pathname === "/hotels" ? (
@@ -53,7 +53,7 @@ export default function SideNavbar() {
           <NavLink
             to={"/offers"}
             className={({ isActive }) =>
-              `flex gap-1 ${isActive ? "activeSidenav" : ""}`
+              `flex gap-1 p-1 ${isActive ? "activeSidenav" : ""}`
             }
           >
             {loaction.pathname === "/offers" ? (

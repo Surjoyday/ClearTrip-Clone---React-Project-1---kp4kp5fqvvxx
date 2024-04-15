@@ -15,6 +15,14 @@ function getCurrentDate() {
   return `${year}-${month}-${day}`;
 }
 
+function getTommorrowsDate() {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // ensuring that month have always has 2 digits
+  const day = String(currentDate.getDate() + 1).padStart(2, "0"); // ensuring that day have always has 2 digits
+  return `${year}-${month}-${day}`;
+}
+
 const offersCardsImages = [
   {
     id: crypto.randomUUID(),
@@ -119,6 +127,7 @@ export {
   HEADERS,
   PROJECT_ID,
   getCurrentDate,
+  getTommorrowsDate,
   offersCardsImages,
   moreOffers,
   appOfferImage,
