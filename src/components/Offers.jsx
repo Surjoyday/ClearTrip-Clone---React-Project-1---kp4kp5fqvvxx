@@ -43,7 +43,6 @@ function Offers() {
   }
 
   // GETTING INDIVIDUAL OFFERS DATA
-
   async function getIndividualOffers(item) {
     if (item === "flights" && flightOffers.length !== 0) return;
     if (item === "hotels" && hotelOffers.length !== 0) return;
@@ -85,11 +84,11 @@ function Offers() {
       {isLoading && <Loader />}
       <aside className="flex max-sm:flex-col mb-10">
         <nav className="px-10 mt-10 w-50 max-sm:w-full max-sm:px-0">
-          <ul className="flex flex-col p-2 gap-8 max-sm:flex-row  max-sm:text-sm overflow-x-auto text-center pr-2 ">
+          <ul className="flex flex-col p-2 gap-8 max-sm:flex-row  max-sm:text-sm overflow-x-auto text-center pr-2 font-medium">
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "All Offers" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
-              }  max-sm:pr-2 hover:bg-[#d5e7fc] rounded-[4px] transition transition-duration:1s`}
+              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s`}
               onClick={() => handleIsActive("All Offers")}
             >
               <BiSolidOffer size={20} />{" "}
@@ -98,7 +97,7 @@ function Offers() {
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "flights" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
-              }  max-sm:pr-2 hover:bg-[#d5e7fc] rounded-[4px] transition transition-duration:1s`}
+              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s`}
               onClick={() => handleIsActive("flights")}
             >
               <GiCommercialAirplane size={20} />
@@ -107,7 +106,7 @@ function Offers() {
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "hotels" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
-              }  max-sm:pr-2 hover:bg-[#d5e7fc] rounded-[4px] transition transition-duration:1s`}
+              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s`}
               onClick={() => handleIsActive("hotels")}
             >
               <RiHotelBedLine size={20} />
@@ -116,7 +115,7 @@ function Offers() {
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "cabs" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
-              }  max-sm:pr-2 hover:bg-[#d5e7fc] rounded-[4px] transition transition-duration:1s`}
+              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s`}
               onClick={() => handleIsActive("cabs")}
             >
               <BsTaxiFrontFill size={20} />
@@ -126,10 +125,16 @@ function Offers() {
         </nav>
 
         {/* OFFERS */}
-        {isActive === "All Offers" && <OffersCard offerCardData={allOffers} />}
-        {isActive === "flights" && <OffersCard offerCardData={flightOffers} />}
-        {isActive === "hotels" && <OffersCard offerCardData={hotelOffers} />}
-        {isActive === "cabs" && <OffersCard offerCardData={cabOffers} />}
+        <div className="mt-7">
+          {isActive === "All Offers" && (
+            <OffersCard offerCardData={allOffers} />
+          )}
+          {isActive === "flights" && (
+            <OffersCard offerCardData={flightOffers} />
+          )}
+          {isActive === "hotels" && <OffersCard offerCardData={hotelOffers} />}
+          {isActive === "cabs" && <OffersCard offerCardData={cabOffers} />}
+        </div>
       </aside>
     </>
   );

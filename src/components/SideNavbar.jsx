@@ -10,12 +10,12 @@ export default function SideNavbar() {
 
   return (
     <nav className="flex flex-col w-40">
-      <ul className="list-none flex flex-col gap-8 max-sm:flex-row">
-        <li>
+      <ul className="list-none flex flex-col gap-8 max-sm:flex-row font-medium">
+        <li title="Flights">
           <NavLink
             to={"flights"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 pr-10 max-sm:pr-2 hover:bg-[#d5e7fc] hover:rounded-[4px] transition transition-duration:1s ${
+              `flex gap-1 p-1 pr-10 max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s ${
                 isActive ? "activeSidenav" : ""
               }`
             }
@@ -32,11 +32,11 @@ export default function SideNavbar() {
             )}
           </NavLink>
         </li>
-        <li>
+        <li title="Hotels">
           <NavLink
             to={"hotels"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 pr-10 max-sm:pr-0 hover:bg-[#d5e7fc] hover:rounded-[4px] transition transition-duration:1s ${
+              `flex gap-1 p-1 pr-10 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s ${
                 isActive ? "activeSidenav" : ""
               }`
             }
@@ -53,11 +53,11 @@ export default function SideNavbar() {
             )}
           </NavLink>
         </li>
-        <li>
+        <li title="Offers">
           <NavLink
             to={"offers"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 pr-10 max-sm:pr-0 hover:bg-[#d5e7fc] hover:rounded-[4px]  transition transition-duration:1s ${
+              `flex gap-1 p-1 pr-10 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF] rounded-[4px]  transition transition-duration:1s ${
                 isActive ? "activeSidenav" : ""
               }`
             }
