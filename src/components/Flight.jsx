@@ -13,14 +13,21 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { LuMinusCircle, LuPlusCircle } from "react-icons/lu";
 import { MdFlightTakeoff, MdFlightLand } from "react-icons/md";
 
-import { base_URL, HEADERS, getCurrentDate } from "../assets/helper";
+import {
+  base_URL,
+  HEADERS,
+  getCurrentDate,
+  getDayOfWeek,
+} from "../assets/helper";
 import { RightLeftArrow } from "../assets/icons";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   fromInput: null,
   toInput: null,
   airportData: [],
   dateInput: getCurrentDate(),
+  day: getDayOfWeek(new Date(getCurrentDate())),
   travelClass: "Economy",
   seats: 1,
   errors: {
@@ -67,6 +74,7 @@ function reducer(state, action) {
       return {
         ...state,
         dateInput: action.payload,
+        day: getDayOfWeek(new Date(action.payload)),
       };
 
     case "SET_ERRORS":
@@ -79,6 +87,8 @@ function reducer(state, action) {
 }
 
 export default function Flight() {
+  const navigate = useNavigate();
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
@@ -90,6 +100,7 @@ export default function Flight() {
     travelClass,
     errors,
     seats,
+    day,
   } = state;
 
   // console.log(airportData);
@@ -98,7 +109,9 @@ export default function Flight() {
 
   // console.log("EQUAL", toInput === fromInput);
   // console.log(errors.fromInError);
-  // console.log(dateInput);
+  console.log(dateInput);
+  console.log(day);
+
   // console.log(fromInput);
   // console.log(toInput);
 
@@ -154,6 +167,10 @@ export default function Flight() {
       });
       return;
     }
+
+    navigate(
+      `/flights/results?source=${fromInput}&destination=${toInput}&depart_date=${dateInput}&day=${day}&travel_class=${travelClass}&seats=${seats}`
+    );
   }
 
   return (

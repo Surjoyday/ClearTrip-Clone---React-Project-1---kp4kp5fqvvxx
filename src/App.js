@@ -11,6 +11,8 @@ import Hotels from "./components/Hotels";
 import Offers from "./components/Offers";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import FlightResults from "./pages/FlightResults";
+import PageNotFound from "./pages/PageNotFound";
 
 export default function App() {
   return (
@@ -26,6 +28,8 @@ export default function App() {
               <Route path="hotels" element={<Hotels />} />
             </Route>
             <Route path="offers" element={<Offers />} />
+            <Route path="flights/results" element={<FlightResults />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
 
           <Footer />

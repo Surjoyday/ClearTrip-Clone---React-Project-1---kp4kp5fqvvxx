@@ -112,11 +112,11 @@ export default function OffersCarousel() {
       {isLoading && <Loader />}
       <div>
         <div className="flex flex-col gap-12 max-sm:items-center mb-5 p-4">
-          <div className="card border-stone-400  w-[250px] max-h-max overflow-x-hidden overflow-y-hidden">
+          <div className="card border-stone-400  w-[250px] max-h-max overflow-x-hidden rounded-xl overflow-y-hidden">
             <Slider {...carouselSettings}>
               {location.pathname === "/flights"
                 ? flightOffers.map((offers) => (
-                    <div key={offers._id} className="relative rounded-xl">
+                    <div key={offers._id} className="relative ">
                       <img
                         src={offers.newHeroUrl}
                         alt={`${offers.type}-img`}
@@ -135,7 +135,7 @@ export default function OffersCarousel() {
                   ))
                 : location.pathname === "/hotels"
                 ? hotelOffers.map((offers) => (
-                    <div key={offers._id} className="relative rounded-xl">
+                    <div key={offers._id} className="relative ">
                       <img
                         src={offers.newHeroUrl}
                         alt={`${offers.type}-img`}

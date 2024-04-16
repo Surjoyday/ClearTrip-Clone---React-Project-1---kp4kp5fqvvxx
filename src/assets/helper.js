@@ -23,6 +23,12 @@ function getTommorrowsDate() {
   return `${year}-${month}-${day}`;
 }
 
+function getDayOfWeek(date) {
+  return new Intl.DateTimeFormat("en", {
+    weekday: "short",
+  }).format(date);
+}
+
 const moreOffers = [
   {
     id: crypto.randomUUID(),
@@ -93,4 +99,5 @@ export {
   moreOffers,
   appOfferImage,
   popularDestinationsImages,
+  getDayOfWeek,
 };
