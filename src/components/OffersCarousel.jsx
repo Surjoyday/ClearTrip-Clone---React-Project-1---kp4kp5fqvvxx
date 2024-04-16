@@ -1,10 +1,14 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+import { HEADERS, base_URL, moreOffers } from "../assets/helper";
+import Loader from "./Loader";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { HEADERS, base_URL, moreOffers } from "../assets/helper";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import Loader from "./Loader";
+
+import { FaLessThan, FaGreaterThan } from "react-icons/fa6";
 
 const carouselSettings = {
   // dots: true,
@@ -13,9 +17,11 @@ const carouselSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  arrows: false,
+  // arrows: false,
   autoplaySpeed: 3000,
   pauseOnHover: true,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
 };
 
 const carouselSettingsForMoreOffers = {
@@ -25,10 +31,31 @@ const carouselSettingsForMoreOffers = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  arrows: false,
   autoplaySpeed: 3500,
   pauseOnHover: true,
 };
+
+function PrevArrow({ onClick }) {
+  return (
+    <div
+      className="next-arrow absolute bottom-2 left-4 transform -translate-y-1/2  z-10 cursor-pointer text-[white]"
+      onClick={onClick}
+    >
+      <FaLessThan size={20} />
+    </div>
+  );
+}
+
+function NextArrow({ onClick }) {
+  return (
+    <div
+      className="next-arrow absolute bottom-2 right-4 transform -translate-y-1/2  z-10 cursor-pointer text-[white]"
+      onClick={onClick}
+    >
+      <FaGreaterThan size={20} />
+    </div>
+  );
+}
 
 export default function OffersCarousel() {
   const [flightOffers, setFlightOffers] = useState([]);
@@ -46,6 +73,7 @@ export default function OffersCarousel() {
     [location.pathname]
   );
 
+  // GETTING THE OFFERS BASED ON PAGE
   async function getOffers() {
     if (
       (location.pathname === "/flights" && flightOffers.length > 0) ||
@@ -84,31 +112,43 @@ export default function OffersCarousel() {
       {isLoading && <Loader />}
       <div>
         <div className="flex flex-col gap-12 max-sm:items-center mb-5 p-4">
-          <div className="card border-stone-400 rounded-[4px] w-[250px] max-h-max overflow-x-hidden overflow-y-hidden">
+          <div className="card border-stone-400  w-[250px] max-h-max overflow-x-hidden overflow-y-hidden">
             <Slider {...carouselSettings}>
               {location.pathname === "/flights"
                 ? flightOffers.map((offers) => (
-                    <div key={offers._id} className="relative">
+                    <div key={offers._id} className="relative rounded-xl">
                       <img
                         src={offers.newHeroUrl}
                         alt={`${offers.type}-img`}
-                        className="w-full h-full  object-contain  rounded-[4px] contrast-[.70]"
+                        className="w-full h-full  object-contain  rounded-xl contrast-[.70]"
                       />
-                      <p className="absolute top-0 bottom-10 w-full h-full p-4 font-semibold">
+                      <p className="absolute top-0 bottom-10 w-full h-full p-4 font-semibold flex flex-col">
                         <span className="text-white">{offers.pTl}</span>
+                        <span className="text-white text-xs pt-2">
+                          {offers.pTx}
+                        </span>
+                        <span className="text-white pt-8">
+                          {offers.offerPersuasion} <span> &rarr;</span>
+                        </span>
                       </p>
                     </div>
                   ))
                 : location.pathname === "/hotels"
                 ? hotelOffers.map((offers) => (
-                    <div key={offers._id} className="relative">
+                    <div key={offers._id} className="relative rounded-xl">
                       <img
                         src={offers.newHeroUrl}
                         alt={`${offers.type}-img`}
-                        className="w-full h-full  object-contain  rounded-[4px] contrast-[.70]"
+                        className="w-full h-full  object-contain  rounded-xl contrast-[.70]"
                       />
-                      <p className="absolute top-0 bottom-10 w-full h-full p-4 font-semibold">
+                      <p className="absolute top-0 bottom-10 w-full h-full p-4 font-semibold flex flex-col">
                         <span className="text-white">{offers.pTl}</span>
+                        <span className="text-white text-xs pt-2">
+                          {offers.pTx}
+                        </span>
+                        <span className="text-white pt-8">
+                          {offers.offerPersuasion} <span> &rarr;</span>
+                        </span>
                       </p>
                     </div>
                   ))

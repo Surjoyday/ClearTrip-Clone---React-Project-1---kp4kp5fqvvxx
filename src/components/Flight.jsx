@@ -20,7 +20,6 @@ const initialState = {
   fromInput: null,
   toInput: null,
   airportData: [],
-  // offers:[],
   dateInput: getCurrentDate(),
   travelClass: "Economy",
   seats: 1,
@@ -32,9 +31,6 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    // case "SET_OFFERS":
-    //   return { ...state, offers: action.payload };
-
     case "SET_AIRPORT_DATA":
       return { ...state, airportData: action.payload };
 
@@ -110,20 +106,6 @@ export default function Flight() {
     getAllAirportsData();
   }, []);
 
-  // GETING ALL FLIGHTS OFFERS ON INITIAL RENDER
-  // async function getAllFlightOffers() {
-  //   const res = fetch(`${base_URL}/offers?filter={"type":"FLIGHTS"}`, {
-  //     method: "GET",
-  //     headers : HEADERS,
-  //   });
-
-  //   const resData = await res.json();
-
-  //   const offers = resData.data.offers;
-
-  //   dispatch({ type: "SET_OFFERS", payload: offers });
-  // }
-
   // GETING ALL AIRPORTS DATA ON INITIAL RENDER
   async function getAllAirportsData() {
     const res = await fetch(`${base_URL}/airport?search={"city":""}&limit=30`, {
@@ -185,7 +167,7 @@ export default function Flight() {
         </div>
 
         {/* FLIGHT BOOKING BOX */}
-        <div className="main-container-booking flex flex-col my-6  px-4 py-10 border-2 rounded-xl shadow-lg shadow-slate-200">
+        <div className="main-container-booking flex flex-col my-6  px-4 py-10 shadow-lg  rounded-lg border">
           {/* FLIGHT CLASS AND SEATS */}
 
           <div className="mb-6 flex gap-5 align-middle justify-start pl-4">

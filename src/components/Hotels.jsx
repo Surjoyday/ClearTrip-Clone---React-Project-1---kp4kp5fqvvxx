@@ -114,7 +114,7 @@ export default function Hotels() {
         </div>
 
         {/* HOTEL BOOKING BOX */}
-        <div className="container-hotel flex flex-col gap-6 my-6 px-4 py-14 border-2 rounded-xl shadow-lg shadow-slate-200">
+        <div className="container-hotel flex flex-col gap-6 my-6 px-4 py-14 shadow-lg  rounded-lg border">
           {/* DESTINATION - CITY INPUT*/}
           <div className="hotel-city-box">
             <Autocomplete
