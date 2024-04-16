@@ -23,44 +23,6 @@ function getTommorrowsDate() {
   return `${year}-${month}-${day}`;
 }
 
-const offersCardsImages = [
-  {
-    id: crypto.randomUUID(),
-    url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_204,dpr_2/offermgmt/images/banner/RR_Hifive_0712.png",
-    alt: "RR_Hifive_0712",
-  },
-  {
-    id: crypto.randomUUID(),
-    url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_CTMAHI_F_0504.jpg",
-    alt: "BSB_CTMAHI_F_0504",
-  },
-  {
-    id: crypto.randomUUID(),
-    url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI_DOM_F_2803.jpg",
-    alt: "BSB_SBI_DOM_F_2803",
-  },
-  {
-    id: crypto.randomUUID(),
-    url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_204,dpr_2/offermgmt/images/banner/RR_FEDEMI_H_1001.jpg",
-    alt: "RR_FEDEMI_H_1001",
-  },
-  {
-    id: crypto.randomUUID(),
-    url: "  https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_204,dpr_2/offermgmt/images/banner/RR_One%20Card_H_0201.jpg",
-    alt: "RR_One%20Card_H_0201",
-  },
-  {
-    id: crypto.randomUUID(),
-    url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR%20HDFCEMI.jpg",
-    alt: "RR%20HDFCEMI",
-  },
-  {
-    id: crypto.randomUUID(),
-    url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_ONECARD_F_2603.jpg",
-    alt: "RR_ONECARD_F_2603",
-  },
-];
-
 const moreOffers = [
   {
     id: crypto.randomUUID(),
@@ -128,7 +90,6 @@ export {
   PROJECT_ID,
   getCurrentDate,
   getTommorrowsDate,
-  offersCardsImages,
   moreOffers,
   appOfferImage,
   popularDestinationsImages,

@@ -1,8 +1,8 @@
 import AboutSite from "../components/AboutSite";
-import Navbar from "../components/Navbar";
+
 import OffersCarousel from "../components/OffersCarousel";
 import SideNavbar from "../components/SideNavbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 function Home() {
   return (

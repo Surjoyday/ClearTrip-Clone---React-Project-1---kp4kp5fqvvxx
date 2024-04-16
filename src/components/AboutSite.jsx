@@ -6,11 +6,11 @@ import { appOfferImage, popularDestinationsImages } from "../assets/helper";
 export default function AboutSite() {
   const location = useLocation();
 
-  console.log(location.pathname);
+  // console.log(location.pathname);
 
   return (
     <aside className={`${location.pathname === "/offers" && "hidden"}`}>
-      <div className="popular-destinations my-20">
+      <div className="popular-destinations mt-7 mb-20">
         <h2 className="text-2xl w-fit font-semibold max-sm:text-xl border-l-4 border-[#FF4F17] pl-2">
           Popular destinations
         </h2>

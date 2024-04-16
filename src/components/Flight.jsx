@@ -110,11 +110,11 @@ export default function Flight() {
     getAllAirportsData();
   }, []);
 
-  // // GETING ALL FLIGHTS OFFERS ON INITIAL RENDER
+  // GETING ALL FLIGHTS OFFERS ON INITIAL RENDER
   // async function getAllFlightOffers() {
   //   const res = fetch(`${base_URL}/offers?filter={"type":"FLIGHTS"}`, {
   //     method: "GET",
-  //     headers,
+  //     headers : HEADERS,
   //   });
 
   //   const resData = await res.json();

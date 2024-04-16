@@ -12,7 +12,7 @@ function Navbar() {
 
   const location = useLocation();
 
-  console.log(location);
+  // console.log(location);
 
   // useEffect(() => {
   //   console.log("Token changed:", token);
@@ -33,13 +33,15 @@ function Navbar() {
                 <>
                   <Link to={"/flights"}>
                     <MdFlight
-                      size={30}
+                      size={23}
+                      title="Flight Page"
                       className="text-stone-500 cursor-pointer hover:text-[#0E6AFF] max-sm:hidden"
                     />
                   </Link>
                   <Link to={"/hotels"}>
                     <MdHotel
-                      size={30}
+                      size={23}
+                      title="Hotel Page"
                       className="text-stone-500 cursor-pointer hover:text-[#0E6AFF] max-sm:hidden"
                     />
                   </Link>
@@ -49,7 +51,7 @@ function Navbar() {
             <div className={styles.user}>
               {token ? (
                 <>
-                  <span>{name && `Welcome, ${name}`}</span>
+                  <span>{name && `Hi, ${name}`}</span>
                   <button
                     className={styles["login-signup-button"]}
                     onClick={handleLogout}

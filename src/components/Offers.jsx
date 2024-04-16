@@ -88,7 +88,7 @@ function Offers() {
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "All Offers" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
-              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s`}
+              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s cursor-pointer`}
               onClick={() => handleIsActive("All Offers")}
             >
               <BiSolidOffer size={20} />{" "}
@@ -97,7 +97,7 @@ function Offers() {
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "flights" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
-              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s`}
+              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s cursor-pointer`}
               onClick={() => handleIsActive("flights")}
             >
               <GiCommercialAirplane size={20} />
@@ -106,7 +106,7 @@ function Offers() {
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "hotels" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
-              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s`}
+              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s cursor-pointer`}
               onClick={() => handleIsActive("hotels")}
             >
               <RiHotelBedLine size={20} />
@@ -115,7 +115,7 @@ function Offers() {
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "cabs" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
-              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s`}
+              }  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s cursor-pointer`}
               onClick={() => handleIsActive("cabs")}
             >
               <BsTaxiFrontFill size={20} />
