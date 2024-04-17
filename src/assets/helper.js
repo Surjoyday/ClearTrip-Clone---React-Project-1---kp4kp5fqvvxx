@@ -29,6 +29,16 @@ function getDayOfWeek(date) {
   }).format(date);
 }
 
+function formatDates(date) {
+  const formatedDate = new Intl.DateTimeFormat("en", {
+    weekday: "short",
+    month: "short",
+    day: "2-digit",
+  }).format(date);
+
+  return `${formatedDate}`;
+}
+
 const moreOffers = [
   {
     id: crypto.randomUUID(),
@@ -100,4 +110,5 @@ export {
   appOfferImage,
   popularDestinationsImages,
   getDayOfWeek,
+  formatDates,
 };

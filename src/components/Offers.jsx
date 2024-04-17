@@ -83,8 +83,8 @@ function Offers() {
     <>
       {isLoading && <Loader />}
       <aside className="flex max-sm:flex-col mb-10">
-        <nav className="px-10 mt-10 w-50 max-sm:w-full max-sm:px-0">
-          <ul className="flex flex-col p-2 gap-8 max-sm:flex-row  max-sm:text-sm overflow-x-auto text-center pr-2 font-medium">
+        <nav className="px-10 mt-10 max-sm:mt-4 w-50 max-sm:w-full max-sm:px-0">
+          <ul className="flex flex-col p-2 gap-8 max-sm:flex-row max-sm:pb-4  max-sm:text-sm overflow-x-auto text-center pr-2 font-medium">
             <li
               className={`flex items-center gap-1 p-2 ${
                 isActive === "All Offers" ? "text-[#0E6AFF] bg-[#d5e7fc]" : ""
@@ -125,7 +125,7 @@ function Offers() {
         </nav>
 
         {/* OFFERS */}
-        <div className="mt-7">
+        <div className="mt-7 max-sm:mt-2">
           {isActive === "All Offers" && (
             <OffersCard offerCardData={allOffers} />
           )}

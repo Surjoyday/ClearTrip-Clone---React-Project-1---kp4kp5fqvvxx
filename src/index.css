@@ -29,3 +29,7 @@
   background-color: #d5e7fc;
   transition: all 1s;
 }
+
+.nav-width {
+  width: calc(100% - 64px);
+}

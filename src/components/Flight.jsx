@@ -25,6 +25,8 @@ import { useNavigate } from "react-router-dom";
 const initialState = {
   fromInput: null,
   toInput: null,
+  origin: {},
+  destination: {},
   airportData: [],
   dateInput: getCurrentDate(),
   day: getDayOfWeek(new Date(getCurrentDate())),
@@ -60,6 +62,7 @@ function reducer(state, action) {
       return {
         ...state,
         fromInput: action.payload?.cityCode,
+        origin: action.payload,
         errors: { ...state.errors, fromInError: "" },
       };
 
@@ -67,6 +70,7 @@ function reducer(state, action) {
       return {
         ...state,
         toInput: action.payload?.cityCode,
+        destination: action.payload,
         errors: { ...state.errors, toInError: "" },
       };
 
@@ -101,6 +105,8 @@ export default function Flight() {
     errors,
     seats,
     day,
+    origin,
+    destination,
   } = state;
 
   // console.log(airportData);
@@ -109,8 +115,8 @@ export default function Flight() {
 
   // console.log("EQUAL", toInput === fromInput);
   // console.log(errors.fromInError);
-  console.log(dateInput);
-  console.log(day);
+  // console.log(dateInput);
+  // console.log(day);
 
   // console.log(fromInput);
   // console.log(toInput);
@@ -169,7 +175,8 @@ export default function Flight() {
     }
 
     navigate(
-      `/flights/results?source=${fromInput}&destination=${toInput}&depart_date=${dateInput}&day=${day}&travel_class=${travelClass}&seats=${seats}`
+      `/flights/results?from=${fromInput}&to=${toInput}&depart_date=${dateInput}&day=${day}&travel_class=${travelClass}&seats=${seats}`,
+      { state: { origin, destination, seats, dateInput } }
     );
   }
 
@@ -280,7 +287,7 @@ export default function Flight() {
                         type: "SET_FROM_INPUT",
                         payload: value,
                       });
-                      // console.log(value);
+                      console.log(value);
                     }}
                     renderInput={(params) => (
                       <TextField
@@ -354,7 +361,7 @@ export default function Flight() {
                     isOptionEqualToValue={(option, value) =>
                       option.id === value.id
                     }
-                    onChange={(_, value) => {
+                    onChange={(option, value) => {
                       dispatch({
                         type: "SET_TO_INPUT",
                         payload: value,

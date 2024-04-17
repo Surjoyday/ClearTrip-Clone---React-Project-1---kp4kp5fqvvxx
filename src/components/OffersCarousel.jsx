@@ -64,7 +64,7 @@ export default function OffersCarousel() {
 
   const location = useLocation();
 
-  console.log(location.pathname);
+  // console.log(location.pathname);
 
   useEffect(
     function () {
