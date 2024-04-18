@@ -61,7 +61,13 @@ function Logo() {
 
 function FooterLogo() {
   return (
-    <svg width="177" height="48" viewBox="0 0 177 48" fill="none">
+    <svg
+      className="max-sm:w-20 max-sm:h-10"
+      width="177"
+      height="48"
+      viewBox="0 0 177 48"
+      fill="none"
+    >
       <path
         d="M66.7936 45.5696H65.4542L68.4638 37.3184H69.9216L72.9312 45.5696H71.5918L69.2274 38.8171H69.1621L66.7936 45.5696ZM67.0182 42.3384H71.3631V43.3859H67.0182V42.3384Z"
         fill="#808080"

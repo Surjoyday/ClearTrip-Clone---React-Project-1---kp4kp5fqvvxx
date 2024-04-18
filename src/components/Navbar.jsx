@@ -93,8 +93,8 @@ export default function Navbar() {
 function FlightSearchSummary({ urlState }) {
   return (
     <>
-      <div className="search-criteria-summary flex items-center">
-        <div className="font-normal flex gap-12 items-center text-sm pt-3 m-auto w-100 overflow-x-scroll whitespace-nowrap max-sm:mt-2">
+      <div className="search-criteria-summary flex">
+        <div className="font-normal flex gap-12 items-center text-sm pt-3 m-auto w-100 overflow-x-auto whitespace-nowrap max-sm:mt-2">
           <p className="border rounded-[4px] p-2">One way</p>
 
           <div className="origin-destination-info  flex gap-5 items-center">

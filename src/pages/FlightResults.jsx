@@ -3,9 +3,20 @@ import { useLocation, useSearchParams } from "react-router-dom";
 
 import { RiArrowLeftRightFill } from "react-icons/ri";
 
-import { formatDates } from "../assets/helper";
+import { HEADERS, base_URL, formatDates } from "../assets/helper";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 
-function FlightResults() {
+import { FaChevronDown } from "react-icons/fa";
+import FlightCard from "../components/FlightCard";
+
+export default function FlightResults() {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
@@ -19,26 +30,60 @@ function FlightResults() {
   const origin = location.state.origin;
   const destination = location.state.destination;
 
-  // console.log(location.pathname);
-
-  // console.log(fromCity);
-  // console.log(toCity);
-  // console.log(departDate);
-  // console.log(travelClass);
-  // console.log(seats);
-  // console.log(day);
-  // console.log(location.state.origin);
-  // console.log(location.state.destination);
+  useEffect(function () {
+    getFlightDetails();
+  }, []);
 
   const [flights, setFlights] = useState([]);
 
   // const filteredFlightes =
 
   async function getFlightDetails() {
-    // const res = await fetch(`${}`)
+    const res = await fetch(
+      `${base_URL}/flight?search=
+    {"source":"${fromCity}","destination":"${toCity}"}&day=${day}`,
+      {
+        method: "GET",
+        headers: HEADERS,
+      }
+    );
+
+    const resData = await res.json();
+
+    const flightsData = resData?.data?.flights;
+
+    setFlights(flightsData);
   }
 
-  return <></>;
-}
+  // console.log(flights);
 
-export default FlightResults;
+  return (
+    <>
+      <section>
+        <div className="results-container flex gap-20 mt-7">
+          <div className="sort-filter-accordian w-1/6 ml-10">
+            <Accordion sx={{ boxShadow: "none", border: "none" }}>
+              <AccordionSummary
+                expandIcon={<FaChevronDown />}
+                aria-label="sort-panel"
+                id="sort-panel-header"
+              >
+                <Typography className="pr-2 uppercase">Sort By</Typography>
+              </AccordionSummary>
+
+              <AccordionDetails>
+                <Select />
+              </AccordionDetails>
+            </Accordion>
+          </div>
+
+          <div className="flight-results flex flex-col gap-4">
+            {flights.map((flight) => (
+              <FlightCard key={flight._id} flight={flight} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

@@ -287,7 +287,7 @@ export default function Flight() {
                         type: "SET_FROM_INPUT",
                         payload: value,
                       });
-                      console.log(value);
+                      // console.log(value);
                     }}
                     renderInput={(params) => (
                       <TextField

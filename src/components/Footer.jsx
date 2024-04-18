@@ -6,12 +6,12 @@ import { BsLinkedin } from "react-icons/bs";
 
 function Footer() {
   return (
-    <footer className="p-4 bg-[#F7F7F7] flex flex-col md:flex-row items-center justify-evenly mt-auto">
-      <div className="max-sm:hidden">
+    <footer className="p-4 bg-[#F7F7F7] flex flex-col md:flex-row items-center justify-around mt-auto">
+      <div>
         <FooterLogo />
       </div>
 
-      <div className="flex flex-col gap-3 cursor-pointer text-md max-sm:text-xs">
+      <div className="flex flex-col gap-3 cursor-pointer max-sm:items-center text-md max-sm:text-xs">
         <div>
           <ul className="flex justify-between max-sm:justify-start max-sm:gap-2">
             <li className="hover:underline">About Us</li>
