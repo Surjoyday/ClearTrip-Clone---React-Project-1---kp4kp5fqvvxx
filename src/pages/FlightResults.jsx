@@ -39,7 +39,7 @@ function reducer(state, action) {
 
     case "SET_SORT_BY":
       const [key, value] = action.payload;
-      const updatedSortBy = { ...state.sortBy, [key]: +value };
+      const updatedSortBy = { ...initialState.sortBy, [key]: +value };
       return { ...state, sortBy: updatedSortBy };
 
     case "SET_SORTED_DATA":
@@ -66,7 +66,10 @@ export default function FlightResults() {
 
   const { departureTime, arrivalTime, ticketPrice, stops, duration } = sortBy;
 
-  console.log(sortBy?.departureTime);
+  // console.log(sortBy?.departureTime);
+
+  // console.log(sortBy.departureTime);
+  // console.log(sortBy.arrivalTime);
 
   // const toSortBy = Object.entries(sortBy).find((a) => a.includes(1 || -1));
   // console.log(toSortBy);
@@ -125,7 +128,7 @@ export default function FlightResults() {
 
       getDataBySortedOrder();
     },
-    [departureTime]
+    [departureTime, arrivalTime, duration, stops, ticketPrice]
   );
 
   return (
@@ -145,17 +148,17 @@ export default function FlightResults() {
               </AccordionSummary>
 
               <AccordionDetails>
-                <div className="sort-by-container">
-                  <div className="duration flex flex-col items-start">
+                <div className="sort-by-container flex flex-col">
+                  <div className="departure-time flex flex-col items-start">
                     <label
-                      htmlFor="duration-sort-label"
+                      htmlFor="departure-time-sort-label"
                       className="text-lg text-black uppercase"
                     >
                       Departure
                     </label>
                     <select
-                      className="w-full mt-1 p-3 border-2 rounded-md"
-                      id="duration-sort-label"
+                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      id="departure-time-sort-label"
                       value={sortBy?.departureTime}
                       onChange={(e) =>
                         dispatch({
@@ -169,12 +172,108 @@ export default function FlightResults() {
                       <option value={-1}>Late to Early</option>
                     </select>
                   </div>
+
+                  <div className="arrival-time flex flex-col mt-3 items-start">
+                    <label
+                      htmlFor="arrival-time-sort-label"
+                      className="text-lg text-black uppercase"
+                    >
+                      Arrival
+                    </label>
+                    <select
+                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      id="arrival-time-sort-label"
+                      value={sortBy?.arrivalTime}
+                      onChange={(e) =>
+                        dispatch({
+                          type: "SET_SORT_BY",
+                          payload: ["arrivalTime", e.target.value],
+                        })
+                      }
+                    >
+                      <option value={0}>Select</option>
+                      <option value={1}>Early to Late</option>
+                      <option value={-1}>Late to Early</option>
+                    </select>
+                  </div>
+
+                  <div className="ticket-price flex flex-col mt-3 items-start">
+                    <label
+                      htmlFor="ticket-price-sort-label"
+                      className="text-lg text-black uppercase"
+                    >
+                      Price
+                    </label>
+                    <select
+                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      id="ticket-price-sort-label"
+                      value={sortBy?.ticketPrice}
+                      onChange={(e) =>
+                        dispatch({
+                          type: "SET_SORT_BY",
+                          payload: ["ticketPrice", e.target.value],
+                        })
+                      }
+                    >
+                      <option value={0}>Select</option>
+                      <option value={1}>Low to High</option>
+                      <option value={-1}>High to Low</option>
+                    </select>
+                  </div>
+
+                  <div className="stops flex flex-col mt-3 items-start">
+                    <label
+                      htmlFor="stops-sort-label"
+                      className="text-lg text-black uppercase"
+                    >
+                      Stops
+                    </label>
+                    <select
+                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      id="stops-sort-label"
+                      value={sortBy?.stops}
+                      onChange={(e) =>
+                        dispatch({
+                          type: "SET_SORT_BY",
+                          payload: ["stops", e.target.value],
+                        })
+                      }
+                    >
+                      <option value={0}>Select</option>
+                      <option value={1}>Low to High</option>
+                      <option value={-1}>High to Low</option>
+                    </select>
+                  </div>
+
+                  <div className="duration flex flex-col mt-3 items-start">
+                    <label
+                      htmlFor="duration-sort-label"
+                      className="text-lg text-black uppercase"
+                    >
+                      Duration
+                    </label>
+                    <select
+                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      id="stops-sort-label"
+                      value={sortBy?.duration}
+                      onChange={(e) =>
+                        dispatch({
+                          type: "SET_SORT_BY",
+                          payload: ["duration", e.target.value],
+                        })
+                      }
+                    >
+                      <option value={0}>Select</option>
+                      <option value={1}>Min to Max</option>
+                      <option value={-1}>Max to Min</option>
+                    </select>
+                  </div>
                 </div>
               </AccordionDetails>
             </Accordion>
           </div>
 
-          <div className="flight-results flex flex-col gap-4">
+          <div className="flight-results flex flex-col gap-4 w-2/3">
             {flightUnfiltered?.map((flight) => (
               <FlightCard key={flight._id} flight={flight} />
             ))}
