@@ -3,7 +3,7 @@ import { MdOutlineCircle } from "react-icons/md";
 export default function FlightCard({ flight }) {
   return (
     <>
-      <div className="card-container flex gap-12 items-center justify-evenly border-stone-200 rounded-md shadow-sm p-2">
+      <div className="card-container flex gap-12 items-center justify-evenly border border-stone-200 rounded-md shadow-sm p-4">
         <div className="flight-id">
           <p className="font-bold">{flight.flightID.split("-").at(0)}</p>
           <p className="text-[#3366CC]">Flight details</p>
