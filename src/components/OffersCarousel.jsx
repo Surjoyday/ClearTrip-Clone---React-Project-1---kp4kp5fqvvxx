@@ -41,7 +41,7 @@ function PrevArrow({ onClick }) {
       className="next-arrow absolute bottom-2 left-4 transform -translate-y-1/2  z-10 cursor-pointer text-[white]"
       onClick={onClick}
     >
-      <FaLessThan size={20} />
+      <FaLessThan size={15} className="cursor:pointer" />
     </div>
   );
 }
@@ -52,7 +52,7 @@ function NextArrow({ onClick }) {
       className="next-arrow absolute bottom-2 right-4 transform -translate-y-1/2  z-10 cursor-pointer text-[white]"
       onClick={onClick}
     >
-      <FaGreaterThan size={20} />
+      <FaGreaterThan size={15} className="cursor:pointer" />
     </div>
   );
 }

@@ -1,6 +1,15 @@
 import { MdOutlineCircle } from "react-icons/md";
+import { GoClock } from "react-icons/go";
+
+import { useLocation, useSearchParams } from "react-router-dom";
+import { formatDates } from "../assets/helper";
 
 export default function FlightCard({ flight }) {
+  const loaction = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const urlState = loaction.state;
+
   return (
     <>
       <div className="card-container flex gap-12 items-center justify-evenly border border-stone-200 rounded-md shadow-sm p-4">
@@ -42,7 +51,11 @@ export default function FlightCard({ flight }) {
           <p className="self-end text-2xl font-bold">
             &#8377; {flight.ticketPrice}
           </p>
-          <p className="self-end text-[#0FA670]">
+          <p
+            className={`self-end ${
+              flight.availableSeats <= 10 ? "text-[red]" : "text-[#0FA670]"
+            }`}
+          >
             {flight.availableSeats} seats left
           </p>
         </div>
@@ -51,6 +64,62 @@ export default function FlightCard({ flight }) {
           <button>Book</button>
         </div>
       </div>
+
+      {/* /// FLIGHT DETAILS */}
+      {/* <div className="flight-details w-11/12 m-auto border p-2 rounded-md">
+        <div className="flight-details-row-1 flex gap-2 border-b-2 pb-1">
+          <span className="font-semibold">{urlState.origin.city}</span>
+          <span className="font-semibold">&rarr;</span>
+          <span className="font-semibold">{urlState.destination.city}</span>
+          <span className="text-stone-500">
+            {formatDates(new Date(urlState.dateInput))}
+          </span>
+        </div>
+
+        <div className="flight-details-row-2 pt-4 flex items-start justify-between">
+          <div className="details-col-1">
+            <p className="text-xs">{flight.flightID}</p>
+            <p className="text-xs">{searchParams.get("travel_class")}</p>
+          </div>
+          <div className="details-col-2">
+            <div className="flex gap-2">
+              <p>{urlState.origin.cityCode}</p>
+              <p className="font-semibold">{flight.departureTime}</p>
+            </div>
+            <p className="text-xs mt-1 text-stone-600">
+              {formatDates(new Date(urlState.dateInput))}{" "}
+              {new Date().getFullYear()}
+            </p>
+            <p className="text-xs mt-1 text-stone-600 w-min">
+              {urlState.origin.airportName}
+            </p>
+          </div>
+          <div className="details-col-3 flex flex-col pt-2 items-center">
+            <GoClock size={18} />
+            <p className="text-sm pt-1">{flight.duration}:00h</p>
+          </div>
+
+          <div className="details-col-4">
+            <div className="flex gap-2">
+              <p>{urlState.destination.cityCode}</p>
+              <p className="font-semibold">{flight.arrivalTime}</p>
+            </div>
+            <p className="text-xs mt-1 text-stone-600">
+              {formatDates(new Date(urlState.dateInput))}{" "}
+              {new Date().getFullYear()}
+            </p>
+            <p className="text-xs mt-1 text-stone-600 w-min">
+              {urlState.destination.airportName}
+            </p>
+          </div>
+
+          <div className="details-col-5">
+            <p>
+              Check-In Baggage <span>15kg/adult</span>
+            </p>
+          </div>
+        </div>
+      </div> */}
     </>
   );
 }

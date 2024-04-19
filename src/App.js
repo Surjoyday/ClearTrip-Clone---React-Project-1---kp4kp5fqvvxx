@@ -10,7 +10,7 @@ import Home from "./pages/Home";
 import Hotels from "./components/Hotels";
 import Offers from "./components/Offers";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+
 import FlightResults from "./pages/FlightResults";
 import PageNotFound from "./pages/PageNotFound";
 
@@ -31,8 +31,6 @@ export default function App() {
             <Route path="flights/results" element={<FlightResults />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
-
-          <Footer />
         </BrowserRouter>
         <ToastContainer position="top-center" autoClose={2000} />
       </AuthProvider>
