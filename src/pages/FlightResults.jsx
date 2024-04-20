@@ -1,7 +1,12 @@
 import { useEffect, useReducer, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { HEADERS, base_URL, formatDates } from "../assets/helper";
+import {
+  HEADERS,
+  airlineComapanies,
+  base_URL,
+  formatDates,
+} from "../assets/helper";
 import {
   Accordion,
   AccordionDetails,
@@ -13,6 +18,7 @@ import { FaChevronDown } from "react-icons/fa";
 import FlightCard from "../components/FlightCard";
 import Loader from "../components/Loader";
 import { ToastContainer } from "react-toastify";
+import NoDataFound from "../components/NoDataFound";
 
 const sortByParams = {
   departureTime: 0,
@@ -22,17 +28,32 @@ const sortByParams = {
   duration: 0,
 };
 
-const initialState = {
-  flightUnfiltered: [],
-  isLoading: false,
-  flightCount: 0,
-  sortByParams,
+const resetValuesOfFilter = {
   minPrice: 0,
   maxPrice: 0,
   ticketPriceValue: 0,
   minTripDuration: 0,
   maxTripDuration: 0,
   durationValue: 0,
+  preferedAirlines: [],
+};
+
+const initialState = {
+  flightResultantData: [],
+  isLoading: false,
+  flightCount: 0,
+
+  // sort object
+  sortByParams,
+
+  // filter values
+  minPrice: 0,
+  maxPrice: 0,
+  ticketPriceValue: 0,
+  minTripDuration: 0,
+  maxTripDuration: 0,
+  durationValue: 0,
+  preferedAirlines: [],
 };
 
 function reducer(state, action) {
@@ -50,7 +71,7 @@ function reducer(state, action) {
 
       return {
         ...state,
-        flightUnfiltered: action.payload,
+        flightResultantData: action.payload,
         isLoading: false,
         maxPrice,
         minPrice,
@@ -70,7 +91,11 @@ function reducer(state, action) {
       return { ...state, sortByParams: updatedSortByParams };
 
     case "SET_SORTED_FILTERED_DATA":
-      return { ...state, flightUnfiltered: action.payload, isLoading: false };
+      return {
+        ...state,
+        flightResultantData: action.payload,
+        isLoading: false,
+      };
 
     case "SET_FILTER_PRICE":
       return { ...state, ticketPriceValue: action.payload };
@@ -78,8 +103,14 @@ function reducer(state, action) {
     case "SET_FILTER_DURATION":
       return { ...state, durationValue: action.payload };
 
+    case "SET_AIRLINES_FILTER":
+      return { ...state, preferedAirlines: action.payload };
+
     case "SET_ISLOADING":
       return { ...state, isLoading: true };
+
+    case "RESET":
+      return { ...state, ...resetValuesOfFilter };
 
     default:
       throw new Error("Unkown action");
@@ -100,16 +131,19 @@ export default function FlightResults() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
-    flightUnfiltered,
+    flightResultantData,
     sortByParams,
+    flightCount,
+    isLoading,
+
+    // FILTER
     minPrice,
     maxPrice,
     ticketPriceValue,
     maxTripDuration,
     minTripDuration,
     durationValue,
-    flightCount,
-    isLoading,
+    preferedAirlines,
   } = state;
 
   // console.log(+ticketPriceValue);
@@ -155,7 +189,11 @@ export default function FlightResults() {
           let filterParams = "";
 
           // SETTING THE FILTER PARAMS BASED ON IF ANY VALUE CHANGED IN RANGE INPUT
-          if (ticketPriceValue < maxPrice || durationValue < maxTripDuration) {
+          if (
+            ticketPriceValue < maxPrice ||
+            durationValue < maxTripDuration ||
+            preferedAirlines.length > 0
+          ) {
             let filterConditions = [];
 
             if (ticketPriceValue < maxPrice) {
@@ -168,12 +206,19 @@ export default function FlightResults() {
               filterConditions.push(`"duration":{"$eq":${+durationValue}}`);
             }
 
+            if (preferedAirlines.length > 0) {
+              const airlineFilterConditions = preferedAirlines.map(
+                (airline) => `"airline":"${airline}"`
+              );
+              filterConditions.push(...airlineFilterConditions);
+            }
+
             const filterBy = filterConditions.join(",");
             filterParams = `filter={${filterBy}}`;
           }
 
           // CONDITINALLY CALLING THE API BASED ON IF ITS SORT OR FILTER OR SORT AND FILTER BOTH
-          if (toSortParams || filterParams || (toSortParams && filterParams)) {
+          if (toSortParams || filterParams || preferedAirlines.length > 0) {
             let sortParamsType, sortParamsValue;
             if (toSortParams) {
               [sortParamsType, sortParamsValue] = toSortParams;
@@ -221,12 +266,26 @@ export default function FlightResults() {
       durationValue,
       maxPrice,
       maxTripDuration,
+      preferedAirlines,
     ]
   );
 
   const handleChange = (panel) => (event, newExpanded) => {
     setIsExpanded(newExpanded ? panel : false);
   };
+
+  function handleCheckBox(e) {
+    e.preventDefault();
+
+    const { value, checked } = e.target;
+    const updatedAirlines = checked && [value];
+
+    dispatch({ type: "SET_AIRLINES_FILTER", payload: updatedAirlines });
+  }
+
+  function handleReset() {
+    dispatch({ type: "RESET" });
+  }
 
   return (
     <>
@@ -235,7 +294,7 @@ export default function FlightResults() {
         <div className="results-container flex max-sm:flex-col gap-12 mt-7">
           <div className="sort-filter-accordian w-1/4 max-sm:w-full ml-10 max-sm:ml-0 max-sm:px-2">
             <h1 className="px-2 pb-4 font-semibold">
-              {flightUnfiltered.length} of {flightCount} flights
+              {flightResultantData?.length} of {flightCount} flights
             </h1>
             <Accordion
               expanded={isExpanded == "panel1"}
@@ -458,15 +517,84 @@ export default function FlightResults() {
                       </p>
                     </div>
                   </div>
+
+                  <div className="prefered-airlines-filter flex flex-col">
+                    <p className="text-sm font-semibold pb-2">Airlines</p>
+                    <form>
+                      <div className="flex gap-2 text-sm p-1">
+                        <input
+                          type="checkbox"
+                          id="vistara"
+                          value={airlineComapanies.vistara}
+                          checked={preferedAirlines.includes(
+                            airlineComapanies.vistara
+                          )}
+                          onChange={handleCheckBox}
+                        />
+                        <label htmlFor="vistara">Vistara</label>
+                      </div>
+                      <div className="flex gap-2 text-sm p-1">
+                        <input
+                          type="checkbox"
+                          id="indigo"
+                          value={airlineComapanies.indigo}
+                          checked={preferedAirlines.includes(
+                            airlineComapanies.indigo
+                          )}
+                          onChange={handleCheckBox}
+                        />
+                        <label htmlFor="indigo">IndiGo</label>
+                      </div>
+                      <div className="flex gap-2 text-sm p-1">
+                        <input
+                          type="checkbox"
+                          id="spice-jet"
+                          value={airlineComapanies.spiceJet}
+                          checked={preferedAirlines.includes(
+                            airlineComapanies.spiceJet
+                          )}
+                          onChange={handleCheckBox}
+                        />
+                        <label htmlFor="spice-jet">SpiceJet</label>
+                      </div>
+                      <div className="flex gap-2 text-sm p-1">
+                        <input
+                          type="checkbox"
+                          id="air-india"
+                          value={airlineComapanies.airIndia}
+                          checked={preferedAirlines.includes(
+                            airlineComapanies.airIndia
+                          )}
+                          onChange={handleCheckBox}
+                        />
+                        <label htmlFor="air-india">Air India</label>
+                      </div>
+                      <div className="flex gap-2 text-sm p-1">
+                        <input
+                          type="checkbox"
+                          id="go-first"
+                          value={airlineComapanies.goFirst}
+                          checked={preferedAirlines.includes(
+                            airlineComapanies.goFirst
+                          )}
+                          onChange={handleCheckBox}
+                        />
+                        <label htmlFor="go-first">Go-First</label>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </AccordionDetails>
             </Accordion>
           </div>
 
           <div className="flight-results w-full flex flex-col gap-4 h-screen  overflow-y-scroll mr-10 mb-10">
-            {flightUnfiltered?.map((flight) => (
+            {flightResultantData?.map((flight) => (
               <FlightCard key={flight._id} flight={flight} />
             ))}
+            {flightResultantData.length === 0 && (
+              <NoDataFound onReset={handleReset} />
+            )}
           </div>
         </div>
       </section>

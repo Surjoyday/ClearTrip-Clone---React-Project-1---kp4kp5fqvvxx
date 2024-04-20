@@ -100,6 +100,18 @@ const appOfferImage = {
   alt: "App-Offer-Img",
 };
 
+const airlineComapanies = {
+  vistara: "65144a1b664a43628887c460",
+
+  indigo: "65144a1b664a43628887c45e",
+
+  airIndia: "65144a1b664a43628887c45d",
+
+  spiceJet: "65144a1b664a43628887c45f",
+
+  goFirst: "65144a1b664a43628887c461",
+};
+
 export {
   base_URL,
   HEADERS,
@@ -111,4 +123,5 @@ export {
   popularDestinationsImages,
   getDayOfWeek,
   formatDates,
+  airlineComapanies,
 };
