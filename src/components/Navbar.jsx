@@ -99,13 +99,13 @@ function FlightSearchSummary({ urlState }) {
 
           <div className="origin-destination-info  flex gap-5 items-center">
             <p className="border rounded-[4px] p-2 w-[200px]">
-              <span>{urlState.origin.cityCode}</span>
+              <span>{urlState?.origin.cityCode}</span>
               <span> &ndash; </span>
-              <span>{urlState.origin.city}</span>
+              <span>{urlState?.origin.city}</span>
               <span>&sbquo; </span>
               <span>
-                {urlState.origin.country !== "India"
-                  ? urlState.origin.country
+                {urlState?.origin.country !== "India"
+                  ? urlState?.origin.country
                   : "IN"}
               </span>
             </p>
@@ -113,24 +113,24 @@ function FlightSearchSummary({ urlState }) {
               <PiArrowsLeftRightBold size={18} className="text-[#ED6521]" />
             </p>
             <p className="border rounded-[4px] p-2 w-[200px]">
-              <span>{urlState.destination.cityCode}</span>
+              <span>{urlState?.destination.cityCode}</span>
               <span> &ndash; </span>
-              <span>{urlState.destination.city}</span>
+              <span>{urlState?.destination.city}</span>
               <span>&sbquo; </span>
               <span>
-                {urlState.destination.country !== "India"
-                  ? urlState.destination.country
+                {urlState?.destination.country !== "India"
+                  ? urlState?.destination.country
                   : "IN"}
               </span>
             </p>
           </div>
 
           <p className="border rounded-[4px] p-2">
-            {formatDates(new Date(urlState.dateInput))}
+            {formatDates(new Date(urlState?.dateInput))}
           </p>
           <p className="border rounded-[4px] p-2">
-            {urlState.seats}{" "}
-            {`${urlState.seats > 1 ? "Travellers" : "Traveller"} `}
+            {urlState?.seats}{" "}
+            {`${urlState?.seats > 1 ? "Travellers" : "Traveller"} `}
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { HEADERS, base_URL, formatDates } from "../assets/helper";
@@ -11,6 +11,8 @@ import {
 
 import { FaChevronDown } from "react-icons/fa";
 import FlightCard from "../components/FlightCard";
+import Loader from "../components/Loader";
+import { ToastContainer } from "react-toastify";
 
 const sortByParams = {
   departureTime: 0,
@@ -22,6 +24,7 @@ const sortByParams = {
 
 const initialState = {
   flightUnfiltered: [],
+  isLoading: false,
   flightCount: 0,
   sortByParams,
   minPrice: 0,
@@ -48,6 +51,7 @@ function reducer(state, action) {
       return {
         ...state,
         flightUnfiltered: action.payload,
+        isLoading: false,
         maxPrice,
         minPrice,
         ticketPriceValue,
@@ -65,8 +69,8 @@ function reducer(state, action) {
       };
       return { ...state, sortByParams: updatedSortByParams };
 
-    case "SET_SORTED_DATA":
-      return { ...state, flightUnfiltered: action.payload };
+    case "SET_SORTED_FILTERED_DATA":
+      return { ...state, flightUnfiltered: action.payload, isLoading: false };
 
     case "SET_FILTER_PRICE":
       return { ...state, ticketPriceValue: action.payload };
@@ -74,12 +78,16 @@ function reducer(state, action) {
     case "SET_FILTER_DURATION":
       return { ...state, durationValue: action.payload };
 
+    case "SET_ISLOADING":
+      return { ...state, isLoading: true };
+
     default:
       throw new Error("Unkown action");
   }
 }
 
 export default function FlightResults() {
+  const [isExpanded, setIsExpanded] = useState("panel1");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const fromCity = searchParams.get("from");
@@ -101,6 +109,7 @@ export default function FlightResults() {
     minTripDuration,
     durationValue,
     flightCount,
+    isLoading,
   } = state;
 
   // console.log(+ticketPriceValue);
@@ -112,78 +121,91 @@ export default function FlightResults() {
 
   // HANDLES GETTING THE UN-FILTERED DATA
   async function getFlightDetails() {
-    const res = await fetch(
-      `${base_URL}/flight?search=
-    {"source":"${fromCity}","destination":"${toCity}"}&day=${day}`,
-      {
-        method: "GET",
-        headers: HEADERS,
-      }
-    );
+    dispatch({ type: "SET_ISLOADING" });
+    try {
+      const res = await fetch(
+        `${base_URL}/flight?search=
+      {"source":"${fromCity}","destination":"${toCity}"}&day=${day}`,
+        {
+          method: "GET",
+          headers: HEADERS,
+        }
+      );
 
-    const resData = await res.json();
+      const resData = await res.json();
 
-    const flightsData = resData?.data?.flights;
+      const flightsData = resData?.data?.flights;
 
-    dispatch({ type: "SET_UNFILTERED_DATA", payload: flightsData });
+      dispatch({ type: "SET_UNFILTERED_DATA", payload: flightsData });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // GETTING FLIGHTS DATA BASED ON SORT-BY
   useEffect(
     function () {
       async function getDataBySortedOrder() {
-        const toSortParams = Object.entries(sortByParams).find(
-          ([key, value]) => value !== 0
-        );
+        dispatch({ type: "SET_ISLOADING" });
+        try {
+          const toSortParams = Object.entries(sortByParams).find(
+            ([key, value]) => value !== 0
+          );
 
-        let filterParams = "";
+          let filterParams = "";
 
-        // SETTING THE FILTER PARAMS BASED ON IF ANY VALUE CHANGED IN RANGE INPUT
-        if (ticketPriceValue < maxPrice || durationValue < maxTripDuration) {
-          let filterConditions = [];
+          // SETTING THE FILTER PARAMS BASED ON IF ANY VALUE CHANGED IN RANGE INPUT
+          if (ticketPriceValue < maxPrice || durationValue < maxTripDuration) {
+            let filterConditions = [];
 
-          if (ticketPriceValue < maxPrice) {
-            filterConditions.push(
-              `"ticketPrice":{"$lte":${+maxPrice},"$gte":${+ticketPriceValue}}`
-            );
+            if (ticketPriceValue < maxPrice) {
+              filterConditions.push(
+                `"ticketPrice":{"$lte":${+ticketPriceValue}}`
+              );
+            }
+
+            if (durationValue < maxTripDuration) {
+              filterConditions.push(`"duration":{"$eq":${+durationValue}}`);
+            }
+
+            const filterBy = filterConditions.join(",");
+            filterParams = `filter={${filterBy}}`;
           }
 
-          if (durationValue < maxTripDuration) {
-            filterConditions.push(`"duration":{"$eq":${+durationValue}}`);
+          // CONDITINALLY CALLING THE API BASED ON IF ITS SORT OR FILTER OR SORT AND FILTER BOTH
+          if (toSortParams || filterParams || (toSortParams && filterParams)) {
+            let sortParamsType, sortParamsValue;
+            if (toSortParams) {
+              [sortParamsType, sortParamsValue] = toSortParams;
+            }
+
+            let URL = "";
+
+            if (filterParams && !toSortParams) {
+              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&${filterParams}`;
+            } else if (toSortParams && !filterParams) {
+              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&sort={"${sortParamsType}":${sortParamsValue}}`;
+            } else if (filterParams && sortByParams) {
+              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&sort={"${sortParamsType}":${sortParamsValue}}&${filterParams}`;
+            }
+
+            if (URL) {
+              const res = await fetch(URL, { method: "GET", headers: HEADERS });
+
+              const resData = await res.json();
+
+              const dataReturned = resData?.data?.flights;
+
+              dispatch({
+                type: "SET_SORTED_FILTERED_DATA",
+                payload: dataReturned,
+              });
+            }
+          } else {
+            getFlightDetails();
           }
-
-          const filterBy = filterConditions.join(",");
-          filterParams = `filter={${filterBy}}`;
-        }
-
-        // CONDITINALLY CALLING THE API BASED ON IF ITS SORT OR FILTER OR SORT AND FILTER BOTH
-        if (toSortParams || filterParams || (toSortParams && filterParams)) {
-          let sortParamsType, sortParamsValue;
-          if (toSortParams) {
-            [sortParamsType, sortParamsValue] = toSortParams;
-          }
-
-          let URL = "";
-
-          if (filterParams && !toSortParams) {
-            URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&${filterParams}`;
-          } else if (toSortParams && !filterParams) {
-            URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&sort={"${sortParamsType}":${sortParamsValue}}`;
-          } else if (filterParams && sortByParams) {
-            URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&sort={"${sortParamsType}":${sortParamsValue}}&${filterParams}`;
-          }
-
-          if (URL) {
-            const res = await fetch(URL, { method: "GET", headers: HEADERS });
-
-            const resData = await res.json();
-
-            const sortedFlightsData = resData?.data?.flights;
-
-            dispatch({ type: "SET_SORTED_DATA", payload: sortedFlightsData });
-          }
-        } else {
-          getFlightDetails();
+        } catch (err) {
+          console.log(err);
         }
       }
 
@@ -202,15 +224,23 @@ export default function FlightResults() {
     ]
   );
 
+  const handleChange = (panel) => (event, newExpanded) => {
+    setIsExpanded(newExpanded ? panel : false);
+  };
+
   return (
     <>
+      {isLoading && <Loader />}
       <section>
-        <div className="results-container flex max-sm:flex-col gap-20 mt-7">
-          <div className="sort-filter-accordian w-1/6 max-sm:w-full ml-10 max-sm:ml-0 max-sm:px-2">
-            <h2 className="">
+        <div className="results-container flex max-sm:flex-col gap-12 mt-7">
+          <div className="sort-filter-accordian w-1/4 max-sm:w-full ml-10 max-sm:ml-0 max-sm:px-2">
+            <h1 className="px-2 pb-4 font-semibold">
               {flightUnfiltered.length} of {flightCount} flights
-            </h2>
-            <Accordion>
+            </h1>
+            <Accordion
+              expanded={isExpanded == "panel1"}
+              onChange={handleChange("panel1")}
+            >
               <AccordionSummary
                 expandIcon={<FaChevronDown />}
                 aria-label="sort-panel"
@@ -226,7 +256,7 @@ export default function FlightResults() {
                   <div className="departure-time flex flex-col items-start">
                     <label
                       htmlFor="departure-time-sort-label"
-                      className="text-lg text-black font-semibold pl-1"
+                      className="text-sm text-black font-semibold pl-1"
                     >
                       Departure
                     </label>
@@ -250,7 +280,7 @@ export default function FlightResults() {
                   <div className="arrival-time flex flex-col mt-3 items-start">
                     <label
                       htmlFor="arrival-time-sort-label"
-                      className="text-lg text-black font-semibold pl-1"
+                      className="text-sm text-black font-semibold pl-1"
                     >
                       Arrival
                     </label>
@@ -274,7 +304,7 @@ export default function FlightResults() {
                   <div className="ticket-price flex flex-col mt-3 items-start">
                     <label
                       htmlFor="ticket-price-sort-label"
-                      className="text-lg text-black font-semibold pl-1"
+                      className="text-sm text-black font-semibold pl-1"
                     >
                       Price
                     </label>
@@ -298,7 +328,7 @@ export default function FlightResults() {
                   <div className="stops flex flex-col mt-3 items-start">
                     <label
                       htmlFor="stops-sort-label"
-                      className="text-lg text-black font-semibold pl-1"
+                      className="text-sm text-black font-semibold pl-1"
                     >
                       Stops
                     </label>
@@ -322,7 +352,7 @@ export default function FlightResults() {
                   <div className="duration flex flex-col mt-3 items-start">
                     <label
                       htmlFor="duration-sort-label"
-                      className="text-lg text-black font-semibold pl-1"
+                      className="text-sm text-black font-semibold pl-1"
                     >
                       Duration
                     </label>
@@ -345,7 +375,10 @@ export default function FlightResults() {
                 </div>
               </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion
+              expanded={isExpanded == "panel2"}
+              onChange={handleChange("panel2")}
+            >
               <AccordionSummary
                 expandIcon={<FaChevronDown />}
                 aria-label="sort-panel"
@@ -379,8 +412,8 @@ export default function FlightResults() {
                         type="range"
                         min={minPrice}
                         max={maxPrice}
-                        value={ticketPriceValue}
-                        onChange={(e) =>
+                        defaultValue={ticketPriceValue}
+                        onMouseUp={(e) =>
                           dispatch({
                             type: "SET_FILTER_PRICE",
                             payload: e.target.value,
@@ -430,13 +463,14 @@ export default function FlightResults() {
             </Accordion>
           </div>
 
-          <div className="flight-results flex flex-col gap-4 w-2/3 h-screen  overflow-y-scroll mb-10">
+          <div className="flight-results w-full flex flex-col gap-4 h-screen  overflow-y-scroll mr-10 mb-10">
             {flightUnfiltered?.map((flight) => (
               <FlightCard key={flight._id} flight={flight} />
             ))}
           </div>
         </div>
       </section>
+      <ToastContainer position="top-center" autoClose={2000} />
     </>
   );
 }

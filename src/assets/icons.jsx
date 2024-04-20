@@ -43,4 +43,12 @@ function RightLeftArrow() {
   );
 }
 
-export { RightLeftArrow };
+const flightIcons = {
+  "6E001": "/public/images/6E.svg",
+  UKOO1: "/public/flights_logos/UK.jpg",
+  AI001: "/public/images/AI.svg",
+  SG001: "/public/images/SG.svg",
+  G801: "/public/images/G8.svg",
+};
+
+export { RightLeftArrow, flightIcons };
