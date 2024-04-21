@@ -1,12 +1,41 @@
-import { useLocation } from "react-router-dom";
-import { appOfferImage, popularDestinationsImages } from "../assets/helper";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  appOfferImage,
+  getCurrentDate,
+  getDayOfWeek,
+  popularDestinationsImages,
+} from "../assets/helper";
+import { useState } from "react";
 
-// class="slick-arrow slick-prev"
+// navigate(
+//   `/flights/results?from=${fromInput}&to=${toInput}&depart_date=${dateInput}&day=${day}&travel_class=${travelClass}&seats=${seats}`,
+//   { state: { origin, destination, seats, dateInput } }
+// );
 
 export default function AboutSite() {
   const location = useLocation();
 
-  // console.log(location.pathname);
+  const navigate = useNavigate();
+
+  function handleNavigate(cityCode, city, country) {
+    if (location.pathname === "/flights") {
+      navigate(
+        `/flights/results?from=${"GAU"}&to=${cityCode}&depart_date=${getCurrentDate()}&day=${getDayOfWeek(
+          new Date(getCurrentDate())
+        )}&travel_class=${"Economy"}&seats=${"1"}`,
+        {
+          state: {
+            origin: { cityCode: "GAU", city: "Gauwahati", country: "India" },
+            destination: { cityCode, city, country },
+            seats: 1,
+            dateInput: getCurrentDate(),
+          },
+        }
+      );
+    }
+  }
+
+  console.log(location.pathname);
 
   return (
     <aside className={`${location.pathname === "/offers" && "hidden"}`}>
@@ -19,6 +48,13 @@ export default function AboutSite() {
             <div
               key={destinationsCard.id}
               className="destination-cards relative text-white "
+              onClick={() =>
+                handleNavigate(
+                  destinationsCard.cityCode,
+                  destinationsCard.city,
+                  destinationsCard.country
+                )
+              }
             >
               <h1 className="absolute bottom-8 left-4 font-bold">
                 {destinationsCard.place}

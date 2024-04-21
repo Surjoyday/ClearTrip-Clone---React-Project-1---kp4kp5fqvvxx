@@ -33,3 +33,7 @@
 .nav-width {
   width: calc(100% - 64px);
 }
+
+.navlink_active {
+  color: #0e6aff;
+}

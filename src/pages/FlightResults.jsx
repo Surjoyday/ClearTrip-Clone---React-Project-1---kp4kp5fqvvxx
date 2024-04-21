@@ -19,34 +19,25 @@ import FlightCard from "../components/FlightCard";
 import Loader from "../components/Loader";
 import { ToastContainer } from "react-toastify";
 import NoDataFound from "../components/NoDataFound";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const sortByParams = {
-  departureTime: 0,
-  arrivalTime: 0,
-  ticketPrice: 0,
-  stops: 0,
-  duration: 0,
-};
-
-const resetValuesOfFilter = {
-  minPrice: 0,
-  maxPrice: 0,
-  ticketPriceValue: 0,
-  minTripDuration: 0,
-  maxTripDuration: 0,
-  durationValue: 0,
-  preferedAirlines: [],
-};
+// const sortByParams = {};
 
 const initialState = {
   flightResultantData: [],
   isLoading: false,
   flightCount: 0,
 
-  // sort object
-  sortByParams,
+  // SORT TYPE
+  sortByParams: {
+    departureTime: 0,
+    arrivalTime: 0,
+    ticketPrice: 0,
+    stops: 0,
+    duration: 0,
+  },
 
-  // filter values
+  // FILTER VALUES
   minPrice: 0,
   maxPrice: 0,
   ticketPriceValue: 0,
@@ -54,24 +45,26 @@ const initialState = {
   maxTripDuration: 0,
   durationValue: 0,
   preferedAirlines: [],
+  shouldShowNotFoundPage: false,
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case "SET_UNFILTERED_DATA":
-      const price = action.payload.map((flight) => flight.ticketPrice);
+    case "SET_INITIAL_RENDER_DATA":
+      const { flightsData, totalResults } = action.payload;
+      const price = flightsData.map((flight) => flight.ticketPrice);
       const maxPrice = Math.max(...price);
       const minPrice = Math.min(...price);
       const ticketPriceValue = Math.max(...price);
 
-      const duration = action.payload.map((flight) => flight.duration);
+      const duration = flightsData.map((flight) => flight.duration);
       const maxTripDuration = Math.max(...duration);
       const minTripDuration = Math.min(...duration);
       const durationValue = Math.max(...duration);
 
       return {
         ...state,
-        flightResultantData: action.payload,
+        flightResultantData: flightsData,
         isLoading: false,
         maxPrice,
         minPrice,
@@ -79,7 +72,7 @@ function reducer(state, action) {
         maxTripDuration,
         minTripDuration,
         durationValue,
-        flightCount: action.payload.length,
+        flightCount: totalResults,
       };
 
     case "SET_SORT_BY":
@@ -88,13 +81,18 @@ function reducer(state, action) {
         ...initialState.sortByParams,
         [key]: +value,
       };
-      return { ...state, sortByParams: updatedSortByParams };
+      return {
+        ...state,
+        sortByParams: updatedSortByParams,
+        shouldShowNotFoundPage: true,
+      };
 
-    case "SET_SORTED_FILTERED_DATA":
+    case "SET_SORTED_AND_FILTERED_DATA":
       return {
         ...state,
         flightResultantData: action.payload,
         isLoading: false,
+        shouldShowNotFoundPage: true,
       };
 
     case "SET_FILTER_PRICE":
@@ -110,7 +108,16 @@ function reducer(state, action) {
       return { ...state, isLoading: true };
 
     case "RESET":
-      return { ...state, ...resetValuesOfFilter };
+      return {
+        ...state,
+        minPrice: 0,
+        maxPrice: 0,
+        ticketPriceValue: 0,
+        minTripDuration: 0,
+        maxTripDuration: 0,
+        durationValue: 0,
+        preferedAirlines: [],
+      };
 
     default:
       throw new Error("Unkown action");
@@ -135,6 +142,8 @@ export default function FlightResults() {
     sortByParams,
     flightCount,
     isLoading,
+    shouldShowNotFoundPage,
+    page,
 
     // FILTER
     minPrice,
@@ -156,6 +165,8 @@ export default function FlightResults() {
   // HANDLES GETTING THE UN-FILTERED DATA
   async function getFlightDetails() {
     dispatch({ type: "SET_ISLOADING" });
+
+    if (flightResultantData.length > flightCount) return;
     try {
       const res = await fetch(
         `${base_URL}/flight?search=
@@ -169,8 +180,12 @@ export default function FlightResults() {
       const resData = await res.json();
 
       const flightsData = resData?.data?.flights;
+      const totalResults = resData?.totalResults;
 
-      dispatch({ type: "SET_UNFILTERED_DATA", payload: flightsData });
+      dispatch({
+        type: "SET_INITIAL_RENDER_DATA",
+        payload: { flightsData, totalResults },
+      });
     } catch (err) {
       console.log(err);
     }
@@ -242,7 +257,7 @@ export default function FlightResults() {
               const dataReturned = resData?.data?.flights;
 
               dispatch({
-                type: "SET_SORTED_FILTERED_DATA",
+                type: "SET_SORTED_AND_FILTERED_DATA",
                 payload: dataReturned,
               });
             }
@@ -278,7 +293,7 @@ export default function FlightResults() {
     e.preventDefault();
 
     const { value, checked } = e.target;
-    const updatedAirlines = checked && [value];
+    const updatedAirlines = checked ? [value] : [];
 
     dispatch({ type: "SET_AIRLINES_FILTER", payload: updatedAirlines });
   }
@@ -291,7 +306,7 @@ export default function FlightResults() {
     <>
       {isLoading && <Loader />}
       <section>
-        <div className="results-container flex max-sm:flex-col gap-12 mt-7">
+        <div className="results-container flex max-sm:flex-col gap-12 mt-7 mb-20">
           <div className="sort-filter-accordian w-1/4 max-sm:w-full ml-10 max-sm:ml-0 max-sm:px-2">
             <h1 className="px-2 pb-4 font-semibold">
               {flightResultantData?.length} of {flightCount} flights
@@ -471,7 +486,7 @@ export default function FlightResults() {
                         type="range"
                         min={minPrice}
                         max={maxPrice}
-                        defaultValue={ticketPriceValue}
+                        defaultValue={maxPrice}
                         onMouseUp={(e) =>
                           dispatch({
                             type: "SET_FILTER_PRICE",
@@ -588,11 +603,12 @@ export default function FlightResults() {
             </Accordion>
           </div>
 
-          <div className="flight-results w-full flex flex-col gap-4 h-screen  overflow-y-scroll mr-10 mb-10">
-            {flightResultantData?.map((flight) => (
-              <FlightCard key={flight._id} flight={flight} />
+          <div className="flight-results w-full p-4">
+            {flightResultantData?.map((flight, i) => (
+              <FlightCard key={i} flight={flight} />
             ))}
-            {flightResultantData.length === 0 && (
+
+            {flightResultantData?.length === 0 && shouldShowNotFoundPage && (
               <NoDataFound onReset={handleReset} />
             )}
           </div>

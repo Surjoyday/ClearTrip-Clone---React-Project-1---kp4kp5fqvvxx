@@ -64,6 +64,9 @@ const popularDestinationsImages = [
     place: "Goa",
     properties: "3051", //fights to the destination that are available through the Cleartrip API.
     id: crypto.randomUUID(),
+    cityCode: "GOI",
+    city: "Goa",
+    country: "India",
   },
   {
     src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/bangalore.jpg",
@@ -71,6 +74,9 @@ const popularDestinationsImages = [
     place: "Bangalore",
     properties: "2500",
     id: crypto.randomUUID(),
+    cityCode: "BLR",
+    city: "Bangalore",
+    country: "India",
   },
   {
     src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/Jaipur.png",
@@ -78,6 +84,9 @@ const popularDestinationsImages = [
     place: "Jaipur",
     properties: "920",
     id: crypto.randomUUID(),
+    cityCode: "JAI",
+    city: "Jaipur",
+    country: "India",
   },
   {
     src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/delhi.jpg",
@@ -85,6 +94,9 @@ const popularDestinationsImages = [
     place: "Delhi",
     properties: "2435",
     id: crypto.randomUUID(),
+    cityCode: "DEL",
+    city: "Delhi",
+    country: "India",
   },
   {
     src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/Pattaya.png",
@@ -112,7 +124,31 @@ const airlineComapanies = {
   goFirst: "65144a1b664a43628887c461",
 };
 
+const airlineImages = {
+  "6E": [
+    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705554/6E_fw0stg.png",
+    "IndiGo",
+  ],
+  UK: [
+    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705630/UK_ibzova.png",
+    "Vistara",
+  ],
+  G8: [
+    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705557/G8_xfgcwx.png",
+    "GoFirst",
+  ],
+  AI: [
+    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705555/AI_hbkfzu.png",
+    "AirIndia",
+  ],
+  SG: [
+    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705558/SG_smxvmw.png",
+    "SpiceJet",
+  ],
+};
+
 export {
+  airlineImages,
   base_URL,
   HEADERS,
   PROJECT_ID,

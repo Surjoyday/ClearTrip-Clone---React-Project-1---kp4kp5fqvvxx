@@ -2,94 +2,116 @@ import { MdOutlineCircle } from "react-icons/md";
 import { GoClock } from "react-icons/go";
 
 import { useLocation, useSearchParams } from "react-router-dom";
-import { formatDates, getImageSrc } from "../assets/helper";
+import {
+  airlineImages,
+  formatDates,
+  getImageSrc,
+  getImageURL,
+} from "../assets/helper";
 import { useState } from "react";
 
 export default function FlightCard({ flight }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const imageSrc = flight?.flightID.split("-").at(0).slice(0, 2);
+
+  // console.log(imageSrc);
+
   return (
     <div
-      className={`flex flex-col gap-2 ${
-        isOpen && "border rounded-lg pb-4"
-      } shadow-sm transition-all duration-300`}
+      className={`flex flex-col gap-2 shadow-sm transition-all duration-300 mb-7 ${
+        isOpen && "border rounded-md pb-2"
+      } `}
     >
       <div
-        className={`card-container w-full flex max-sm:flex-col gap-12 items-center justify-between border ${
+        className={`card-container flex gap-12 items-center justify-around border border-stone-200 rounded-md  p-4 ${
           isOpen ? "border-none " : ""
-        } border-stone-200 rounded-md  p-4`}
+        } `}
       >
-        <div className="flight-id">
-          <p className="font-bold">{flight.flightID.split("-").at(0)}</p>
+        <div className="flight-id max-sm:text-xs">
+          <img
+            src={airlineImages[imageSrc].at(0)}
+            alt={`${airlineImages[imageSrc].at(1)}-img`}
+            width={50}
+            height={50}
+          />
+          <p className="font-semibold pt-1">{airlineImages[imageSrc].at(1)}</p>
+          <p className="text-sm text-stone-500">
+            {flight.flightID.split("-").at(0)}
+          </p>
           <p
-            className="text-[#3366CC] text-sm cursor-pointer"
+            className="text-[#3366CC] text-sm cursor-pointer max-sm:hidden"
             onClick={() => setIsOpen((open) => !open)}
           >
-            Flight details
+            {isOpen ? "Hide details" : "Flight details"}
           </p>
         </div>
 
-        <div className="departure-time text-xl">
-          <p>{flight.departureTime}</p>
-        </div>
-
-        <div className="duration-stops text-center w-20 ">
-          <p className="pb-1">{flight.duration}h</p>
-          <div className="border border-stone-400 relative flex justify-evenly">
-            {[...Array(flight.stops)].map((_, index) => (
-              <span
-                key={index}
-                className="absolute left-1/3 transform -translate-x-1/2 -translate-y-1/2"
-                style={{ marginLeft: `${index * 30}px` }}
-              >
-                <MdOutlineCircle
-                  size={11}
-                  className="bg-white text-[#FF4F17]"
-                />
-              </span>
-            ))}
+        <div className="departure-diration-arrival flex max-sm:flex-col items-center gap-20 max-sm:gap-10">
+          <div className="departure-time text-xl">
+            <p>{flight.departureTime}</p>
           </div>
-          <p className="text-stone-400 pt-1">
-            {flight.stops === 0 ? "non-stop" : flight.stops + " stop"}
-          </p>
+
+          <div className="duration-stops text-center w-20 ">
+            <p className="pb-1">{flight.duration}h</p>
+            <div className="border border-stone-400 relative flex justify-evenly">
+              {[...Array(flight.stops)].map((_, index) => (
+                <span
+                  key={index}
+                  className="absolute left-1/3 transform -translate-x-1/2 -translate-y-1/2"
+                  style={{ marginLeft: `${index * 30}px` }}
+                >
+                  <MdOutlineCircle
+                    size={11}
+                    className="bg-white text-[#FF4F17]"
+                  />
+                </span>
+              ))}
+            </div>
+            <p className="text-stone-400 pt-1">
+              {flight.stops === 0 ? "non-stop" : flight.stops + " stop"}
+            </p>
+          </div>
+
+          <div className="arrival-time text-xl">
+            <p>{flight.arrivalTime}</p>
+          </div>
         </div>
 
-        <div className="arrival-time text-xl">
-          <p>{flight.arrivalTime}</p>
-        </div>
+        <div className="seats-price-book-btn flex gap-7 items-center max-sm:flex-col">
+          <div className="price-seats flex flex-col w-20 whitespace-nowrap gap-2 ">
+            <p className="self-end text-2xl font-bold max-sm:text-xl">
+              &#8377; {flight.ticketPrice}
+            </p>
+            <p
+              className={`self-end max-sm:text-sm ${
+                flight.availableSeats <= 70 ? "text-[red]" : "text-[#0FA670]"
+              }`}
+            >
+              {flight.availableSeats} seats left
+            </p>
+          </div>
 
-        <div className="price-seats flex flex-col w-20 whitespace-nowrap gap-2 ">
-          <p className="self-end text-2xl font-bold">
-            &#8377; {flight.ticketPrice}
-          </p>
-          <p
-            className={`self-end ${
-              flight.availableSeats <= 70 ? "text-[red]" : "text-[#0FA670]"
-            }`}
-          >
-            {flight.availableSeats} seats left
-          </p>
-        </div>
-
-        <div className="bg-[#FF4F17] text-[white] p-1 rounded-lg w-20  text-center">
-          <button>Book</button>
+          <div className="bg-[#FF4F17] text-[white] p-1 rounded-lg w-20  text-center">
+            <button>Book</button>
+          </div>
         </div>
       </div>
 
       {/* /// FLIGHT DETAILS */}
-      {isOpen && <FlightDetails flight={flight} />}
+      {isOpen && <FlightDetails flight={flight} imageSrc={imageSrc} />}
     </div>
   );
 }
 
-function FlightDetails({ flight }) {
+function FlightDetails({ flight, imageSrc }) {
   const loaction = useLocation();
   const [searchParams] = useSearchParams();
 
   const urlState = loaction.state;
   return (
     <>
-      <div className="flight-details w-11/12 m-auto border p-2 rounded-md max-sm:text-xs">
+      <div className="flight-details w-11/12 m-auto border p-2 rounded-md max-sm:hidden">
         <div className="flight-details-row-1 flex gap-2 border-b-2 pb-1">
           <span className="font-semibold">{urlState.origin.city}</span>
           <span className="font-semibold">&rarr;</span>
@@ -101,7 +123,13 @@ function FlightDetails({ flight }) {
 
         <div className="flight-details-row-2 pt-4 flex items-start gap-2 justify-evenly">
           <div className="details-col-1 flex flex-col gap-2">
-            <p className="text-sm">{flight.flightID}</p>
+            <img
+              src={airlineImages[imageSrc].at(0)}
+              alt={`${airlineImages[imageSrc].at(1)}-img`}
+              width={30}
+              height={30}
+            />
+            <p className="text-sm">{flight.flightID.split("-").at(0)}</p>
             <p className="text-sm">{searchParams.get("travel_class")}</p>
           </div>
           <div className="details-col-2">
