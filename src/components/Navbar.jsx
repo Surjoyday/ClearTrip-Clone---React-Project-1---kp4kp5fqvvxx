@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const urlState = location.state;
 
-  console.log(location.pathname);
+  // console.log(location.pathname);
 
   // useEffect(() => {
   //   console.log("Token changed:", token);
@@ -39,7 +39,7 @@ export default function Navbar() {
                     <MdFlight
                       size={23}
                       title="Flight Page"
-                      className={` cursor-pointer max-sm:hidden ${
+                      className={` cursor-pointer max-sm:hidden hover:text-[#0E6AFF] ${
                         location.pathname.startsWith("/flights")
                           ? "text-[#0E6AFF]"
                           : "text-stone-500"
@@ -50,7 +50,7 @@ export default function Navbar() {
                     <MdHotel
                       size={23}
                       title="Hotel Page"
-                      className={`cursor-pointer max-sm:hidden ${
+                      className={`cursor-pointer max-sm:hidden hover:text-[#0E6AFF] ${
                         location.pathname.startsWith("/hotels")
                           ? "text-[#0E6AFF]"
                           : "text-stone-500"

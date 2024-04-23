@@ -1,21 +1,44 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import { MdOutlineCircle } from "react-icons/md";
 import { GoClock } from "react-icons/go";
-
 import { useLocation, useSearchParams } from "react-router-dom";
-import {
-  airlineImages,
-  formatDates,
-  getImageSrc,
-  getImageURL,
-} from "../assets/helper";
-import { useState } from "react";
+import { airlineImages, formatDates } from "../assets/helper";
+import { useAuth } from "../context/AuthContext";
 
 export default function FlightCard({ flight }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const travelClass = searchParams.get("travel_class");
+  const urlState = location.state;
+  const fromLocation = urlState.origin;
+  const toLocation = urlState.destination;
+  const numSeats = urlState.seats;
+  const date = urlState.dateInput;
+
+  // console.log(urlState);
+  const { isAuthenticated } = useAuth();
 
   const imageSrc = flight?.flightID.split("-").at(0).slice(0, 2);
 
-  // console.log(imageSrc);
+  function handleNavigate() {
+    if (true) {
+      navigate(`${flight._id}`, {
+        state: {
+          fromLocation,
+          toLocation,
+          numSeats,
+          date,
+          imageSrc,
+          travelClass,
+        },
+      });
+    }
+  }
 
   return (
     <div
@@ -93,7 +116,7 @@ export default function FlightCard({ flight }) {
           </div>
 
           <div className="bg-[#FF4F17] text-[white] p-1 rounded-lg w-20  text-center">
-            <button>Book</button>
+            <button onClick={handleNavigate}>Book</button>
           </div>
         </div>
       </div>
@@ -129,8 +152,15 @@ function FlightDetails({ flight, imageSrc }) {
               width={30}
               height={30}
             />
-            <p className="text-sm">{flight.flightID.split("-").at(0)}</p>
-            <p className="text-sm">{searchParams.get("travel_class")}</p>
+            <p className="text-sm">{airlineImages[imageSrc].at(1)}</p>
+            <p className="flex flex-col">
+              <span className="text-xs">
+                {flight.flightID.split("-").at(0)}
+              </span>
+              <span className="text-xs">
+                {searchParams.get("travel_class")}
+              </span>
+            </p>
           </div>
           <div className="details-col-2">
             <div className="flex gap-2">
@@ -167,10 +197,10 @@ function FlightDetails({ flight, imageSrc }) {
           <div className="details-col-5">
             <p className="text-xs flex justify-between gap-2">
               Check-In Baggage{" "}
-              <span className="text-stone-500">15kg/adult</span>
+              <span className="text-stone-500">{`15kg(1 piece) / adult`}</span>
             </p>
             <p className="text-xs flex justify-between gap-2">
-              Cabin Baggage <span className="text-stone-500">7kg/adult</span>
+              Cabin Baggage <span className="text-stone-500">7kg / adult</span>
             </p>
           </div>
         </div>

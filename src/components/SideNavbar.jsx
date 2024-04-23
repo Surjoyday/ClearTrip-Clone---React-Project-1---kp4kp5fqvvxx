@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { PiAirplaneTiltLight, PiAirplaneTiltFill } from "react-icons/pi";
+
 import { RiHotelLine, RiHotelFill } from "react-icons/ri";
 import { MdOutlineLocalOffer, MdLocalOffer } from "react-icons/md";
 
@@ -15,7 +16,7 @@ export default function SideNavbar() {
           <NavLink
             to={"flights"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 pr-10 max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s ${
+              `flex gap-1 p-3  max-sm:pr-2 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s ${
                 isActive ? "activeSidenav" : ""
               }`
             }
@@ -36,7 +37,7 @@ export default function SideNavbar() {
           <NavLink
             to={"hotels"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 pr-10 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s ${
+              `flex gap-1 p-3 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF]  rounded-[4px] transition transition-duration:1s ${
                 isActive ? "activeSidenav" : ""
               }`
             }
@@ -57,7 +58,7 @@ export default function SideNavbar() {
           <NavLink
             to={"offers"}
             className={({ isActive }) =>
-              `flex gap-1 p-1 pr-10 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF] rounded-[4px]  transition transition-duration:1s ${
+              `flex gap-1 p-3 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF] rounded-[4px]  transition transition-duration:1s ${
                 isActive ? "activeSidenav" : ""
               }`
             }

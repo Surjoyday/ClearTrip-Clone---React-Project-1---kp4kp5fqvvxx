@@ -52,12 +52,12 @@ function reducer(state, action) {
   switch (action.type) {
     case "SET_INITIAL_RENDER_DATA":
       const { flightsData, totalResults } = action.payload;
-      const price = flightsData.map((flight) => flight.ticketPrice);
+      const price = flightsData?.map((flight) => flight.ticketPrice);
       const maxPrice = Math.max(...price);
       const minPrice = Math.min(...price);
       const ticketPriceValue = Math.max(...price);
 
-      const duration = flightsData.map((flight) => flight.duration);
+      const duration = flightsData?.map((flight) => flight.duration);
       const maxTripDuration = Math.max(...duration);
       const minTripDuration = Math.min(...duration);
       const durationValue = Math.max(...duration);
@@ -603,7 +603,16 @@ export default function FlightResults() {
             </Accordion>
           </div>
 
-          <div className="flight-results w-full p-4">
+          <div className="flight-results w-full  flex flex-col gap-4 mr-10 p-2">
+            <div className="card_col_heading max-sm:hidden px-6 py-1 sticky top-0 z-10 bg-[#F7F7F7] text-stone-600 text-sm flex justify-around border rounded-md">
+              <p className="pr-10">Airline</p>
+              <div className="flex gap-28 justify-center pr-20">
+                <p>Departure</p>
+                <p>Duration</p>
+                <p>Arrival</p>
+              </div>
+              <p className="pr-20">Price</p>
+            </div>
             {flightResultantData?.map((flight, i) => (
               <FlightCard key={i} flight={flight} />
             ))}

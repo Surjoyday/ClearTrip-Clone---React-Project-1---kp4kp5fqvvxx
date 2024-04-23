@@ -35,7 +35,7 @@ export default function AboutSite() {
     }
   }
 
-  console.log(location.pathname);
+  // console.log(location.pathname);
 
   return (
     <aside className={`${location.pathname === "/offers" && "hidden"}`}>

@@ -46,6 +46,7 @@ function reducer(state, action) {
         name: nameSignup,
         isSignedUp: false,
         isLoggedIn: false,
+        isAuthenticated: true,
       };
 
     case "modal/closed":
@@ -59,7 +60,7 @@ function reducer(state, action) {
       };
 
     case "logout":
-      return { ...state, token: "", name: "" };
+      return { ...state, token: "", name: "", isAuthenticated: false };
 
     default:
       throw new Error("Unkown action");
@@ -125,12 +126,12 @@ function AuthProvider({ children }) {
       if (responseData.status === "success") {
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("userDetails", JSON.stringify(responseData?.data));
-        localStorage.setItem("name", responseData?.data?.name);
+        localStorage.setItem("name", responseData?.data?.user?.name);
         dispatch({
           type: "login/success",
           payload: {
             token: responseData.token,
-            name: responseData?.data?.name,
+            name: responseData?.data?.user?.name,
           },
         });
 

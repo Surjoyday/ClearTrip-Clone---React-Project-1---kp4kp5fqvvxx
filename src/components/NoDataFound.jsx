@@ -3,7 +3,7 @@ import { IoWarningOutline } from "react-icons/io5";
 export default function NoDataFound({ onReset }) {
   return (
     <div className="">
-      <div className="flex flex-col gap-2 items-center max-sm:text-center">
+      <div className="flex flex-col gap-2 items-center justify-center max-sm:text-center">
         <IoWarningOutline size={150} className="text-stone-400" />
 
         <p className="text-2xl font-semibold">

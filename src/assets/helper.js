@@ -39,6 +39,17 @@ function formatDates(date) {
   return `${formatedDate}`;
 }
 
+function formatDatesForDetailsPage(date) {
+  const formatedDate = new Intl.DateTimeFormat("en", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+  }).format(date);
+
+  const parts = formatedDate.split(" ");
+  return `${parts[0]} ${parts[2]} ${parts[1]}`;
+}
+
 const moreOffers = [
   {
     id: crypto.randomUUID(),
@@ -160,4 +171,5 @@ export {
   getDayOfWeek,
   formatDates,
   airlineComapanies,
+  formatDatesForDetailsPage,
 };
