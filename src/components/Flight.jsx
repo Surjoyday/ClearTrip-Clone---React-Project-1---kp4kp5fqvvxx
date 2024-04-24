@@ -127,7 +127,7 @@ export default function Flight() {
 
   // GETING ALL AIRPORTS DATA ON INITIAL RENDER
   async function getAllAirportsData() {
-    const res = await fetch(`${base_URL}/airport?search={"city":""}&limit=30`, {
+    const res = await fetch(`${base_URL}/airport?search={"city":""}`, {
       method: "GET",
       headers: HEADERS,
     });
@@ -242,75 +242,77 @@ export default function Flight() {
               <div className="from-container flex items-center">
                 {/* ROM INPUT CONTAINER */}
                 <div className="from-input-container">
-                  <Autocomplete
-                    forcePopupIcon={false}
-                    options={airportData}
-                    getOptionLabel={(airport) =>
-                      `${airport.cityCode} - ${airport.city}, ${
-                        airport.country.toLowerCase() === "india"
-                          ? "IN"
-                          : airport.country
-                      }`
-                    }
-                    renderOption={(props, airport) => (
-                      <Box
-                        component="li"
-                        sx={{
-                          "&:hover > div": {
-                            backgroundColor: "#0E6AFF",
-                            padding: ".2em",
-                            borderRadius: "2px",
-                            color: "white",
-                          },
-                          "& > div": {
-                            mr: 2,
-                            flexShrink: 0,
-                            transition: "background-color .4s",
-                          },
-                        }}
-                        {...props}
-                        key={airport.id}
-                      >
-                        <div>{airport.cityCode}</div>
-                        {`${airport.cityCode} - ${airport.city}, ${
-                          airport.country.toLowerCase() === "india"
+                  {airportData.length > 0 && (
+                    <Autocomplete
+                      forcePopupIcon={false}
+                      options={airportData}
+                      getOptionLabel={(airport) =>
+                        `${airport?.cityCode} - ${airport?.city}, ${
+                          airport?.country.toLowerCase() === "india"
                             ? "IN"
-                            : airport.country
-                        }`}
-                      </Box>
-                    )}
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    onChange={(_, value) => {
-                      dispatch({
-                        type: "SET_FROM_INPUT",
-                        payload: value,
-                      });
-                      // console.log(value);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="standard"
-                        InputProps={{
-                          ...params.InputProps,
+                            : airport?.country
+                        }`
+                      }
+                      renderOption={(props, airport) => (
+                        <Box
+                          component="li"
+                          sx={{
+                            "&:hover > div": {
+                              backgroundColor: "#0E6AFF",
+                              padding: ".2em",
+                              borderRadius: "2px",
+                              color: "white",
+                            },
+                            "& > div": {
+                              mr: 2,
+                              flexShrink: 0,
+                              transition: "background-color .4s",
+                            },
+                          }}
+                          {...props}
+                          key={airport.id}
+                        >
+                          <div>{airport.cityCode}</div>
+                          {`${airport?.cityCode} - ${airport?.city}, ${
+                            airport?.country.toLowerCase() === "india"
+                              ? "IN"
+                              : airport?.country
+                          }`}
+                        </Box>
+                      )}
+                      isOptionEqualToValue={(option, value) =>
+                        option.id === value.id
+                      }
+                      onChange={(_, value) => {
+                        dispatch({
+                          type: "SET_FROM_INPUT",
+                          payload: value,
+                        });
+                        // console.log(value);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="standard"
+                          InputProps={{
+                            ...params.InputProps,
 
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <MdFlightTakeoff className="text-2xl ml-4  text-stone-400" />
-                            </InputAdornment>
-                          ),
-                        }}
-                        size="small"
-                        id="from-input"
-                        className="w-[250px]  px-2 py-2"
-                        placeholder="Where from?"
-                        error={errors.fromInError !== ""}
-                        helperText={errors.fromInError || ""}
-                      />
-                    )}
-                  />
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <MdFlightTakeoff className="text-2xl ml-4  text-stone-400" />
+                              </InputAdornment>
+                            ),
+                          }}
+                          size="small"
+                          id="from-input"
+                          className="w-[250px]  px-2 py-2"
+                          placeholder="Where from?"
+                          error={errors.fromInError !== ""}
+                          helperText={errors.fromInError || ""}
+                        />
+                      )}
+                    />
+                  )}
                 </div>
               </div>
               {/* ICON LEFT-RIGHT ARROW */}
@@ -321,74 +323,76 @@ export default function Flight() {
               <div className="to-container flex items-center">
                 {/* TO INPUT CONTAINER */}
                 <div className="to-input-container ">
-                  <Autocomplete
-                    forcePopupIcon={false}
-                    options={airportData}
-                    getOptionLabel={(airport) =>
-                      `${airport.cityCode} - ${airport.city}, ${
-                        airport.country.toLowerCase() === "india"
-                          ? "IN"
-                          : airport.country
-                      }`
-                    }
-                    renderOption={(props, airport) => (
-                      <Box
-                        component="li"
-                        sx={{
-                          "&:hover > div": {
-                            backgroundColor: "#0E6AFF",
-                            padding: ".2em",
-                            borderRadius: "2px",
-                            color: "white",
-                          },
-                          "& > div": {
-                            mr: 2,
-                            flexShrink: 0,
-                            transition: "background-color 0.3s",
-                          },
-                        }}
-                        {...props}
-                        key={airport.id}
-                      >
-                        <div>{airport.cityCode}</div>
-                        {`${airport.cityCode} - ${airport.city}, ${
-                          airport.country.toLowerCase() === "india"
+                  {airportData.length > 0 && (
+                    <Autocomplete
+                      forcePopupIcon={false}
+                      options={airportData}
+                      getOptionLabel={(airport) =>
+                        `${airport?.cityCode} - ${airport?.city}, ${
+                          airport?.country.toLowerCase() === "india"
                             ? "IN"
-                            : airport.country
-                        }`}
-                      </Box>
-                    )}
-                    isOptionEqualToValue={(option, value) =>
-                      option.id === value.id
-                    }
-                    onChange={(option, value) => {
-                      dispatch({
-                        type: "SET_TO_INPUT",
-                        payload: value,
-                      });
-                      // console.log(value);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="standard"
-                        InputProps={{
-                          ...params.InputProps,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <MdFlightLand className="text-2xl ml-4 text-stone-400" />
-                            </InputAdornment>
-                          ),
-                        }}
-                        size="small"
-                        id="to-input"
-                        className="w-[250px]  px-2 py-2"
-                        placeholder="Where to?"
-                        error={errors.toInError !== ""}
-                        helperText={errors.toInError || ""}
-                      />
-                    )}
-                  />
+                            : airport?.country
+                        }`
+                      }
+                      renderOption={(props, airport) => (
+                        <Box
+                          component="li"
+                          sx={{
+                            "&:hover > div": {
+                              backgroundColor: "#0E6AFF",
+                              padding: ".2em",
+                              borderRadius: "2px",
+                              color: "white",
+                            },
+                            "& > div": {
+                              mr: 2,
+                              flexShrink: 0,
+                              transition: "background-color 0.3s",
+                            },
+                          }}
+                          {...props}
+                          key={airport.id}
+                        >
+                          <div>{airport?.cityCode}</div>
+                          {`${airport?.cityCode} - ${airport?.city}, ${
+                            airport.country.toLowerCase() === "india"
+                              ? "IN"
+                              : airport.country
+                          }`}
+                        </Box>
+                      )}
+                      isOptionEqualToValue={(option, value) =>
+                        option.id === value.id
+                      }
+                      onChange={(option, value) => {
+                        dispatch({
+                          type: "SET_TO_INPUT",
+                          payload: value,
+                        });
+                        // console.log(value);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="standard"
+                          InputProps={{
+                            ...params.InputProps,
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <MdFlightLand className="text-2xl ml-4 text-stone-400" />
+                              </InputAdornment>
+                            ),
+                          }}
+                          size="small"
+                          id="to-input"
+                          className="w-[250px]  px-2 py-2"
+                          placeholder="Where to?"
+                          error={errors.toInError !== ""}
+                          helperText={errors.toInError || ""}
+                        />
+                      )}
+                    />
+                  )}
                 </div>
               </div>
             </div>

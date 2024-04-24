@@ -6,6 +6,7 @@ import { GoClock } from "react-icons/go";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { airlineImages, formatDates } from "../assets/helper";
 import { useAuth } from "../context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function FlightCard({ flight }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,12 +22,12 @@ export default function FlightCard({ flight }) {
   const date = urlState.dateInput;
 
   // console.log(urlState);
-  const { isAuthenticated } = useAuth();
+  const { token } = useAuth();
 
   const imageSrc = flight?.flightID.split("-").at(0).slice(0, 2);
 
   function handleNavigate() {
-    if (true) {
+    if (token) {
       navigate(`${flight._id}`, {
         state: {
           fromLocation,
@@ -37,6 +38,8 @@ export default function FlightCard({ flight }) {
           travelClass,
         },
       });
+    } else if (!token) {
+      toast.warn("You must log in to continue");
     }
   }
 
@@ -136,11 +139,11 @@ function FlightDetails({ flight, imageSrc }) {
     <>
       <div className="flight-details w-11/12 m-auto border p-2 rounded-md max-sm:hidden">
         <div className="flight-details-row-1 flex gap-2 border-b-2 pb-1">
-          <span className="font-semibold">{urlState.origin.city}</span>
+          <span className="font-semibold">{urlState?.origin?.city}</span>
           <span className="font-semibold">&rarr;</span>
-          <span className="font-semibold">{urlState.destination.city}</span>
+          <span className="font-semibold">{urlState?.destination?.city}</span>
           <span className="text-stone-500">
-            {formatDates(new Date(urlState.dateInput))}
+            {formatDates(new Date(urlState?.dateInput))}
           </span>
         </div>
 
@@ -155,7 +158,7 @@ function FlightDetails({ flight, imageSrc }) {
             <p className="text-sm">{airlineImages[imageSrc].at(1)}</p>
             <p className="flex flex-col">
               <span className="text-xs">
-                {flight.flightID.split("-").at(0)}
+                {flight?.flightID?.split("-").at(0)}
               </span>
               <span className="text-xs">
                 {searchParams.get("travel_class")}
@@ -164,33 +167,33 @@ function FlightDetails({ flight, imageSrc }) {
           </div>
           <div className="details-col-2">
             <div className="flex gap-2">
-              <p>{urlState.origin.cityCode}</p>
-              <p className="font-semibold">{flight.departureTime}</p>
+              <p>{urlState?.origin?.cityCode}</p>
+              <p className="font-semibold">{flight?.departureTime}</p>
             </div>
             <p className="text-xs mt-1 text-stone-600">
-              {formatDates(new Date(urlState.dateInput))}{" "}
+              {formatDates(new Date(urlState?.dateInput))}{" "}
               {new Date().getFullYear()}
             </p>
             <p className="text-xs mt-1 text-stone-600 w-min ">
-              {urlState.origin.airportName}
+              {urlState?.origin?.airportName}
             </p>
           </div>
           <div className="details-col-3 flex flex-col pt-2 items-center">
             <GoClock size={18} />
-            <p className="text-sm pt-1">{flight.duration}:00h</p>
+            <p className="text-sm pt-1">{flight?.duration}:00h</p>
           </div>
 
           <div className="details-col-4">
             <div className="flex gap-2">
-              <p>{urlState.destination.cityCode}</p>
-              <p className="font-semibold">{flight.arrivalTime}</p>
+              <p>{urlState?.destination?.cityCode}</p>
+              <p className="font-semibold">{flight?.arrivalTime}</p>
             </div>
             <p className="text-xs mt-1 text-stone-600">
-              {formatDates(new Date(urlState.dateInput))}{" "}
+              {formatDates(new Date(urlState?.dateInput))}{" "}
               {new Date().getFullYear()}
             </p>
             <p className="text-xs mt-1 text-stone-600 w-min">
-              {urlState.destination.airportName}
+              {urlState?.destination?.airportName}
             </p>
           </div>
 
@@ -205,6 +208,7 @@ function FlightDetails({ flight, imageSrc }) {
           </div>
         </div>
       </div>
+      <ToastContainer position="top-center" autoClose={3000} />
     </>
   );
 }

@@ -2,7 +2,7 @@ export default function OffersCard({ offerCardData }) {
   return (
     <>
       <div className="offer-card flex gap-10 max-sm:p-5 flex-wrap cursor-pointer ">
-        {offerCardData.map((offers) => (
+        {offerCardData?.map((offers) => (
           <div
             key={offers._id}
             className="flex flex-col flex-wrap border-1 rounded-[6px] border-gray-500 shadow-md"

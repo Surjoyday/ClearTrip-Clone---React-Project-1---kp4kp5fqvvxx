@@ -85,7 +85,7 @@ export default function OffersCarousel() {
     try {
       const extractedOfferType = location.pathname.slice(1).toUpperCase();
       const res = await fetch(
-        `${base_URL}/offers?filter={"type":"${extractedOfferType}"}`,
+        `${base_URL}/offers?limit=5&filter={"type":"${extractedOfferType}"}`,
         {
           method: "GET",
           headers: HEADERS,
@@ -115,8 +115,8 @@ export default function OffersCarousel() {
           <div className="card border-stone-400  w-[250px] max-h-max overflow-x-hidden rounded-xl overflow-y-hidden">
             <Slider {...carouselSettings}>
               {location.pathname === "/flights"
-                ? flightOffers.map((offers) => (
-                    <div key={offers._id} className="relative ">
+                ? flightOffers?.map((offers) => (
+                    <div key={offers._id} className="relative">
                       <img
                         src={offers.newHeroUrl}
                         alt={`${offers.type}-img`}
@@ -134,7 +134,7 @@ export default function OffersCarousel() {
                     </div>
                   ))
                 : location.pathname === "/hotels"
-                ? hotelOffers.map((offers) => (
+                ? hotelOffers?.map((offers) => (
                     <div key={offers._id} className="relative ">
                       <img
                         src={offers.newHeroUrl}
@@ -160,7 +160,7 @@ export default function OffersCarousel() {
             <h1 className="text-xl font-semibold mb-2">More Offers</h1>
             <div className="w-[250px] h-[145px] border border-grey-400 rounded-xl ">
               <Slider {...carouselSettingsForMoreOffers}>
-                {moreOffers.map((offer) => (
+                {moreOffers?.map((offer) => (
                   <div
                     key={offer.id}
                     className="p-4 pb-2 mt-2 mb-3 h-[120px] flex flex-col"

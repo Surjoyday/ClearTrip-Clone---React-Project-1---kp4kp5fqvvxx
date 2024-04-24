@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar";
 import FlightResults from "./pages/FlightResults";
 import PageNotFound from "./pages/PageNotFound";
 import FlightDetails from "./pages/FlightDetails";
+import MyTrips from "./pages/MyTrips";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
               path="flights/results/:itinerary"
               element={<FlightDetails />}
             />
+            <Route path="mytrips" element={<MyTrips />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>

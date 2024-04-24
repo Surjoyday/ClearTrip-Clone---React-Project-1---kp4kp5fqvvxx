@@ -117,52 +117,56 @@ export default function Hotels() {
         <div className="container-hotel flex flex-col gap-6 my-6 px-4 py-14 shadow-lg  rounded-lg border">
           {/* DESTINATION - CITY INPUT*/}
           <div className="hotel-city-box">
-            <Autocomplete
-              fullWidth
-              forcePopupIcon={false}
-              options={cities}
-              getOptionLabel={(cities) => `${cities.cityState}`}
-              isOptionEqualToValue={(option, value) => option._id === value._id}
-              onChange={(_, value) =>
-                dispatch({ type: "SET_SEARCHED_CITY", payload: value })
-              }
-              renderOption={(props, option) => (
-                <Box
-                  component="li"
-                  sx={{ "& > div": { mr: 2, flexShrink: 0 } }}
-                  {...props}
-                  key={option._id}
-                >
-                  <div>
-                    <GrMapLocation />
-                  </div>
-                  {option.cityState}
-                </Box>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  onFocus={() => dispatch({ type: "SET_IS_FOCUSED" })}
-                  onBlur={() => dispatch({ type: "SET_IS_FOCUSED" })}
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <IoLocationSharp
-                          className="text-2xl text-stone-400"
-                          style={isFocused && { color: "#FF4F17" }}
-                        />
-                      </InputAdornment>
-                    ),
-                  }}
-                  placeholder="Enter city"
-                  id="city-input"
-                  className="w-full sm:w-[630px] max-w-[630px]  px-2 py-2"
-                  error={errorMsg !== ""}
-                  helperText={errorMsg ? errorMsg : ""}
-                />
-              )}
-            />
+            {cities.length > 0 && (
+              <Autocomplete
+                fullWidth
+                forcePopupIcon={false}
+                options={cities}
+                getOptionLabel={(cities) => `${cities?.cityState}`}
+                isOptionEqualToValue={(option, value) =>
+                  option?._id === value?._id
+                }
+                onChange={(_, value) =>
+                  dispatch({ type: "SET_SEARCHED_CITY", payload: value })
+                }
+                renderOption={(props, option) => (
+                  <Box
+                    component="li"
+                    sx={{ "& > div": { mr: 2, flexShrink: 0 } }}
+                    {...props}
+                    key={option._id}
+                  >
+                    <div>
+                      <GrMapLocation />
+                    </div>
+                    {option.cityState}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    onFocus={() => dispatch({ type: "SET_IS_FOCUSED" })}
+                    onBlur={() => dispatch({ type: "SET_IS_FOCUSED" })}
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <IoLocationSharp
+                            className="text-2xl text-stone-400"
+                            style={isFocused && { color: "#FF4F17" }}
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
+                    placeholder="Enter city"
+                    id="city-input"
+                    className="w-full sm:w-[630px] max-w-[630px]  px-2 py-2"
+                    error={errorMsg !== ""}
+                    helperText={errorMsg ? errorMsg : ""}
+                  />
+                )}
+              />
+            )}
           </div>
           {/* IN - OUT - SEARCH INPUT  */}
           <div className="flex max-sm:flex-col gap-3 items-center justify-center">

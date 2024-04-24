@@ -104,7 +104,7 @@ function AuthProvider({ children }) {
     localStorage.removeItem("userDetails");
     localStorage.removeItem("name");
     dispatch({ type: "logout" });
-    toast("You have successfully logged out");
+    toast.info("You have successfully logged out");
   }
 
   // LOGIN USER
@@ -127,6 +127,7 @@ function AuthProvider({ children }) {
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("userDetails", JSON.stringify(responseData?.data));
         localStorage.setItem("name", responseData?.data?.user?.name);
+
         dispatch({
           type: "login/success",
           payload: {
@@ -204,6 +205,7 @@ function AuthProvider({ children }) {
         name,
         isLoggedIn,
         isSignedUp,
+        isAuthenticated,
         handleCloseModal,
         handleOpenModal,
         handleLogout,

@@ -44,9 +44,9 @@ export default function AboutSite() {
           Popular destinations
         </h2>
         <div className="flex gap-5 flex-wrap max-sm:text-sm max-sm:justify-center mt-10">
-          {popularDestinationsImages.map((destinationsCard) => (
+          {popularDestinationsImages?.map((destinationsCard) => (
             <div
-              key={destinationsCard.id}
+              key={destinationsCard?.id}
               className="destination-cards relative text-white "
               onClick={() =>
                 handleNavigate(
@@ -57,22 +57,22 @@ export default function AboutSite() {
               }
             >
               <h1 className="absolute bottom-8 left-4 font-bold">
-                {destinationsCard.place}
+                {destinationsCard?.place}
               </h1>
               <p className="absolute bottom-2 left-4 font-bold">
                 {destinationsCard.properties}
               </p>
               <img
                 className="rounded hover:contrast-125  cursor-pointer max-sm:w-[130px]"
-                src={destinationsCard.src}
-                alt={destinationsCard.alt}
+                src={destinationsCard?.src}
+                alt={destinationsCard?.alt}
               />
             </div>
           ))}
         </div>
       </div>
       <div className="app-offer-image my-10 max-sm:hidden max-w-fit cursor-pointer">
-        <img src={appOfferImage.src} alt={appOfferImage.alt} />
+        <img src={appOfferImage?.src} alt={appOfferImage?.alt} />
       </div>
 
       {location.pathname === "/flights" && <AboutFlight />}

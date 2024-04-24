@@ -22,12 +22,13 @@
   bottom: 0;
 } */
 
-.activeSidenav {
-  cursor: pointer;
+.active {
+  /* cursor: pointer;
   border: none;
   border-radius: 4px;
   background-color: #d5e7fc;
-  transition: all 1s;
+  transition: all 1s; */
+  color: #0e6aff;
 }
 
 .nav-width {
