@@ -15,6 +15,7 @@ import FlightResults from "./pages/FlightResults";
 import PageNotFound from "./pages/PageNotFound";
 import FlightDetails from "./pages/FlightDetails";
 import MyTrips from "./pages/MyTrips";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
+        <Footer />
         <ToastContainer position="top-center" autoClose={2000} />
       </AuthProvider>
     </div>
