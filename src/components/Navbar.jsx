@@ -33,7 +33,7 @@ export default function Navbar() {
               <Logo />
 
               {(location.pathname === "/offers" ||
-                location.pathname === "/mytrips" ||
+                location.pathname.includes("/mytrips") ||
                 location.pathname === "/flights/results") && (
                 <>
                   <Link to={"/flights"}>
