@@ -40,42 +40,6 @@ function FlightsBooked() {
       ) : (
         <div>
           {flightsBooked.map((flightObj) => (
-            // <div
-            //   key={flightObj["_id"]}
-            //   className="border-b p-2 flex flex-col gap-2 mb-4"
-            // >
-            //   <p>
-            //     <span className="font-semibold">Trip ID :</span>{" "}
-            //     <span>{flightObj?._id}</span>
-            //   </p>
-            //   <p>
-            //     <span className="font-semibold">From :</span>{" "}
-            //     <span>{flightObj?.flight?.source}</span>
-            //   </p>
-            //   <p>
-            //     <span className="font-semibold">To : </span>
-            //     <span>{flightObj?.flight?.destination}</span>
-            //   </p>
-            //   <p>
-            //     <span className="font-semibold">Start Date :</span>{" "}
-            //     <span>{flightObj?.start_date}</span>
-            //   </p>
-            //   <p>
-            //     <span className="font-semibold">End Date :</span>{" "}
-            //     <span>{flightObj?.end_date}</span>
-            //   </p>
-            //   <p>
-            //     <span className="font-semibold">Booking status : </span>
-            //     <span
-            //       className={`${
-            //         flightObj?.status === "confirmed" ? "text-green-600" : ""
-            //       }`}
-            //     >
-            //       {flightObj?.status?.at(0).toUpperCase() +
-            //         flightObj?.status?.slice(1)}
-            //     </span>
-            //   </p>
-            // </div>
             <div key={flightObj["_id"]} className="mb-10 border rounded-sm">
               <div className="flex items-start gap-5 p-4 bg-[#E8F6FF]">
                 <div className="border p-3 bg-white">
@@ -119,9 +83,11 @@ function FlightsBooked() {
                 </div>
 
                 <div className="text-center">
-                  <p className="font-semibold">
+                  <p>
                     <span>{flightObj?.flight?.source} </span>
-                    <span>{flightObj?.flight?.departureTime}</span>
+                    <span className="font-semibold text-sm">
+                      {flightObj?.flight?.departureTime}
+                    </span>
                   </p>
                   <p>{formatDates(new Date(flightObj?.start_date))}</p>
                 </div>
@@ -132,8 +98,10 @@ function FlightsBooked() {
                 </div>
 
                 <div className="text-center">
-                  <p className="font-semibold">
-                    <span>{flightObj?.flight?.arrivalTime}</span>
+                  <p>
+                    <span className="font-semibold text-sm">
+                      {flightObj?.flight?.arrivalTime}
+                    </span>
                     <span> {flightObj?.flight?.destination}</span>
                   </p>
                   <p>{formatDates(new Date(flightObj?.end_date))}</p>

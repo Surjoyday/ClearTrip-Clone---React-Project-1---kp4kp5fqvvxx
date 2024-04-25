@@ -11,7 +11,12 @@ import { CgProfile } from "react-icons/cg";
 
 export default function MyTrips() {
   const { token } = useAuth();
-  return <>{token ? <MyTripsAuthenticated /> : <MyTripsNotAuthenticated />}</>;
+  return (
+    <>
+      {token ? <MyTripsAuthenticated /> : <MyTripsNotAuthenticated />}
+      <ToastContainer position="top-center" autoClose={2000} />
+    </>
+  );
 }
 
 function MyTripsAuthenticated() {
@@ -21,7 +26,7 @@ function MyTripsAuthenticated() {
   let pageTitle;
 
   switch (location.pathname) {
-    case "/mytrips/mytripshotels":
+    case "/mytrips/mytripsflights":
       pageTitle = "Trips you've booked";
       break;
 
@@ -39,16 +44,17 @@ function MyTripsAuthenticated() {
 
   return (
     <>
-      <div className="mt-10 ml-28 max-sm:ml-0 p-4">
+      <div className="mt-10 ml-28 max-sm:ml-0 py-4 max-sm:px-4">
+        <h1 className="font-normal text-2xl mb-8">{pageTitle}</h1>
         <div className="flex max-sm:flex-col ">
           <div className="sidebar_my__trips flex flex-col gap-7">
-            <h1 className="font-normal text-2xl">{pageTitle}</h1>
-            <ul className="flex flex-col max-sm:flex-row gap-7">
+            {/* <h1 className="font-normal text-2xl">{pageTitle}</h1> */}
+            <ul className="flex flex-col max-sm:flex-row gap-7 overflow-x-auto">
               <li>
                 <NavLink
                   to="mytripsflights"
                   className={(props) =>
-                    `flex items-center gap-2 p-2 ${
+                    `flex items-center gap-2 py-2 pl-2 pr-28 max-sm:px-4 ${
                       props.isActive ? "bg-[#5383B6] text-white rounded-sm" : ""
                     }`
                   }
@@ -61,7 +67,7 @@ function MyTripsAuthenticated() {
                 <NavLink
                   to="mytripshotels"
                   className={(props) =>
-                    `flex items-center gap-2 p-2 ${
+                    `flex items-center gap-2 py-2 pl-2 pr-28 max-sm:px-4 ${
                       props.isActive ? "bg-[#5383B6] text-white rounded-sm" : ""
                     }`
                   }
@@ -74,7 +80,7 @@ function MyTripsAuthenticated() {
                 <NavLink
                   to="profile"
                   className={(props) =>
-                    `flex items-center gap-2 p-2 ${
+                    `flex items-center gap-2 py-2 pl-2 pr-28 max-sm:px-4 ${
                       props.isActive ? "bg-[#5383B6] text-white rounded-sm" : ""
                     }`
                   }
@@ -85,7 +91,14 @@ function MyTripsAuthenticated() {
               </li>
             </ul>
           </div>
-          <div className="mt-[60px] border p-10 w-3/6 max-sm:w-full shadow-md rounded-sm h-screen overflow-y-auto">
+          <div
+            className={`${
+              location.pathname === "/mytrips/profile"
+                ? "pl-10 max-sm:pl-2"
+                : "border shadow-md rounded-sm p-10"
+            }    w-3/6 max-sm:w-full h-screen overflow-y-auto max-sm:mt-8`}
+          >
+            {/* /mytrips/profile */}
             <Outlet />
           </div>
         </div>
@@ -123,7 +136,7 @@ function MyTripsNotAuthenticated() {
             <p>Trip ID</p>
             <p
               title="Default value"
-              className="px-6 py-2 border bg-stone-100 text-stone-500 cursor-not-allowed"
+              className="px-14 py-2 border bg-stone-100 text-stone-500 cursor-not-allowed"
             >
               kp4kp5fqvvxx
             </p>

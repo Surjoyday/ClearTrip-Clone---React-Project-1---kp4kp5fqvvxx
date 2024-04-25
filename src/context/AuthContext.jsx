@@ -16,7 +16,7 @@ const initialState = {
   isLoggedIn: false,
   isSignedUp: false,
   name: localStorage.getItem("name") || "",
-  email: "",
+  email: localStorage.getItem("email") || "",
   password: "",
   token: localStorage.getItem("token") || "",
 };
@@ -70,15 +70,7 @@ function reducer(state, action) {
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const {
-    name,
-    email,
-    password,
-    token,
-    isLoggedIn,
-    isAuthenticated,
-    isSignedUp,
-  } = state;
+  const { name, email, token, isLoggedIn, isAuthenticated, isSignedUp } = state;
 
   // HANDLE CLOSE MODAL
   function handleCloseModal() {
@@ -103,6 +95,7 @@ function AuthProvider({ children }) {
     localStorage.removeItem("token");
     localStorage.removeItem("userDetails");
     localStorage.removeItem("name");
+    localStorage.removeItem("email");
     dispatch({ type: "logout" });
     toast.info("You have successfully logged out");
   }
@@ -127,6 +120,7 @@ function AuthProvider({ children }) {
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("userDetails", JSON.stringify(responseData?.data));
         localStorage.setItem("name", responseData?.data?.user?.name);
+        localStorage.setItem("email", responseData?.data?.user?.email);
 
         dispatch({
           type: "login/success",
@@ -173,6 +167,7 @@ function AuthProvider({ children }) {
           JSON.stringify(responseData?.data?.user)
         );
         localStorage.setItem("name", responseData?.data?.user?.name);
+        localStorage.setItem("email", responseData?.data?.user?.email);
         dispatch({
           type: "signup/success",
           payload: {
@@ -203,6 +198,7 @@ function AuthProvider({ children }) {
       value={{
         token,
         name,
+        email,
         isLoggedIn,
         isSignedUp,
         isAuthenticated,
