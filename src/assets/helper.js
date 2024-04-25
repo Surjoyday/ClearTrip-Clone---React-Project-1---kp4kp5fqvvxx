@@ -50,6 +50,19 @@ function formatDatesForDetailsPage(date) {
   return `${parts[0]} ${parts[2]} ${parts[1]}`;
 }
 
+function formatDateTimeISOString(date, time) {
+  const dateReceived = new Date(date);
+
+  const [hoursReceived, minutesReceived] = time.split(":");
+
+  dateReceived.setHours(hoursReceived);
+  dateReceived.setMinutes(minutesReceived);
+
+  const ISOString = dateReceived.toISOString();
+
+  return ISOString;
+}
+
 const moreOffers = [
   {
     id: crypto.randomUUID(),
@@ -135,6 +148,18 @@ const airlineComapanies = {
   goFirst: "65144a1b664a43628887c461",
 };
 
+const airlineComapaniesForMyTrips = {
+  Vistara: "65144a1b664a43628887c460",
+
+  IndiGo: "65144a1b664a43628887c45e",
+
+  AirIndia: "65144a1b664a43628887c45d",
+
+  SpiceJet: "65144a1b664a43628887c45f",
+
+  GoFirst: "65144a1b664a43628887c461",
+};
+
 const airlineImages = {
   "6E": [
     "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705554/6E_fw0stg.png",
@@ -172,4 +197,6 @@ export {
   formatDates,
   airlineComapanies,
   formatDatesForDetailsPage,
+  formatDateTimeISOString,
+  airlineComapaniesForMyTrips,
 };

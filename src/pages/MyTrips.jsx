@@ -1,16 +1,97 @@
-import { useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 import { MdOutlineAirplanemodeActive } from "react-icons/md";
 import { IoCheckmark } from "react-icons/io5";
 import { FaBed } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
+import { ToastContainer } from "react-toastify";
+import { MdLuggage } from "react-icons/md";
+import { BiHotel } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
 
 export default function MyTrips() {
-  return <MyTripsNotAuthenticated />;
+  const { token } = useAuth();
+  return <>{token ? <MyTripsAuthenticated /> : <MyTripsNotAuthenticated />}</>;
 }
 
 function MyTripsAuthenticated() {
-  return;
+  const location = useLocation();
+  // console.log(location);
+
+  let pageTitle;
+
+  switch (location.pathname) {
+    case "/mytrips/mytripshotels":
+      pageTitle = "Trips you've booked";
+      break;
+
+    case "/mytrips/mytripshotels":
+      pageTitle = "Hotels you've booked";
+      break;
+
+    case "/mytrips/profile":
+      pageTitle = "Your Profile Details";
+      break;
+
+    default:
+      pageTitle = "Trips you've booked";
+  }
+
+  return (
+    <>
+      <div className="mt-10 ml-28 max-sm:ml-0 p-4">
+        <div className="flex max-sm:flex-col ">
+          <div className="sidebar_my__trips flex flex-col gap-7">
+            <h1 className="font-normal text-2xl">{pageTitle}</h1>
+            <ul className="flex flex-col max-sm:flex-row gap-7">
+              <li>
+                <NavLink
+                  to="mytripsflights"
+                  className={(props) =>
+                    `flex items-center gap-2 p-2 ${
+                      props.isActive ? "bg-[#5383B6] text-white rounded-sm" : ""
+                    }`
+                  }
+                >
+                  <MdLuggage size={25} />
+                  <span>Trips</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="mytripshotels"
+                  className={(props) =>
+                    `flex items-center gap-2 p-2 ${
+                      props.isActive ? "bg-[#5383B6] text-white rounded-sm" : ""
+                    }`
+                  }
+                >
+                  <BiHotel size={25} />
+                  <span>Hotels</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="profile"
+                  className={(props) =>
+                    `flex items-center gap-2 p-2 ${
+                      props.isActive ? "bg-[#5383B6] text-white rounded-sm" : ""
+                    }`
+                  }
+                >
+                  <CgProfile size={25} />
+                  <span>Profile</span>
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+          <div className="mt-[60px] border p-10 w-3/6 max-sm:w-full shadow-md rounded-sm h-screen overflow-y-auto">
+            <Outlet />
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 function MyTripsNotAuthenticated() {

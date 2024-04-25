@@ -308,6 +308,7 @@ export default function FlightResults() {
       <section>
         <div className="results-container flex max-sm:flex-col gap-12 mt-7 mb-20">
           <div className="sort-filter-accordian w-1/4 max-sm:w-full ml-10 max-sm:ml-0 max-sm:px-2">
+            {/* <div className="sort-filter-accordian sticky top-4 w-1/4 max-sm:w-full max-sm:left-0 max-sm:px-2"> */}
             <h1 className="px-2 pb-4 font-semibold">
               {flightResultantData?.length} of {flightCount} flights
             </h1>
@@ -486,7 +487,7 @@ export default function FlightResults() {
                         type="range"
                         min={minPrice}
                         max={maxPrice}
-                        defaultValue={maxPrice}
+                        defaultValue={ticketPriceValue}
                         onMouseUp={(e) =>
                           dispatch({
                             type: "SET_FILTER_PRICE",
