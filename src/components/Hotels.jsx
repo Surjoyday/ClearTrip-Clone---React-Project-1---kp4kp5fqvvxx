@@ -11,6 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 import { IoLocationSharp } from "react-icons/io5";
 import { GrMapLocation } from "react-icons/gr";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   searchedCity: "",
@@ -55,6 +56,8 @@ function reducer(state, action) {
 export default function Hotels() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const navigate = useNavigate();
+
   const {
     checkIn,
     checkOut,
@@ -65,6 +68,12 @@ export default function Hotels() {
     isFocused,
     errorMsg,
   } = state;
+  // console.log("checkIn", checkIn);
+  // console.log("checkOut", checkOut);
+  // console.log("cities", cities);
+  // console.log("searchedCity", searchedCity);
+  // console.log("isFocused", isFocused);
+  // console.log("checkOut", checkOut);
 
   // console.log(cities);
   // console.log("Check IN " + checkIn);
@@ -97,9 +106,13 @@ export default function Hotels() {
       !cities
         .map((city) => city?.cityState?.split(",").at(0).trim())
         .includes(searchedCity) ||
-      searchedCity === undefined
+      searchedCity === ""
     ) {
       dispatch({ type: "SET_ERROR_MSG" });
+    } else {
+      navigate(
+        `/hotels/results?city=${searchedCity}&chk_in=${checkIn}&chk_out=${checkOut}&guests=${guest}&rooms=${rooms}`
+      );
     }
   }
 
@@ -107,7 +120,7 @@ export default function Hotels() {
     <>
       <section>
         <div className="hotels-headings">
-          <h1 className="text-3xl font-medium mt-1">Serch Hotels</h1>
+          <h1 className="text-3xl font-medium mt-1">Search Hotels</h1>
           <h2 className="font-medium text-base mt-1 text-stone-700">
             Enjoy hassle free bookings with Cleartrip
           </h2>

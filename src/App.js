@@ -20,6 +20,7 @@ import Footer from "./components/Footer";
 import FlightsBooked from "./components/FlightsBooked";
 import HotelsBooked from "./components/HotelsBooked";
 import Profile from "./components/Profile";
+import HotelResults from "./pages/HotelResults";
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
                 path="flights/results/:itinerary"
                 element={<FlightDetails />}
               />
+              <Route path="hotels/results" element={<HotelResults />} />
               <Route path="mytrips" element={<MyTrips />}>
                 <Route
                   index

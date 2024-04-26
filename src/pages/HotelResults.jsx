@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+
 export default function HotelResults() {
-  return <div></div>;
+  useEffect(function () {}, []);
+  return <div>Hoels Results</div>;
 }

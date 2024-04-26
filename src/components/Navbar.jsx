@@ -3,9 +3,12 @@ import LoginPage from "../pages/LoginPage";
 import { formatDates } from "../assets/helper";
 import { MdFlight, MdHotel } from "react-icons/md";
 import { PiArrowsLeftRightBold } from "react-icons/pi";
+import { CiLocationOn } from "react-icons/ci";
+import { PiCalendarBlankLight } from "react-icons/pi";
+import { IoPersonOutline } from "react-icons/io5";
 
 import { useAuth } from "../context/AuthContext";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 
 export default function Navbar() {
   const { showLoginSignupModal, handleLogout, token, name } = useAuth();
@@ -73,7 +76,7 @@ export default function Navbar() {
                     )}
                   </span>
                   <button
-                    className="font-semibold text-base px-2 py-1 bg-[#0e6aff] text-[white] rounded-lg border-none mx-sm:text-xs max-sm:font-normal"
+                    className="font-semibold text-base px-2 py-2 bg-[#0e6aff] text-[white] rounded-lg border-none mx-sm:text-xs max-sm:font-normal"
                     onClick={handleLogout}
                   >
                     Log out
@@ -81,7 +84,7 @@ export default function Navbar() {
                 </>
               ) : (
                 <button
-                  className="font-semibold text-base px-2 py-1 bg-[#0e6aff] text-[white] rounded-lg border-none mx-sm:text-xs max-sm:font-normal"
+                  className="font-semibold text-base px-2 py-2 bg-[#0e6aff] text-[white] rounded-md border-none mx-sm:text-xs max-sm:font-normal"
                   onClick={showLoginSignupModal}
                 >
                   Login / Sign up
@@ -92,6 +95,7 @@ export default function Navbar() {
           {location.pathname === "/flights/results" && (
             <FlightSearchSummary urlState={urlState} />
           )}
+          {location.pathname === "/hotels/results" && <HotelSearchedSummary />}
         </div>
       </nav>
 
@@ -103,7 +107,7 @@ export default function Navbar() {
 function FlightSearchSummary({ urlState }) {
   return (
     <>
-      <div className="search-criteria-summary flex">
+      <div className="flight-search-criteria-summary flex">
         <div className="font-normal flex gap-12 items-center text-sm pt-3 m-auto w-100 overflow-x-auto whitespace-nowrap max-sm:mt-2">
           <p className="border rounded-[4px] p-2">One way</p>
 
@@ -145,5 +149,53 @@ function FlightSearchSummary({ urlState }) {
         </div>
       </div>
     </>
+  );
+}
+
+function HotelSearchedSummary() {
+  const [searchParams] = useSearchParams();
+
+  const city = searchParams.get("city");
+  const checkInDate = searchParams.get("chk_in");
+  const checkOutDate = searchParams.get("chk_out");
+  const guests = searchParams.get("guests");
+  const rooms = searchParams.get("rooms");
+
+  // console.log(city);
+  // console.log(checkInDate);
+  // console.log(checkOutDate);
+  // console.log(guest);
+  // console.log(rooms);
+
+  return (
+    <div className="flex justify-center">
+      <div className="flex gap-3 max-sm:py-0 border rounded-md max-sm:mt-5 max-sm:overflow-x-scroll">
+        <div className="flex items-center gap-2 p-3  border-r-2">
+          <CiLocationOn size={18} />
+          <p className="font-semibold">{city}</p>
+        </div>
+        <div className="flex items-center gap-2 p-2 border-r-2">
+          <PiCalendarBlankLight size={18} />
+          <div className="flex gap-3 max-sm:text-sm whitespace-nowrap">
+            <p className="font-semibold border-r-2 pr-3">
+              {formatDates(new Date(checkInDate))}
+            </p>
+            <p className="font-semibold">
+              {formatDates(new Date(checkOutDate))}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center pr-2 gap-2 max-sm:text-sm whitespace-nowrap">
+          <IoPersonOutline />
+          <p className="font-semibold">{`${rooms} ${
+            +rooms === 1 ? "room" : "rooms"
+          }`}</p>
+          <span>,</span>
+          <p className="font-semibold">{`${guests} ${
+            +guests === 1 ? "guest" : "guests"
+          }`}</p>
+        </div>
+      </div>
+    </div>
   );
 }

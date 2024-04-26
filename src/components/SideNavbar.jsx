@@ -11,8 +11,8 @@ export default function SideNavbar() {
   // console.log(loaction);
 
   return (
-    <nav className="flex flex-col w-40">
-      <ul className="list-none cursor-pointer flex flex-col gap-8 max-sm:flex-row font-medium">
+    <nav className="flex flex-col max-sm:w-full w-40">
+      <ul className="list-none cursor-pointer flex flex-col gap-8 max-sm:flex-row font-medium overflow-x-scroll">
         <li title="Flights">
           <NavLink
             to={"flights"}
@@ -46,7 +46,7 @@ export default function SideNavbar() {
             {loaction.pathname === "/hotels" ? (
               <>
                 <RiHotelFill size={24} className="text-[#0E6AFF]" />
-                <span className=" text-[#0E6AFF]">Hotels</span>
+                <span className=" text-[#0E6AFF] pr-2">Hotels</span>
               </>
             ) : (
               <>
@@ -64,7 +64,7 @@ export default function SideNavbar() {
           </Link>
         </li>
 
-        <li>
+        <li title="My Trips">
           <Link
             to={"mytrips"}
             className={`flex gap-1 p-3 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF] rounded-[4px]  transition transition-duration:1s `}

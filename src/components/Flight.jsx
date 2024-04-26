@@ -184,7 +184,7 @@ export default function Flight() {
     <>
       <section className="flex-grow">
         <div className="flight-headings">
-          <h1 className="text-3xl font-medium mt-1">Serch Flights</h1>
+          <h1 className="text-3xl font-medium mt-1">Search Flights</h1>
           <h2 className="font-medium text-base mt-1 text-stone-700">
             Enjoy hassle free bookings with Cleartrip
           </h2>
