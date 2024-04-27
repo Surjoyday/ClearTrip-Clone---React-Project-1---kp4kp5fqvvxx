@@ -185,7 +185,7 @@ function HotelSearchedSummary() {
             </p>
           </div>
         </div>
-        <div className="flex items-center pr-2 gap-2 max-sm:text-sm whitespace-nowrap">
+        <div className="flex items-center pr-3 gap-2 max-sm:text-sm whitespace-nowrap">
           <IoPersonOutline />
           <p className="font-semibold">{`${rooms} ${
             +rooms === 1 ? "room" : "rooms"

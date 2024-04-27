@@ -166,7 +166,7 @@ export default function FlightResults() {
   async function getFlightDetails() {
     dispatch({ type: "SET_ISLOADING" });
 
-    if (flightResultantData.length > flightCount) return;
+    // if (flightResultantData.length > flightCount) return;
     try {
       const res = await fetch(
         `${base_URL}/flight?search=
@@ -300,6 +300,7 @@ export default function FlightResults() {
 
   function handleReset() {
     dispatch({ type: "RESET" });
+    getFlightDetails();
   }
 
   return (
