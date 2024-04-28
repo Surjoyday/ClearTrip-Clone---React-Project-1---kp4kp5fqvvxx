@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
@@ -10,9 +10,9 @@ export default function HotelCard({ hotelData }) {
     <div className="flex flex-col pb-7">
       <HotelImages imagesArr={hotelData?.images} alt={hotelData?.name} />
 
-      <div className="flex justify-between">
+      <div className="flex justify-between pt-1">
         <p className="font-semibold">{hotelData?.name}</p>
-        <p className="bg-[#EBF8F4] p-0.5 font-semibold text-sm">
+        <p className="bg-[#EBF8F4] rounded-sm p-1 font-semibold text-sm">
           <span className="text-[#0FA670]">
             {hotelData?.rating?.toFixed(1)}
           </span>
@@ -22,7 +22,12 @@ export default function HotelCard({ hotelData }) {
       <div className="text-stone-500 text-sm">
         <p>
           5-star hotel &middot;{" "}
-          <span className="truncate">{hotelData?.location}</span>
+          <span className="">
+            {hotelData?.location ===
+            "Delhi, National Capital Territory of Delhi"
+              ? "Delhi"
+              : hotelData?.location}
+          </span>
         </p>
       </div>
 
@@ -70,13 +75,17 @@ function HotelImages({ imagesArr, alt }) {
       >
         <FaAngleLeft size={24} />
       </button>
+      {/* <img
+        loading="lazy"
+        className="w-[300px] h-[250px] object-cover rounded-md contrast-[.8]"
+        src={imagesArr[imgIndex]}
+        alt={alt}
+      /> */}
       <LazyLoadImage
         loading="lazy"
         effect="blur"
-        height={250}
-        width={300}
-        className="w-[300px] h-[250px] object-cover rounded-md contrast-[.8]"
-        src={imagesArr && imagesArr[imgIndex]}
+        className="w-[300px] h-[250px] object-cover rounded-md contrast-[.8] transition-all ease-in"
+        src={imagesArr[imgIndex]}
         alt={alt}
       />
       <button
