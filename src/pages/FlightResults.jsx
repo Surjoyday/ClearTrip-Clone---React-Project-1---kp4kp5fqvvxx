@@ -488,7 +488,7 @@ export default function FlightResults() {
                         type="range"
                         min={minPrice}
                         max={maxPrice}
-                        defaultValue={ticketPriceValue}
+                        value={ticketPriceValue}
                         onMouseUp={(e) =>
                           dispatch({
                             type: "SET_FILTER_PRICE",

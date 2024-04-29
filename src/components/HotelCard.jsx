@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
@@ -47,7 +47,7 @@ export default function HotelCard({ hotelData }) {
   );
 }
 
-function HotelImages({ imagesArr, alt }) {
+const HotelImages = memo(function HotelImages({ imagesArr, alt }) {
   const [imgIndex, setImgIndex] = useState(1);
   const [isMouseOver, setIsMouseOver] = useState(false);
 
@@ -84,6 +84,7 @@ function HotelImages({ imagesArr, alt }) {
       <LazyLoadImage
         loading="lazy"
         effect="blur"
+        delayTime={300}
         className="w-[300px] h-[250px] object-cover rounded-md contrast-[.8] transition-all ease-in"
         src={imagesArr[imgIndex]}
         alt={alt}
@@ -98,4 +99,4 @@ function HotelImages({ imagesArr, alt }) {
       </button>
     </div>
   );
-}
+});
