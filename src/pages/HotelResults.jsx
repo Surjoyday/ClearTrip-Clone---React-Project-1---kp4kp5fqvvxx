@@ -535,7 +535,10 @@ export default function HotelResults() {
             onClose={() => setPriceFilterAnchorEl(null)}
             TransitionComponent={Fade}
           >
-            <div className="p-4 flex flex-col gap-3 items-start">
+            <div
+              className="p-4 flex flex-col gap-3 items-start"
+              onMouseLeave={() => setPriceFilterAnchorEl(null)}
+            >
               <div>
                 <p className="font-semibold text-lg pb-2">
                   Price &#40;per night&#41;

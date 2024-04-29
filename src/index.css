@@ -73,3 +73,18 @@
 .my__trip__bg {
   background-image: linear-gradient(to top, white, #eff5fc);
 }
+
+.hovered .left-button,
+.hovered .right-button {
+  opacity: 1;
+}
+
+.left-button,
+.right-button {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.visible {
+  opacity: 1 !important;
+}

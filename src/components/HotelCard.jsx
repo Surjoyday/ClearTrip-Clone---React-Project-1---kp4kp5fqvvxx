@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
@@ -47,12 +47,12 @@ export default function HotelCard({ hotelData }) {
   );
 }
 
-const HotelImages = memo(function HotelImages({ imagesArr, alt }) {
-  const [imgIndex, setImgIndex] = useState(1);
-  const [isMouseOver, setIsMouseOver] = useState(false);
+function HotelImages({ imagesArr, alt }) {
+  const [imgIndex, setImgIndex] = useState(0);
+  const imageRef = useRef(null);
 
   function handleMovetoNextImg() {
-    setImgIndex((nextIndex) => (nextIndex + 1) % imagesArr.length);
+    setImgIndex((prevIndex) => (prevIndex + 1) % imagesArr.length);
   }
 
   function handleMovetoPrevImg() {
@@ -61,42 +61,40 @@ const HotelImages = memo(function HotelImages({ imagesArr, alt }) {
     );
   }
 
+  function handleMouseEnter() {
+    imageRef.current.querySelector(".left-button").classList.add("visible");
+    imageRef.current.querySelector(".right-button").classList.add("visible");
+  }
+
+  function handleMouseLeave() {
+    imageRef.current.querySelector(".left-button").classList.remove("visible");
+    imageRef.current.querySelector(".right-button").classList.remove("visible");
+  }
+
   return (
     <div
       className="relative"
-      onMouseEnter={() => setIsMouseOver(true)}
-      onMouseLeave={() => setIsMouseOver(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      ref={imageRef}
     >
       <button
         onClick={handleMovetoPrevImg}
-        className={`absolute z-10 transform -translate-y-1/2 top-1/2 left-3 p-1 bg-slate-200 rounded-full ${
-          isMouseOver ? "opacity-100" : "opacity-0"
-        } transition-all ease-in`}
+        className="absolute z-10 top-1/2 left-3 transform -translate-y-1/2 p-1 bg-slate-200 rounded-full left-button"
       >
         <FaAngleLeft size={24} />
       </button>
-      {/* <img
-        loading="lazy"
-        className="w-[300px] h-[250px] object-cover rounded-md contrast-[.8]"
-        src={imagesArr[imgIndex]}
-        alt={alt}
-      /> */}
-      <LazyLoadImage
-        loading="lazy"
-        effect="blur"
-        delayTime={300}
+      <img
         className="w-[300px] h-[250px] object-cover rounded-md contrast-[.8] transition-all ease-in"
         src={imagesArr[imgIndex]}
         alt={alt}
       />
       <button
         onClick={handleMovetoNextImg}
-        className={`absolute z-10 transform -translate-y-1/2 top-1/2 right-3 p-1  bg-slate-200 rounded-full ${
-          isMouseOver ? "opacity-100" : "opacity-0"
-        } transition-all ease-in`}
+        className="absolute z-10 top-1/2 right-3 transform -translate-y-1/2 p-1 bg-slate-200 rounded-full right-button"
       >
         <FaAngleRight size={24} />
       </button>
     </div>
   );
-});
+}
