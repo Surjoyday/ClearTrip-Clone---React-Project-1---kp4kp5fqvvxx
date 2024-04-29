@@ -17,9 +17,27 @@ function getCurrentDate() {
 
 function getTommorrowsDate() {
   const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // ensuring that month have always has 2 digits
-  const day = String(currentDate.getDate() + 1).padStart(2, "0"); // ensuring that day have always has 2 digits
+  let year = currentDate.getFullYear();
+  let month = currentDate.getMonth() + 1;
+  let day = currentDate.getDate() + 1;
+
+  // console.log("day", day);
+
+  if (day > new Date(year, month, 0).getDate()) {
+    day = 1;
+    month++;
+    if (month > 12) {
+      month = 1;
+      year++;
+    }
+  }
+
+  // console.log(new Date(year, month, 0).getDate());
+  // console.log(month);
+
+  month = String(month).padStart(2, "0");
+  day = String(day).padStart(2, "0");
+
   return `${year}-${month}-${day}`;
 }
 

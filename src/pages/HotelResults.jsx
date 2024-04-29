@@ -8,6 +8,7 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { HiOutlineStar } from "react-icons/hi";
 import { PiNumberCircleOneFill } from "react-icons/pi";
 import { BiSolidOffer } from "react-icons/bi";
+import { act } from "react";
 
 const sortBy = {
   rating: 0,
@@ -21,7 +22,7 @@ const initialState = {
     guestRatingFilter: 0,
     avgCostPerNightFilter: 0,
   },
-  filtersAppliedList: [],
+  filtersAppliedList: { rating: "", price: "" },
   sortByTag: "Recommended",
   isLoading: false,
   totalResults: "",
@@ -68,34 +69,50 @@ function reducer(state, action) {
           ...state.filterBy,
           guestRatingFilter: action.payload,
         },
-        filtersAppliedList: [
+        filtersAppliedList: {
           ...state.filtersAppliedList,
-          `${action.payload} & above`,
-        ],
+          rating: `${action.payload} & above`,
+        },
       };
 
     case "SET_PRICE_FILTER_VALUE":
+      const indexOfPriceFilter = action.payload;
       return {
         ...state,
         filterBy: { ...state.filterBy, avgCostPerNightFilter: action.payload },
-        filtersAppliedList: [
+        filtersAppliedList: {
           ...state.filtersAppliedList,
-          `₹${state.minPrice} - ₹${action.payload}`,
-        ],
+          price: `₹${state.minPrice} - ₹${action.payload}`,
+        },
       };
 
     case "RESET_APPLIED_FILTER":
-      const updatedFilterList = state.filtersAppliedList.filter(
-        (filterValue) => !filterValue.includes("above")
-      );
+      const updatedFilterBy = { ...state.filterBy };
+      const updatedFiltersApplliedList = { ...state.filtersAppliedList };
+      if (action.payload === "rating") {
+        updatedFilterBy.guestRatingFilter = 0;
+        updatedFiltersApplliedList.rating = "";
+      } else if (action.payload === "price") {
+        updatedFilterBy.avgCostPerNightFilter = 0;
+        updatedFiltersApplliedList.price = "";
+      }
+      return {
+        ...state,
+        filterBy: updatedFilterBy,
+        filtersAppliedList: updatedFiltersApplliedList,
+      };
 
+    case "RESET_ALL_FILTER":
       return {
         ...state,
         filterBy: {
-          ...state.filterBy,
           guestRatingFilter: 0,
+          avgCostPerNightFilter: 0,
         },
-        filtersAppliedList: updatedFilterList,
+        filtersAppliedList: {
+          rating: "",
+          price: "",
+        },
       };
 
     default:
@@ -127,7 +144,7 @@ export default function HotelResults() {
   // console.log(filtersAppliedList?.some((str) => str.includes("above")));
   // console.log(maxPrice);
   // console.log(minPrice);
-  console.log(filterBy.avgCostPerNightFilter);
+  // console.log(filterBy.avgCostPerNightFilter);
 
   const [searchParams] = useSearchParams();
 
@@ -241,7 +258,7 @@ export default function HotelResults() {
       console.log(err);
     }
 
-    console.log(URL.join(""));
+    // console.log(URL.join(""));
   }
 
   useEffect(
@@ -274,6 +291,10 @@ export default function HotelResults() {
       }
     })();
   }, []);
+
+  const showFilltersApplied = Object.values(filtersAppliedList)?.some(
+    (value) => value !== ""
+  );
 
   return (
     <>
@@ -378,12 +399,12 @@ export default function HotelResults() {
             onClick={(e) => setStarCategoryAnchorEl(e.currentTarget)}
             variant="outlined"
             className={`normal-case text-black rounded-2xl ${
-              filtersAppliedList?.some((str) => str.includes("above"))
+              filtersAppliedList?.rating !== ""
                 ? "border-2 border-black"
                 : "border-stone-300"
             }`}
             endIcon={
-              filtersAppliedList?.some((str) => str.includes("above")) ? (
+              filtersAppliedList?.rating !== "" ? (
                 <PiNumberCircleOneFill />
               ) : starCategoryAnchorEl ? (
                 <FaAngleUp size={15} />
@@ -488,21 +509,14 @@ export default function HotelResults() {
             onClick={(e) => setPriceFilterAnchorEl(e.currentTarget)}
             variant="outlined"
             className={`normal-case text-black rounded-2xl ${
-              filtersAppliedList?.some((str) => str.includes("above"))
+              filtersAppliedList?.price !== ""
                 ? "border-2 border-black"
                 : "border-stone-300"
             }`}
-            // endIcon={
-            //   filtersAppliedList?.some((str) => str.includes("above")) ? (
-            //     <PiNumberCircleOneFill />
-            //   ) : starCategoryAnchorEl ? (
-            //     <FaAngleUp size={15} />
-            //   ) : (
-            //     <FaAngleDown size={15} />
-            //   )
-            // }
             endIcon={
-              priceFilterAnchorEl ? (
+              filtersAppliedList?.price !== "" ? (
+                <PiNumberCircleOneFill />
+              ) : priceFilterAnchorEl ? (
                 <FaAngleUp size={15} />
               ) : (
                 <FaAngleDown size={15} />
@@ -566,33 +580,43 @@ export default function HotelResults() {
 
       {/* ///HOTEL CARD  */}
       <div className="my-10">
-        {filtersAppliedList.length > 0 && (
+        {showFilltersApplied && (
           <>
-            <div className="px-10 font-medium pb-10 max-sm:text-xl flex max-sm:flex-col gap-3 items-center justify-between whitespace-nowrap">
+            <div className="px-10 font-medium pb-10 flex max-sm:flex-col gap-3 items-center justify-between whitespace-nowrap">
               <div className="flex gap-2 items-center overflow-x-scroll">
                 <p>Filters applied</p>
-                {Object.entries(filtersAppliedList).map(([key, value]) => (
-                  <p
-                    key={key}
-                    className="border-2 p-2 text-sm rounded-2xl border-black bg-[#F3F3F3]"
-                  >
-                    <span>{value}</span>
-                    <span
-                      onClick={() => {
-                        dispatch({
-                          type: "RESET_APPLIED_FILTER",
-                          payload: value,
-                        });
-                      }}
-                      className="pl-2 font-light cursor-pointer"
+                {Object.entries(filtersAppliedList)
+                  .filter(([key, value]) => value !== "")
+                  .map(([key, value]) => (
+                    <p
+                      key={key}
+                      className="border-2 p-2 text-sm rounded-2xl border-black bg-[#F3F3F3] max-sm:p-1 max-sm:text-xs"
                     >
-                      &#x2717;
-                    </span>
-                  </p>
-                ))}
+                      <span>{value}</span>
+                      <span
+                        onClick={() => {
+                          dispatch({
+                            type: "RESET_APPLIED_FILTER",
+                            payload: key,
+                          });
+                          console.log(key);
+                        }}
+                        className="pl-2 font-light cursor-pointer"
+                      >
+                        &#x2717;
+                      </span>
+                    </p>
+                  ))}
               </div>
 
-              <p className="text-[#0E6AFF] text-sm">Clear all</p>
+              <p
+                onClick={() => {
+                  dispatch({ type: "RESET_ALL_FILTER" });
+                }}
+                className="text-[#0E6AFF] text-sm cursor-pointer"
+              >
+                Clear all
+              </p>
             </div>
           </>
         )}
