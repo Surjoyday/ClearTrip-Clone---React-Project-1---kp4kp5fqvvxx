@@ -20,7 +20,7 @@ import {
   getDayOfWeek,
 } from "../assets/helper";
 import { RightLeftArrow } from "../assets/icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const initialState = {
   fromInput: null,
@@ -93,6 +93,8 @@ function reducer(state, action) {
 export default function Flight() {
   const navigate = useNavigate();
 
+  // const loaction = useLocation();
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
@@ -109,6 +111,7 @@ export default function Flight() {
     destination,
   } = state;
 
+  // console.log(loaction);
   // console.log(airportData);
 
   // console.log(typeof fromInput === "string");
@@ -127,7 +130,7 @@ export default function Flight() {
 
   // GETING ALL AIRPORTS DATA ON INITIAL RENDER
   async function getAllAirportsData() {
-    const res = await fetch(`${base_URL}/airport?search={"city":""}`, {
+    const res = await fetch(`${base_URL}/airport?search={"city":""}&limit=30`, {
       method: "GET",
       headers: HEADERS,
     });

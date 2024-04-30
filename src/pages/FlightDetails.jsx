@@ -65,7 +65,7 @@ export default function FlightDetails() {
 
   const timeOutRef = useRef(null);
 
-  const itinerary = params.itinerary;
+  const itinerary = params.flightID;
 
   const {
     fromLocation,
@@ -256,6 +256,7 @@ export default function FlightDetails() {
 
   useEffect(() => {
     async function getFlightDetails() {
+      setIsError((error) => ({ ...error, invalidItinerary: false }));
       setIsLoading(true);
       try {
         const res = await fetch(`${base_URL}/flight/${itinerary}`, {

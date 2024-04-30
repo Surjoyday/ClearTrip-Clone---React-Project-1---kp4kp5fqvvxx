@@ -3,6 +3,7 @@ import {
   appOfferImage,
   getCurrentDate,
   getDayOfWeek,
+  getTommorrowsDate,
   popularDestinationsImages,
 } from "../assets/helper";
 import { useState } from "react";
@@ -31,6 +32,12 @@ export default function AboutSite() {
             dateInput: getCurrentDate(),
           },
         }
+      );
+    } else if (location.pathname === "/hotels") {
+      const checkIn = getCurrentDate(new Date());
+      const checkOut = getTommorrowsDate(new Date());
+      navigate(
+        `/hotels/results?city=${city}&chk_in=${checkIn}&chk_out=${checkOut}&guests=${1}&rooms=${1}`
       );
     }
   }

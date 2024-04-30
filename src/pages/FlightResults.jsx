@@ -488,7 +488,7 @@ export default function FlightResults() {
                         type="range"
                         min={minPrice}
                         max={maxPrice}
-                        value={ticketPriceValue}
+                        defaultValue={ticketPriceValue}
                         onMouseUp={(e) =>
                           dispatch({
                             type: "SET_FILTER_PRICE",
@@ -606,7 +606,7 @@ export default function FlightResults() {
           </div>
 
           <div className="flight-results w-full  flex flex-col gap-4 mr-10 p-2">
-            <div className="card_col_heading max-sm:hidden px-6 py-1 sticky top-0 z-10 bg-[#F7F7F7] text-stone-600 text-sm flex justify-around border rounded-md">
+            <div className="card_col_heading max-sm:hidden px-6 py-1 sticky top-32 z-10 bg-[#F7F7F7] text-stone-600 text-sm flex justify-around border rounded-md">
               <p className="pr-10">Airline</p>
               <div className="flex gap-28 justify-center pr-20">
                 <p>Departure</p>

@@ -8,7 +8,12 @@ import { PiCalendarBlankLight } from "react-icons/pi";
 import { IoPersonOutline } from "react-icons/io5";
 
 import { useAuth } from "../context/AuthContext";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 export default function Navbar() {
   const { showLoginSignupModal, handleLogout, token, name } = useAuth();
@@ -16,6 +21,10 @@ export default function Navbar() {
   const location = useLocation();
 
   const urlState = location.state;
+
+  // const params = useParams();
+
+  // console.log(params.itinerary);
 
   // console.log(location.pathname);
 
@@ -29,7 +38,11 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="shadow">
+      <nav
+        className={` sticky top-0 bg-white z-20 ${
+          location.pathname === "/hotels/results" ? "" : "shadow"
+        }`}
+      >
         <div className="mx-8 py-4 nav-width">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
@@ -37,7 +50,8 @@ export default function Navbar() {
 
               {(location.pathname === "/offers" ||
                 location.pathname.includes("/mytrips") ||
-                location.pathname === "/flights/results") && (
+                location.pathname === "/flights/results" ||
+                location.pathname === "/hotels/results") && (
                 <>
                   <Link to={"/flights"}>
                     <MdFlight
@@ -67,16 +81,18 @@ export default function Navbar() {
             <div className="flex items-center">
               {token ? (
                 <>
-                  <span className="pr-3">
+                  <span className="pr-3 max-sm:pr-2">
                     {name && (
                       <>
-                        <span className="text-lg">Hi, </span>{" "}
-                        <span className="text-lg font-medium">{name}</span>
+                        <span className="text-lg max-sm:text-xs">Hi, </span>{" "}
+                        <span className="text-lg max-sm:text-xs font-medium">
+                          {name}
+                        </span>
                       </>
                     )}
                   </span>
                   <button
-                    className="font-semibold text-base px-2 py-2 bg-[#0e6aff] text-[white] rounded-lg border-none mx-sm:text-xs max-sm:font-normal"
+                    className="font-medium text-base max-sm:text-xs px-2 py-2 bg-[#0e6aff] text-[white] rounded-lg border-none mx-sm:text-xs max-sm:font-normal"
                     onClick={handleLogout}
                   >
                     Log out
@@ -84,7 +100,12 @@ export default function Navbar() {
                 </>
               ) : (
                 <button
-                  className="font-semibold text-base px-2 py-2 bg-[#0e6aff] text-[white] rounded-md border-none mx-sm:text-xs max-sm:font-normal"
+                  className={`${
+                    location.pathname === "/flights" ||
+                    location.pathname === "/hotels"
+                      ? "bg-[#0e6aff] text-[white]"
+                      : "border border-stone-400 text-black"
+                  } font-medium text-base max-sm:text-xs px-2 py-2  rounded-md mx-sm:text-xs max-sm:font-normal`}
                   onClick={showLoginSignupModal}
                 >
                   Login / Sign up
@@ -95,7 +116,10 @@ export default function Navbar() {
           {location.pathname === "/flights/results" && (
             <FlightSearchSummary urlState={urlState} />
           )}
-          {location.pathname === "/hotels/results" && <HotelSearchedSummary />}
+          {(location.pathname === "/hotels/results" ||
+            location.pathname.includes("/hotels/itinerary/")) && (
+            <HotelSearchedSummary />
+          )}
         </div>
       </nav>
 

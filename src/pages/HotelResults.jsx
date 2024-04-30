@@ -300,7 +300,7 @@ export default function HotelResults() {
     <>
       {isLoading && <Loader />}
 
-      <div className="whitespace-nowrap flex gap-5 items-center px-10 justify-start sticky top-0 py-4 z-10 bg-white border-b overflow-x-scroll">
+      <div className="whitespace-nowrap flex gap-5 items-center px-10 justify-start sticky top-28 max-sm:top-40 py-4 z-20 bg-white border-b overflow-x-scroll">
         <h1 className="text-[#0E6AFF] font-medium text-sm">All filters</h1>
         <div>
           <Button

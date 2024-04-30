@@ -21,6 +21,7 @@ import FlightsBooked from "./components/FlightsBooked";
 import HotelsBooked from "./components/HotelsBooked";
 import Profile from "./components/Profile";
 import HotelResults from "./pages/HotelResults";
+import HotelDetails from "./pages/HotelDetails";
 
 export default function App() {
   return (
@@ -36,13 +37,21 @@ export default function App() {
                 <Route path="flights" element={<Flight />} />
                 <Route path="hotels" element={<Hotels />} />
               </Route>
+
               <Route path="offers" element={<Offers />} />
+
               <Route path="flights/results" element={<FlightResults />} />
               <Route
-                path="flights/results/:itinerary"
+                path="flights/itinerary/:flightID"
                 element={<FlightDetails />}
               />
+
               <Route path="hotels/results" element={<HotelResults />} />
+              <Route
+                path="hotels/itinerary/:hotelID"
+                element={<HotelDetails />}
+              />
+
               <Route path="mytrips" element={<MyTrips />}>
                 <Route
                   index
@@ -52,6 +61,7 @@ export default function App() {
                 <Route path="mytripshotels" element={<HotelsBooked />} />
                 <Route path="profile" element={<Profile />} />
               </Route>
+
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>

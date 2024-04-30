@@ -28,7 +28,7 @@ export default function FlightCard({ flight }) {
 
   function handleNavigate() {
     if (token) {
-      navigate(`${flight._id}`, {
+      navigate(`/flights/itinerary/${flight._id}`, {
         state: {
           fromLocation,
           toLocation,
@@ -73,7 +73,7 @@ export default function FlightCard({ flight }) {
           </p>
         </div>
 
-        <div className="departure-diration-arrival flex max-sm:flex-col items-center gap-20 max-sm:gap-10">
+        <div className="departure-diration-arrival flex max-sm:flex-col items-center gap-24 max-sm:gap-10">
           <div className="departure-time text-xl">
             <p>{flight.departureTime}</p>
           </div>

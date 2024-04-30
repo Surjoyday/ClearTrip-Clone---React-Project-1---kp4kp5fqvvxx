@@ -29,7 +29,7 @@ function TripProvider({ children }) {
         (type) => type["booking_type"] === "flight"
       );
 
-      /// FILTERING HOTELS BOOKED DATA ..........
+      /// FILTERING HOTELS BOOKED DATA SEPERATE FUNCTION..........
 
       if (resData.status === "fail") throw new Error(resData?.message);
 

@@ -23,6 +23,8 @@ function getTommorrowsDate() {
 
   // console.log("day", day);
 
+  /// 0 means last day of the previous month
+
   if (day > new Date(year, month, 0).getDate()) {
     day = 1;
     month++;

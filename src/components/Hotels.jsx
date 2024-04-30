@@ -88,7 +88,7 @@ export default function Hotels() {
 
   // GETTING ALL AVILABLE CITIES
   async function getAllCities() {
-    const res = await fetch(`${base_URL}/city`, {
+    const res = await fetch(`${base_URL}/city?limit=40`, {
       method: "GET",
       headers: HEADERS,
     });

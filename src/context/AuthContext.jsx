@@ -96,6 +96,7 @@ function AuthProvider({ children }) {
     localStorage.removeItem("userDetails");
     localStorage.removeItem("name");
     localStorage.removeItem("email");
+    localStorage.removeItem("flightBookingIDs");
     dispatch({ type: "logout" });
     toast.info("You have successfully logged out");
   }
