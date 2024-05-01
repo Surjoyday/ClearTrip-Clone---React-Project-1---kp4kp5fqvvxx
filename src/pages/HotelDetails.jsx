@@ -1,11 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { HEADERS, base_URL } from "../assets/helper";
-import { MdOutlineFastfood, MdOutlineLocalBar } from "react-icons/md";
+import {
+  MdOutlineFastfood,
+  MdOutlineLocalBar,
+  MdOutlineFreeCancellation,
+} from "react-icons/md";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { CgGym } from "react-icons/cg";
 import { FaWifi, FaSwimmer, FaSpa } from "react-icons/fa";
+import { BiBed } from "react-icons/bi";
+
+import Loader from "../components/Loader";
+import PageNotFound from "../pages/PageNotFound";
 
 function amenityIcons(amenities) {
   switch (amenities.toLowerCase()) {
@@ -31,7 +39,11 @@ export default function HotelDetails() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [imageIndex, setImgIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState("general");
   const imageRef = useRef(null);
+  const generalRef = useRef(null);
+  const amenitiesRef = useRef(null);
+  const roomsRef = useRef(null);
   const params = useParams();
   const [searchParams] = useSearchParams();
 
@@ -62,6 +74,7 @@ export default function HotelDetails() {
   function handleMouseLeave() {
     imageRef.current.querySelector(".left-button").classList.remove("visible");
     imageRef.current.querySelector(".right-button").classList.remove("visible");
+    setImgIndex(0);
   }
 
   useEffect(function () {
@@ -96,120 +109,222 @@ export default function HotelDetails() {
   // console.log(hotelData);
 
   // console.log(location);
+
+  if (isLoading) return <Loader />;
+
+  if (!isLoading && isError) return <PageNotFound />;
+
   return (
     <>
-      <div className="border-b pt-4 px-12 sticky top-28 max-sm:top-40 z-20 bg-white">
-        <ul className="flex gap-7 px-7">
-          <li>General</li>
-          <li>Amenities</li>
-          {/* <li>Rules</li> */}
-          <li>Rooms</li>
-        </ul>
-      </div>
+      <div className="mb-10">
+        <div className="border-b pt-4 px-12 sticky top-28 max-sm:top-32 z-20 bg-white">
+          <ul className="flex gap-7 px-7">
+            <li>
+              <button
+                onClick={() => {
+                  generalRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "end",
+                  });
 
-      <div className="flex justify-between gap-7 px-20 max-sm:p-10 max-sm:flex-col mt-7">
-        <div className="w-11/12 flex flex-col gap-10">
-          {/* /// GENERAL */}
-          <div className="flex flex-col gap-4">
-            <h1 className="text-3xl font-semibold">{hotelData?.name}</h1>
-            <p className="text-stone-500">
-              5-star Hotel &middot; {hotelData?.location}
-            </p>
+                  setActiveTab("general");
+                }}
+                className={
+                  activeTab === "general" ? "border-b-2 border-black" : ""
+                }
+              >
+                General
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  amenitiesRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "end",
+                  });
 
-            <div className="flex items-center gap-2 ">
-              <p className="bg-[#EBF8F4] rounded-md p-1 w-fit font-semibold">
-                <span className="text-[#0FA670]">
-                  {hotelData?.rating?.toFixed(1)}
-                </span>
+                  setActiveTab("amenities");
+                }}
+                className={
+                  activeTab === "amenities" ? "border-b-2 border-black" : ""
+                }
+              >
+                Amenities
+              </button>
+            </li>
+            {/* <li>Rules</li> */}
+            <li>
+              <button
+                onClick={() => {
+                  roomsRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+
+                  setActiveTab("rooms");
+                }}
+                className={
+                  activeTab === "rooms" ? "border-b-2 border-black" : ""
+                }
+              >
+                Rooms
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div className="flex justify-between gap-7 px-20 max-sm:p-10 max-sm:flex-col mt-7">
+          <div className="w-11/12 flex flex-col gap-10">
+            {/* /// GENERAL */}
+
+            <div ref={generalRef} className="flex flex-col gap-4">
+              <h1 className="text-3xl font-semibold">{hotelData?.name}</h1>
+              <p className="text-stone-500">
+                5-star Hotel &middot; {hotelData?.location}
               </p>
-              <p className="font-semibold border-b">600+ ratings</p>
-            </div>
 
-            <div className="flex gap-2 items-start pt-4">
-              <MdOutlineFastfood size={22} />
-              <div>
-                <p className="font-medium">Free breakfast on select plans </p>
-                <p className="text-stone-500 text-sm">
-                  Some plans include free breakfast
+              <div className="flex items-center gap-2 ">
+                <p className="bg-[#EBF8F4] rounded-md p-1 w-fit font-semibold">
+                  <span className="text-[#0FA670]">
+                    {hotelData?.rating?.toFixed(1)}
+                  </span>
                 </p>
+                <p className="font-semibold border-b">600+ ratings</p>
+              </div>
+
+              <div className="flex gap-2 items-start pt-4">
+                <MdOutlineFastfood size={22} />
+                <div>
+                  <p className="font-medium">Free breakfast on select plans </p>
+                  <p className="text-stone-500 text-sm">
+                    Some plans include free breakfast
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* /// AMENITIES */}
-          <div>
-            <p className="text-2xl font-semibold pb-4">Amenities</p>
-            <div>
-              {hotelData?.amenities?.map((amenity, index) => (
-                <p key={index} className="flex items-center gap-7 p-3">
-                  <span>{amenityIcons(amenity)}</span> <span>{amenity}</span>
-                </p>
-              ))}
+            {/* /// AMENITIES */}
+
+            <div ref={amenitiesRef}>
+              <p className="text-2xl font-semibold pb-4">Amenities</p>
+              <div>
+                {hotelData?.amenities?.map((amenity, index) => (
+                  <p key={index} className="flex items-center gap-7 p-3">
+                    <span>{amenityIcons(amenity)}</span> <span>{amenity}</span>
+                  </p>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* /// PROPERTY RULES */}
-          {/* <div>
+            {/* /// PROPERTY RULES */}
+            {/* <div>
             <p className="text-2xl font-semibold pb-4">Property Rules</p>
           </div> */}
-        </div>
-
-        {/* /// HOTEL IMAGE & SELECT ROOM BTN */}
-
-        <div
-          className="w-full relative"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          ref={imageRef}
-        >
-          <div onClick={handleMovetoPrevImg}>
-            <button className="absolute z-10 top-1/2 left-3 transform -translate-y-1/2 p-1 bg-slate-100 rounded-full left-button">
-              <FaAngleLeft size={24} />
-            </button>
-          </div>
-          <img
-            src={hotelData?.images?.at(imageIndex)}
-            alt={hotelData?.name}
-            className="h-96 max-sm:h-44 w-full object-cover rounded-lg"
-          />
-          {/* <span className="absolute z-10 transform -translate-y-1/2 bottom-28 right-6  text-lg bg-slate-50 rounded-full px-2">
-    {imageIndex + 1} of {hotelData?.images?.length} images
-  </span> */}
-
-          <div onClick={handleMovetoNextImg}>
-            <button className="absolute z-10 top-1/2 right-3 transform -translate-y-1/2 p-1 bg-slate-100 rounded-full right-button">
-              <FaAngleRight size={24} />
-            </button>
           </div>
 
-          <div className="mt-7 border rounded-md  p-5 flex justify-between">
-            <div className="flex gap-1 items-center">
-              <p className="font-semibold text-2xl">
-                &#8377;{Math.trunc(hotelData?.avgCostPerNight)}
-              </p>
-              <p className="text-sm">&#43;</p>
-              <p className="text-sm ">
-                &#8377;{Math.trunc(hotelData?.avgCostPerNight / 7.76)}
-              </p>
-              <p className="text-xs ">
-                <span>tax</span> <span className="text-stone-500">/ night</span>
-              </p>
+          {/* /// HOTEL IMAGE & SELECT ROOM BTN */}
+
+          <div
+            className="w-full"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            ref={imageRef}
+          >
+            <div className="relative">
+              <div onClick={handleMovetoPrevImg}>
+                <button className="absolute z-10 top-1/2 left-3 transform -translate-y-1/2 p-1 bg-slate-100 rounded-full left-button">
+                  <FaAngleLeft size={24} />
+                </button>
+              </div>
+              <img
+                src={hotelData?.images?.at(imageIndex)}
+                alt={hotelData?.name}
+                className="h-96 max-sm:h-44 w-full object-cover rounded-lg"
+              />
+              <span className="absolute z-10 transform -translate-y-1/2 bottom-0 right-6 p-2  text-xs bg-slate-50 rounded-full px-2">
+                {imageIndex + 1} / {hotelData?.images?.length}
+              </span>
+
+              <div onClick={handleMovetoNextImg}>
+                <button className="absolute z-10 top-1/2 right-3 transform -translate-y-1/2 p-1 bg-slate-100 rounded-full right-button">
+                  <FaAngleRight size={24} />
+                </button>
+              </div>
             </div>
-            <button className="bg-[#FF4F17] p-2 rounded-md text-sm text-white font-semibold">
-              Select Room
-            </button>
+
+            <div className="mt-7 border rounded-md  p-5 flex justify-between">
+              <div className="flex gap-1 items-center">
+                <p className="font-semibold text-2xl">
+                  &#8377;{Math.trunc(hotelData?.avgCostPerNight)}
+                </p>
+                <p className="text-sm">&#43;</p>
+                <p className="text-sm ">
+                  &#8377;{Math.trunc(hotelData?.avgCostPerNight / 7.76)}
+                </p>
+                <p className="text-xs ">
+                  <span>tax</span>{" "}
+                  <span className="text-stone-500">/ night</span>
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  roomsRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                  setActiveTab("rooms");
+                }}
+                className="bg-[#FF4F17] p-2 rounded-md text-sm text-white font-semibold"
+              >
+                Select Room
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* /// ROOMS AVAILABLE */}
-      <div className="my-4 px-20 max-sm:p-10 ">
-        <p className="text-2xl font-semibold pb-4">Rooms Available</p>
+        {/* /// ROOMS AVAILABLE */}
+
+        <div className="my-7 px-20 max-sm:p-10 ">
+          <p id="rooms" ref={roomsRef} className="text-2xl font-semibold pb-4">
+            Rooms Available
+          </p>
+          <div className="flex flex-wrap justify-evenly gap-4">
+            {hotelData?.rooms?.map((room) => (
+              <RoomsAvialableCard key={room["_id"]} roomDetails={room} />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
 }
 
-// function RoomsAvialableCard(){
-//   return
-// }
+function RoomsAvialableCard({ roomDetails, roomsRef }) {
+  return (
+    <div className="border px-4 py-4 text-start rounded-md shadow-sm flex flex-col gap-3">
+      <p className="text-xl font-semibold">{roomDetails?.roomType} Room</p>
+      <p className="text-stone-500 text-sm">
+        {roomDetails?.roomSize?.toFixed(1)} sq.ft
+      </p>
+      <p className="flex items-center gap-2">
+        <BiBed size={20} />
+        {roomDetails?.bedDetail}
+      </p>
+      <p className="flex items-center gap-2">
+        <MdOutlineFreeCancellation size={20} />
+        {roomDetails?.cancellationPolicy}
+      </p>
+      <p>
+        <span className="text-lg font-medium">
+          &#8377; {roomDetails?.costPerNight}
+        </span>
+        <span className="text-stone-500"> / night</span>
+      </p>
+      <div className="w-100 m-auto">
+        <button className="bg-[#ff4f17] px-7 rounded-md py-2 font-semibold text-white">
+          Book
+        </button>
+      </div>
+    </div>
+  );
+}

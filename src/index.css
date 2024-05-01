@@ -88,3 +88,7 @@
 .visible {
   opacity: 1 !important;
 }
+
+a .genral__hotel:active {
+  text-decoration: underline;
+}
