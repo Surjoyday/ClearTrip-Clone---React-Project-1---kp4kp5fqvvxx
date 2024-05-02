@@ -22,6 +22,8 @@ import HotelsBooked from "./components/HotelsBooked";
 import Profile from "./components/Profile";
 import HotelResults from "./pages/HotelResults";
 import HotelDetails from "./pages/HotelDetails";
+import HotelConfirmation from "./pages/HotelConfirmation";
+import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 export default function App() {
   return (
@@ -43,13 +45,29 @@ export default function App() {
               <Route path="flights/results" element={<FlightResults />} />
               <Route
                 path="flights/itinerary/:flightID"
-                element={<FlightDetails />}
+                element={
+                  <ProtectedRoutes>
+                    <FlightDetails />
+                  </ProtectedRoutes>
+                }
               />
 
               <Route path="hotels/results" element={<HotelResults />} />
               <Route
                 path="hotels/itinerary/:hotelID"
-                element={<HotelDetails />}
+                element={
+                  <ProtectedRoutes>
+                    <HotelDetails />
+                  </ProtectedRoutes>
+                }
+              />
+              <Route
+                path="hotels/confirmation/:selectedRoomID"
+                element={
+                  <ProtectedRoutes>
+                    <HotelConfirmation />
+                  </ProtectedRoutes>
+                }
               />
 
               <Route path="mytrips" element={<MyTrips />}>

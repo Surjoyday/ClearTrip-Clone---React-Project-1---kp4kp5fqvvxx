@@ -9,6 +9,7 @@ import { HiOutlineStar } from "react-icons/hi";
 import { PiNumberCircleOneFill } from "react-icons/pi";
 import { BiSolidOffer } from "react-icons/bi";
 import { act } from "react";
+import { ToastContainer } from "react-toastify";
 
 const sortBy = {
   rating: 0,
@@ -638,6 +639,8 @@ export default function HotelResults() {
           className="flex justify-center mb-2"
         />
       </div>
+
+      <ToastContainer position="top-center" autoClose={2000} />
     </>
   );
 }

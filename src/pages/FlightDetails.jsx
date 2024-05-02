@@ -290,7 +290,7 @@ export default function FlightDetails() {
       {!isLoading && isError.invalidItinerary && <PageNotFound />}
       {!isLoading && !isError.invalidItinerary && (
         <>
-          <div className="container flex w-full gap-20 justify-around mt-10 mb-10 max-sm:flex-col">
+          <div className="container flex w-full max-sm:p-3 gap-20 justify-around mt-10 mb-10 max-sm:flex-col ">
             <div className="sub-conatiner-1  flex flex-col gap-5 ml-12 max-sm:ml-0 max-sm:p-5">
               <div className="row_num__1 flex gap-3 items-center">
                 <PiNumberCircleOne size={30} />
@@ -610,7 +610,7 @@ export default function FlightDetails() {
               </div>
             </div>
 
-            <div className="fare-price max-sm:w-full  w-3/12 border h-1/3 rounded-md sticky top-1 z-10 ">
+            <div className="fare-price max-sm:w-full w-3/12 border h-1/3 rounded-md sticky top-1 z-10 ">
               <div className="p-4">
                 <div className="flex justify-between">
                   <p>Total Price </p>

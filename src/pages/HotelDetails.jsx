@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { HEADERS, base_URL } from "../assets/helper";
 import {
   MdOutlineFastfood,
@@ -53,6 +53,17 @@ export default function HotelDetails() {
   const checkOutDate = searchParams.get("chk_out");
   const guests = searchParams.get("guests");
   const rooms = searchParams.get("rooms");
+
+  const navigate = useNavigate();
+
+  function handleNavigate(selectedRoomId) {
+    navigate(
+      `/hotels/confirmation/${selectedRoomId}?guests=${guests}&rooms=${rooms}`,
+      {
+        state: { hotelData },
+      }
+    );
+  }
 
   function handleMovetoNextImg() {
     setImgIndex((nextIndex) =>
@@ -288,9 +299,13 @@ export default function HotelDetails() {
           <p id="rooms" ref={roomsRef} className="text-2xl font-semibold pb-4">
             Rooms Available
           </p>
-          <div className="flex flex-wrap justify-evenly gap-4">
+          <div className="flex flex-wrap justify-evenly gap-10 mt-7">
             {hotelData?.rooms?.map((room) => (
-              <RoomsAvialableCard key={room["_id"]} roomDetails={room} />
+              <RoomsAvialableCard
+                key={room["_id"]}
+                roomDetails={room}
+                onNavigate={handleNavigate}
+              />
             ))}
           </div>
         </div>
@@ -299,10 +314,14 @@ export default function HotelDetails() {
   );
 }
 
-function RoomsAvialableCard({ roomDetails, roomsRef }) {
+function RoomsAvialableCard({ roomDetails, onNavigate }) {
+  // console.log(roomDetails?._id);
+
   return (
-    <div className="border px-4 py-4 text-start rounded-md shadow-sm flex flex-col gap-3">
-      <p className="text-xl font-semibold">{roomDetails?.roomType} Room</p>
+    <div className="border p-4 text-start rounded-md shadow-sm flex flex-col gap-3">
+      <p className="text-xl font-medium">
+        {roomDetails?.roomType} <span>Room</span>
+      </p>
       <p className="text-stone-500 text-sm">
         {roomDetails?.roomSize?.toFixed(1)} sq.ft
       </p>
@@ -320,8 +339,11 @@ function RoomsAvialableCard({ roomDetails, roomsRef }) {
         </span>
         <span className="text-stone-500"> / night</span>
       </p>
-      <div className="w-100 m-auto">
-        <button className="bg-[#ff4f17] px-7 rounded-md py-2 font-semibold text-white">
+      <div className="pt-3">
+        <button
+          onClick={() => onNavigate(roomDetails?._id)}
+          className="w-full bg-[#ff4f17] px-7 rounded-md py-2 font-semibold text-white"
+        >
           Book
         </button>
       </div>
