@@ -164,18 +164,15 @@ export default function FlightDetails() {
 
     setIsError((err) => ({ ...err, ...errors }));
 
-    if (Object.keys(errors).length === 0) {
-      setIsFormValidated(true);
+    const hasNoErrors = Object.values(errors).every((err) => err === "");
+
+    if (hasNoErrors) {
+      handleOpenModal();
     }
   }
 
   function handleOpenModal() {
-    if (
-      isFormValidated &&
-      Object.values(isError).some((error) => error === "")
-    ) {
-      setIsOpenModal(true);
-    }
+    setIsOpenModal(true);
   }
 
   function handleCloseModal() {
@@ -244,15 +241,6 @@ export default function FlightDetails() {
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (
-      !Object.values(isError).some((error) => error !== "") &&
-      isFormValidated
-    ) {
-      setIsOpenModal(true);
-    }
-  }, [isError, isFormValidated]);
 
   useEffect(() => {
     async function getFlightDetails() {
@@ -516,7 +504,6 @@ export default function FlightDetails() {
                   className="bg-[#F77727] p-2 rounded-md text-white font-semibold hover:bg-[#d4581d]"
                   onClick={() => {
                     handleFormValidation();
-                    handleOpenModal();
                   }}
                 >
                   Continue to Payment
@@ -527,7 +514,7 @@ export default function FlightDetails() {
                   aria-labelledby="modal-modal-title"
                   aria-describedby="modal-modal-description"
                 >
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-400 rounded-md bg-white shadow-md p-4">
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  rounded-md bg-white shadow-md p-4">
                     <div className="flex justify-between items-center">
                       <h1 className="text-xl">Review Information</h1>
                       <div onClick={handleCloseModal}>
@@ -573,27 +560,23 @@ export default function FlightDetails() {
                       </div>
 
                       <div className="flex flex-col gap-2 border p-4 rounded-sm">
-                        <p>
-                          <span className="text-md font-normal pr-1">
-                            Name:
-                          </span>
-                          {travellerDetails.firstName}{" "}
-                          {travellerDetails.lastName}
-                        </p>
+                        <div className="flex justify-between">
+                          <p className="text-sm font-normal pr-1">Name</p>
+                          <p>
+                            {travellerDetails.firstName}{" "}
+                            {travellerDetails.lastName}
+                          </p>
+                        </div>
 
-                        <p>
-                          <span className="text-md font-normal pr-1">
-                            Mobile:
-                          </span>
-                          {phoneNumber}
-                        </p>
+                        <div className="flex justify-between">
+                          <p className="text-sm font-normal pr-1">Mobile</p>
+                          <p>{phoneNumber}</p>
+                        </div>
 
-                        <p>
-                          <span className="text-md font-normal pr-1">
-                            Email:
-                          </span>
-                          {email}
-                        </p>
+                        <div className="flex justify-between items-center">
+                          <p className="text-sm font-normal pr-1">Email</p>
+                          <p className="text-sm"> {email}</p>
+                        </div>
                       </div>
 
                       {/* <hr className="my-3" /> */}
