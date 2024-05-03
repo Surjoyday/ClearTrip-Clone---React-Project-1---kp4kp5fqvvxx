@@ -173,7 +173,6 @@ function FlightSearchSummary({ urlState }) {
           </p>
         </div>
       </div>
-      <ToastContainer position="top-center" autoClose={2000} />
     </>
   );
 }

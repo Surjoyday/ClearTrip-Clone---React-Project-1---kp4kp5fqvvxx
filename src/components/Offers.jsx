@@ -8,6 +8,7 @@ import { RiHotelBedLine } from "react-icons/ri";
 import { BsTaxiFrontFill } from "react-icons/bs";
 import OffersCard from "./OffersCard";
 import Loader from "./Loader";
+import { ToastContainer } from "react-toastify";
 
 function Offers() {
   const [allOffers, setAllOffers] = useState([]);
@@ -136,6 +137,7 @@ function Offers() {
           {isActive === "cabs" && <OffersCard offerCardData={cabOffers} />}
         </div>
       </aside>
+      <ToastContainer position="top-center" autoClose={2000} />
     </>
   );
 }
