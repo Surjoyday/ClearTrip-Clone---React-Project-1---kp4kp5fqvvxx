@@ -12,6 +12,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { IoLocationSharp } from "react-icons/io5";
 import { GrMapLocation } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const initialState = {
   searchedCity: "",
