@@ -14,6 +14,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 export default function Navbar() {
   const { showLoginSignupModal, handleLogout, token, name } = useAuth();
@@ -172,6 +173,7 @@ function FlightSearchSummary({ urlState }) {
           </p>
         </div>
       </div>
+      <ToastContainer position="top-center" autoClose={2000} />
     </>
   );
 }
