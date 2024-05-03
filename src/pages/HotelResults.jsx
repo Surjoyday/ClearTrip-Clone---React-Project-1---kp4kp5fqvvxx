@@ -301,7 +301,7 @@ export default function HotelResults() {
     <>
       {isLoading && <Loader />}
 
-      <div className="whitespace-nowrap flex gap-5 items-center px-10 justify-start sticky top-28 max-sm:top-40 py-4 z-20 bg-white border-b overflow-x-scroll">
+      <div className="whitespace-nowrap flex gap-5 items-center px-10 justify-start sticky top-28 max-sm:top-36 py-4 z-20 bg-white border-b overflow-x-scroll">
         <h1 className="text-[#0E6AFF] font-medium text-sm">All filters</h1>
         <div>
           <Button
@@ -323,7 +323,7 @@ export default function HotelResults() {
             onClose={() => setAnchorEl(null)}
             TransitionComponent={Fade}
           >
-            <div className="p-4 flex items-start flex-col gap-3">
+            <div className="p-7 flex items-start flex-col gap-3">
               <h1 className="font-semibold text-xl">Sort hotels by</h1>
 
               <div className="flex gap-2 items-center">
@@ -425,7 +425,7 @@ export default function HotelResults() {
             onClose={() => setStarCategoryAnchorEl(null)}
             TransitionComponent={Fade}
           >
-            <div className={`p-4 flex gap-2  items-start flex-col `}>
+            <div className={`p-7 flex gap-2  items-start flex-col `}>
               <h1 className="font-semibold text-lg">Guest ratings</h1>
 
               <div className="flex items-center gap-3">
@@ -537,7 +537,7 @@ export default function HotelResults() {
             TransitionComponent={Fade}
           >
             <div
-              className="p-4 flex flex-col gap-3 items-start"
+              className="p-7 flex flex-col gap-3 items-start"
               onMouseLeave={() => setPriceFilterAnchorEl(null)}
             >
               <div>

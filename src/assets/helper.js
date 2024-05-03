@@ -70,7 +70,16 @@ function formatDatesForDetailsPage(date) {
   return `${parts[0]} ${parts[2]} ${parts[1]}`;
 }
 
-function formatDateTimeISOString(date, time) {
+/// CREATING CURRENT TIME FOR DEFAULT VALUE NOT EXPORTING
+
+function getCurrentTime() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
+
+function formatDateTimeISOString(date, time = getCurrentTime()) {
   const dateReceived = new Date(date);
 
   const [hoursReceived, minutesReceived] = time.split(":");
@@ -81,6 +90,13 @@ function formatDateTimeISOString(date, time) {
   const ISOString = dateReceived.toISOString();
 
   return ISOString;
+}
+
+function calcTotalNights(checkIn, checkOut) {
+  const oneDay = 24 * 60 * 60 * 1000;
+  const totalNights = Math.round(Math.abs((checkOut - checkIn) / oneDay));
+
+  return totalNights;
 }
 
 const moreOffers = [
@@ -219,4 +235,5 @@ export {
   formatDatesForDetailsPage,
   formatDateTimeISOString,
   airlineComapaniesForMyTrips,
+  calcTotalNights,
 };

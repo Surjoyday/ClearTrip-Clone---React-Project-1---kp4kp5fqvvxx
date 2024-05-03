@@ -610,7 +610,7 @@ export default function FlightDetails() {
               </div>
             </div>
 
-            <div className="fare-price max-sm:w-full w-3/12 border h-1/3 rounded-md sticky top-1 z-10 ">
+            <div className="fare-price max-sm:w-full w-3/12 border h-1/3 rounded-md sticky top-28 z-10 ">
               <div className="p-4">
                 <div className="flex justify-between">
                   <p>Total Price </p>

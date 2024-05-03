@@ -88,3 +88,36 @@
 .visible {
   opacity: 1 !important;
 }
+
+.circle__parent {
+  position: relative;
+}
+.left__circle::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 10px;
+  border-top: 2px solid #e6e6e6;
+  border-left: 2px solid #e6e6e6;
+  top: 0px;
+  left: -6px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  transform: rotate(90deg);
+  background-color: white;
+}
+
+.right__circle::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 10px;
+  border-top: 2px solid #e6e6e6;
+  border-left: 2px solid #e6e6e6;
+  top: 0px;
+  right: -6px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  transform: rotate(270deg);
+  background-color: white;
+}

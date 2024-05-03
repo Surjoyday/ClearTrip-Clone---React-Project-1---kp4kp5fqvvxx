@@ -58,7 +58,7 @@ export default function HotelDetails() {
 
   function handleNavigate(selectedRoomId) {
     navigate(
-      `/hotels/confirmation/${selectedRoomId}?guests=${guests}&rooms=${rooms}`,
+      `/hotels/confirmation/${selectedRoomId}?chk_in=${checkInDate}&chk_out=${checkOutDate}&guests=${guests}&rooms=${rooms}`,
       {
         state: { hotelData },
       }
