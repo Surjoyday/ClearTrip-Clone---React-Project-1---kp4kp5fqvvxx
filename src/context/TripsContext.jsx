@@ -7,12 +7,13 @@ const TripContext = createContext();
 function TripProvider({ children }) {
   const [allBookingDeatils, setAllBookingDetails] = useState([]);
   const [flightsBooked, setFlightsBooked] = useState([]);
-  const [hotelssBooked, setHotelsBooked] = useState([]);
+  const [hotelsBooked, setHotelsBooked] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { token } = useAuth();
 
-  async function getFlightTripDetails() {
+  /// FUNCTION TO GET BOOKING DETAILS
+  async function getBookingDetails() {
     setIsLoading(true);
     try {
       const res = await fetch(`${base_URL}/booking`, {
@@ -22,20 +23,25 @@ function TripProvider({ children }) {
 
       const resData = await res.json();
 
-      const detailsOfAllBookings = resData?.data;
-
-      // FILTERING FLIGHTS BOOKED DATA
-      const flights = resData?.data?.filter(
-        (type) => type["booking_type"] === "flight"
-      );
-
-      /// FILTERING HOTELS BOOKED DATA SEPERATE FUNCTION..........
-
       if (resData.status === "fail") throw new Error(resData?.message);
 
       if (resData.status === "success") {
+        /// GETTING ALL BOOKINGS HOTEL AND FLIGHTS
+        const detailsOfAllBookings = resData?.data;
+
+        /// FILTERING FLIGHTS BOOKED DATA
+        const flights = resData?.data?.filter(
+          (type) => type["booking_type"] === "flight"
+        );
+
+        /// FILTERING HOTELS BOOKED DATA
+        const hotels = resData?.data?.filter(
+          (type) => type["booking_type"] === "hotel"
+        );
+
         setAllBookingDetails(detailsOfAllBookings);
         setFlightsBooked(flights);
+        setHotelsBooked(hotels);
       }
     } catch (err) {
       console.log(err);
@@ -44,13 +50,17 @@ function TripProvider({ children }) {
     }
   }
 
+  // console.log("flights", flightsBooked);
+  console.log("hotels", hotelsBooked);
+
   return (
     <TripContext.Provider
       value={{
         isLoading,
         flightsBooked,
+        hotelsBooked,
         allBookingDeatils,
-        getFlightTripDetails,
+        getBookingDetails,
       }}
     >
       {children}

@@ -8,11 +8,22 @@ import { ToastContainer } from "react-toastify";
 import { MdLuggage } from "react-icons/md";
 import { BiHotel } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
+import { useEffect } from "react";
+import { useTrip } from "../context/TripsContext";
+import Loader from "../components/Loader";
 
 export default function MyTrips() {
   const { token } = useAuth();
+
+  const { getBookingDetails, isLoading } = useTrip();
+
+  useEffect(function () {
+    getBookingDetails();
+  }, []);
+
   return (
     <>
+      {token && isLoading && <Loader />}
       {token ? <MyTripsAuthenticated /> : <MyTripsNotAuthenticated />}
       <ToastContainer position="top-center" autoClose={2000} />
     </>

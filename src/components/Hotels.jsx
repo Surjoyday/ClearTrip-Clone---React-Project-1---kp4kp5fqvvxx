@@ -22,7 +22,7 @@ const initialState = {
   guest: 1,
   cities: [],
   isFocused: false,
-  errorMsg: "",
+  errorMessages: { textFieldError: "", checkInError: "", checkOutError: "" },
 };
 
 function reducer(state, action) {
@@ -35,18 +35,48 @@ function reducer(state, action) {
 
     case "SET_SEARCHED_CITY":
       const cityName = action.payload?.cityState?.split(",")[0].trim();
-      return { ...state, searchedCity: cityName, errorMsg: "" };
-
-    case "SET_CHECK-IN":
-      return { ...state, checkIn: action.payload };
-
-    case "SET_CHECK-OUT":
-      return { ...state, checkOut: action.payload };
-
-    case "SET_ERROR_MSG":
       return {
         ...state,
-        errorMsg: "Please select a valid destination",
+        searchedCity: cityName,
+        errorMessages: { ...state.errorMessages, textFieldError: "" },
+      };
+
+    case "SET_CHECK-IN":
+      return {
+        ...state,
+        checkIn: action.payload,
+        errorMessages: { ...state.errorMessages, checkInError: "" },
+      };
+
+    case "SET_CHECK-OUT":
+      return {
+        ...state,
+        checkOut: action.payload,
+        errorMessages: { ...state.errorMessages, checkOutError: "" },
+      };
+
+    case "SET_ERROR_MSG":
+      const { payload } = action;
+      const updatedErrorMessages = { ...state.errorMessages };
+
+      switch (payload) {
+        case "textFieldError":
+          updatedErrorMessages.textFieldError =
+            "Please select a valid destination";
+          break;
+        case "checkInError":
+          updatedErrorMessages.checkInError = "Select a different date";
+          break;
+        case "checkOutError":
+          updatedErrorMessages.checkOutError = "Select a different date";
+          break;
+        default:
+          break;
+      }
+
+      return {
+        ...state,
+        errorMessages: updatedErrorMessages,
       };
 
     default:
@@ -67,7 +97,7 @@ export default function Hotels() {
     cities,
     searchedCity,
     isFocused,
-    errorMsg,
+    errorMessages,
   } = state;
   // console.log("checkIn", checkIn);
   // console.log("checkOut", checkOut);
@@ -103,14 +133,30 @@ export default function Hotels() {
 
   // REDIRECT TO HOTELS SEARCH PAGE AND ERROR CHECK
   function handleNavigate() {
+    let hasNoErrors = true;
     if (
       !cities
         .map((city) => city?.cityState?.split(",").at(0).trim())
         .includes(searchedCity) ||
       searchedCity === ""
     ) {
-      dispatch({ type: "SET_ERROR_MSG" });
-    } else {
+      dispatch({ type: "SET_ERROR_MSG", payload: "textFieldError" });
+      hasNoErrors = false;
+    }
+
+    // errorMessages: { textFieldError: "", checkInError: "", checkOutError: "" },
+
+    if (new Date(checkIn) > new Date(checkOut)) {
+      dispatch({ type: "SET_ERROR_MSG", payload: "checkInError" });
+      hasNoErrors = false;
+    }
+
+    if (new Date(checkOut) < new Date(checkIn)) {
+      dispatch({ type: "SET_ERROR_MSG", payload: "checkOutError" });
+      hasNoErrors = false;
+    }
+
+    if (hasNoErrors) {
       navigate(
         `/hotels/results?city=${searchedCity}&chk_in=${checkIn}&chk_out=${checkOut}&guests=${guest}&rooms=${rooms}`
       );
@@ -175,8 +221,12 @@ export default function Hotels() {
                     placeholder="Enter city"
                     id="city-input"
                     className="w-full sm:w-[630px] max-w-[630px]  px-2 py-2"
-                    error={errorMsg !== ""}
-                    helperText={errorMsg ? errorMsg : ""}
+                    error={errorMessages.textFieldError !== ""}
+                    helperText={
+                      errorMessages.textFieldError
+                        ? errorMessages.textFieldError
+                        : ""
+                    }
                   />
                 )}
               />
@@ -200,6 +250,10 @@ export default function Hotels() {
                   inputProps={{
                     min: getCurrentDate(),
                   }}
+                  error={errorMessages.checkInError !== ""}
+                  helperText={
+                    errorMessages.checkInError ? errorMessages.checkInError : ""
+                  }
                 />
               </div>
               <div className="check-out ">
@@ -216,6 +270,12 @@ export default function Hotels() {
                   inputProps={{
                     min: getTommorrowsDate(),
                   }}
+                  error={errorMessages.checkOutError !== ""}
+                  helperText={
+                    errorMessages.checkOutError
+                      ? errorMessages.checkOutError
+                      : ""
+                  }
                 />
               </div>
             </div>

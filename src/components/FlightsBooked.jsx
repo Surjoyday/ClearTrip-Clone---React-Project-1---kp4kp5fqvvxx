@@ -13,16 +13,15 @@ import {
 } from "../assets/helper";
 
 function FlightsBooked() {
-  const { flightsBooked, getFlightTripDetails, isLoading } = useTrip();
+  const { flightsBooked } = useTrip();
 
-  useEffect(function () {
-    getFlightTripDetails();
-  }, []);
+  // useEffect(function () {
+  //   getBookingDetails();
+  // }, []);
 
-  console.log(flightsBooked);
+  // console.log(flightsBooked);
   return (
     <>
-      {isLoading && <Loader />}
       {flightsBooked.length === 0 ? (
         <>
           <div className="flex flex-col gap-10 items-center">
@@ -40,13 +39,16 @@ function FlightsBooked() {
       ) : (
         <div>
           {flightsBooked?.reverse()?.map((flightObj, index) => (
-            <div key={flightObj["_id"]} className="mb-10 border rounded-sm">
+            <div
+              key={flightObj["_id"]}
+              className="mb-10 border rounded-md text-ellipsis overflow-scroll"
+            >
               {index === 0 && (
                 <p className="bg-green-500 text-white px-2 py-1">
                   Recently Booked Flight
                 </p>
               )}
-              <div className="flex items-start gap-5 p-4 bg-[#E8F6FF]">
+              <div className="flex items-start gap-5 p-4 bg-[#E8F6FF] shadow-md rounded-tl-md rounded-tr-md">
                 <div className="border p-3 bg-white">
                   <BiSolidPlaneAlt size={30} />
                 </div>
