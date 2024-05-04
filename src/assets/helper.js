@@ -122,7 +122,7 @@ const popularDestinationsImages = [
     src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/goa.jpg",
     alt: "goa-popular-destination-img",
     place: "Goa",
-    properties: "3051", //fights to the destination that are available through the Cleartrip API.
+    properties: "3051", /// fights to the destination that are available through the Cleartrip API.
     id: crypto.randomUUID(),
     cityCode: "GOI",
     city: "Goa",

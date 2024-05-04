@@ -1,41 +1,35 @@
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+
+import { Popover } from "@mui/material";
+
 import { Logo } from "./Logo";
 import LoginPage from "../pages/LoginPage";
 import { formatDates } from "../assets/helper";
-import { MdFlight, MdHotel } from "react-icons/md";
-import { PiArrowsLeftRightBold } from "react-icons/pi";
-import { CiLocationOn } from "react-icons/ci";
-import { PiCalendarBlankLight } from "react-icons/pi";
-import { IoPersonOutline } from "react-icons/io5";
 
-import { useAuth } from "../context/AuthContext";
+import { MdFlight, MdHotel } from "react-icons/md";
 import {
-  Link,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+  PiArrowsLeftRightBold,
+  PiCalendarBlankLight,
+  PiUserCircleLight,
+  PiSuitcaseLight,
+  PiSignOutLight,
+} from "react-icons/pi";
+import { CiLocationOn } from "react-icons/ci";
+import {
+  IoPersonOutline,
+  IoChevronDownOutline,
+  IoChevronUpOutline,
+} from "react-icons/io5";
 
 export default function Navbar() {
   const { showLoginSignupModal, handleLogout, token, name } = useAuth();
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const location = useLocation();
 
   const urlState = location.state;
-
-  // const params = useParams();
-
-  // console.log(params.itinerary);
-
-  // console.log(location.pathname);
-
-  // useEffect(() => {
-  //   console.log("Token changed:", token);
-  // }, [token]);
-
-  // useEffect(() => {
-  //   console.log("Name changed:", name);
-  // }, [name]);
 
   return (
     <>
@@ -44,11 +38,12 @@ export default function Navbar() {
           location.pathname === "/hotels/results" ? "" : "shadow"
         }`}
       >
-        <div className="mx-8 py-4 nav-width">
+        <div className="mx-8 py-4 nav-width px-5 max-sm:px-0">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <Logo />
 
+              {/* /// BASED ON PAGES SHOWING THE FLIGHT AND HOTEL ICON FOR ROUTE */}
               {(location.pathname === "/offers" ||
                 location.pathname.includes("/mytrips") ||
                 location.pathname === "/flights/results" ||
@@ -79,32 +74,73 @@ export default function Navbar() {
                 </>
               )}
             </div>
+
             <div className="flex items-center">
               {token ? (
                 <>
-                  <span className="pr-3 max-sm:pr-2">
-                    {name && (
-                      <>
-                        <span className="text-lg max-sm:text-xs">Hi, </span>{" "}
-                        <span className="text-lg max-sm:text-xs font-medium">
-                          {name}
-                        </span>
-                      </>
-                    )}
-                  </span>
-                  <button
-                    className="font-medium text-base max-sm:text-xs px-2 py-2 bg-[#0e6aff] text-[white] rounded-lg border-none mx-sm:text-xs max-sm:font-normal"
-                    onClick={handleLogout}
+                  <div
+                    // onClick={(e) => setAnchorEl(e.currentTarget)}
+                    className="pr-3 max-sm:pr-2 cursor-pointer"
                   >
-                    Log out
-                  </button>
+                    {name && (
+                      <div
+                        className="whitespace-nowrap flex gap-2 items-center"
+                        onClick={(e) => setAnchorEl(e.currentTarget)}
+                      >
+                        <PiUserCircleLight size={23} />
+                        <span className="text-md max-sm:text-sm font-medium ">
+                          Hi, {name.split(" ").at(0)}
+                        </span>
+
+                        {anchorEl !== null ? (
+                          <IoChevronUpOutline />
+                        ) : (
+                          <IoChevronDownOutline />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <Popover
+                      open={Boolean(anchorEl)}
+                      anchorEl={anchorEl}
+                      onClose={() => setAnchorEl(null)}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
+                      }}
+                    >
+                      <div className="w-40 cursor-pointer">
+                        <div className=" flex items-center gap-4 font-medium hover:bg-slate-200 px-3 py-4">
+                          <PiSuitcaseLight size={20} />
+                          <Link
+                            to={"mytrips"}
+                            onClick={() => setAnchorEl(null)}
+                          >
+                            My Trips
+                          </Link>
+                        </div>
+
+                        <div
+                          onClick={() => {
+                            handleLogout();
+                            setAnchorEl(null);
+                          }}
+                          className="flex items-center gap-4 hover:bg-slate-200 font-medium px-3 py-4"
+                        >
+                          <PiSignOutLight size={20} />
+                          <p>Sign out</p>
+                        </div>
+                      </div>
+                    </Popover>
+                  </div>
                 </>
               ) : (
                 <button
                   className={`${
                     location.pathname === "/flights" ||
                     location.pathname === "/hotels"
-                      ? "bg-[#0e6aff] text-[white]"
+                      ? "bg-[#3366CC] hover:bg-[#244EAF] text-[white]"
                       : "border border-stone-400 text-black"
                   } font-medium text-base max-sm:text-xs px-2 py-2  rounded-md mx-sm:text-xs max-sm:font-normal`}
                   onClick={showLoginSignupModal}

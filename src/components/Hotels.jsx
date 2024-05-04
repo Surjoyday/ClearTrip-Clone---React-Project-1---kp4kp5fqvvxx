@@ -174,7 +174,7 @@ export default function Hotels() {
         </div>
 
         {/* HOTEL BOOKING BOX */}
-        <div className="container-hotel flex flex-col gap-6 my-6 px-4 py-14 shadow-lg  rounded-lg border">
+        <div className="container-hotel flex flex-col gap-6 my-6 px-4 py-14 shadow-lg  rounded-xl border">
           {/* DESTINATION - CITY INPUT*/}
           <div className="hotel-city-box">
             {cities.length > 0 && (

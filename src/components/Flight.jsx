@@ -185,243 +185,257 @@ export default function Flight() {
 
   return (
     <>
-      <section className="flex-grow">
-        <div className="flight-headings">
-          <h1 className="text-3xl font-medium mt-1">Search Flights</h1>
-          <h2 className="font-medium text-base mt-1 text-stone-700">
-            Enjoy hassle free bookings with Cleartrip
-          </h2>
-        </div>
-
-        {/* FLIGHT BOOKING BOX */}
-        <div className="main-container-booking flex flex-col my-6  px-4 py-10 shadow-lg  rounded-lg border">
-          {/* FLIGHT CLASS AND SEATS */}
-
-          <div className="mb-6 flex gap-5 align-middle justify-start pl-4">
-            <div>
-              <FormControl fullWidth>
-                <Select
-                  size="small"
-                  labelId="travel-class-label"
-                  id="travel-class-select"
-                  value={travelClass}
-                  onChange={(e) =>
-                    dispatch({
-                      type: "SET_CLASS_TYPE",
-                      payload: e.target.value,
-                    })
-                  }
-                >
-                  <MenuItem value="Economy">Economy</MenuItem>
-                  <MenuItem value="Bussiness">Bussiness</MenuItem>
-                  <MenuItem value="First Class">First Class</MenuItem>
-                  <MenuItem value="Premium Economy">Premium Economy</MenuItem>
-                </Select>
-              </FormControl>
+      <section className="flex-grow ">
+        <div className="flights__bi rounded-xl">
+          <div className="flight-headings flex relative mx-5 ">
+            <div className="mt-3">
+              <h1 className="text-3xl font-medium">Search Flights</h1>
+              <h2 className="font-medium text-base text-stone-700">
+                Enjoy hassle free bookings with Cleartrip
+              </h2>
             </div>
-
-            <div className="flex gap-2 items-center  py-1 border-stone-300 rounded px-2 ">
-              <button
-                onClick={() => dispatch({ type: "SET_SEATS", payload: "dec" })}
-              >
-                <LuMinusCircle size={22} className="text-blue-500" />
-              </button>
-              <span>
-                {seats} Seat{seats > 1 && "s"}
-              </span>
-              <button
-                onClick={() => dispatch({ type: "SET_SEATS", payload: "inc" })}
-              >
-                <LuPlusCircle size={22} className="text-blue-500" />
-              </button>
+            <div className="absolute right-0 -bottom-10">
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_116,h_120,dpr_2/offermgmt/images/CLEAR_TRIP_MS_DHONI_DESKTOP.png"
+                className="h-36 w-34 max-sm:hidden"
+              />
             </div>
           </div>
 
-          {/* SEARCH CONTAINER*/}
-          <div className="search-field flex flex-col gap-4 px-4">
-            {/* FROM - TO CONTAINER */}
-            <div className="from-to-container flex max-sm:flex-col gap-2 items-center border rounded-md mb-4 mt-5 px-4 py-2">
-              {/* FROM CONTAINER*/}
-              <div className="from-container flex items-center">
-                {/* ROM INPUT CONTAINER */}
-                <div className="from-input-container">
-                  {airportData.length > 0 && (
-                    <Autocomplete
-                      forcePopupIcon={false}
-                      options={airportData}
-                      getOptionLabel={(airport) =>
-                        `${airport?.cityCode} - ${airport?.city}, ${
-                          airport?.country.toLowerCase() === "india"
-                            ? "IN"
-                            : airport?.country
-                        }`
-                      }
-                      renderOption={(props, airport) => (
-                        <Box
-                          component="li"
-                          sx={{
-                            "&:hover > div": {
-                              backgroundColor: "#0E6AFF",
-                              padding: ".2em",
-                              borderRadius: "2px",
-                              color: "white",
-                            },
-                            "& > div": {
-                              mr: 2,
-                              flexShrink: 0,
-                              transition: "background-color .4s",
-                            },
-                          }}
-                          {...props}
-                          key={airport.id}
-                        >
-                          <div>{airport.cityCode}</div>
-                          {`${airport?.cityCode} - ${airport?.city}, ${
+          {/* FLIGHT BOOKING BOX */}
+          <div className="main-container-booking flex flex-col my-6  px-4 py-10 shadow-lg  rounded-xl  border bg-white">
+            {/* FLIGHT CLASS AND SEATS */}
+
+            <div className="mb-6 flex gap-5 align-middle justify-start pl-4">
+              <div>
+                <FormControl fullWidth>
+                  <Select
+                    size="small"
+                    labelId="travel-class-label"
+                    id="travel-class-select"
+                    value={travelClass}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_CLASS_TYPE",
+                        payload: e.target.value,
+                      })
+                    }
+                  >
+                    <MenuItem value="Economy">Economy</MenuItem>
+                    <MenuItem value="Bussiness">Bussiness</MenuItem>
+                    <MenuItem value="First Class">First Class</MenuItem>
+                    <MenuItem value="Premium Economy">Premium Economy</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+
+              <div className="flex gap-2 items-center  py-1 border-stone-300 rounded px-2 ">
+                <button
+                  onClick={() =>
+                    dispatch({ type: "SET_SEATS", payload: "dec" })
+                  }
+                >
+                  <LuMinusCircle size={22} className="text-blue-500" />
+                </button>
+                <span>
+                  {seats} Seat{seats > 1 && "s"}
+                </span>
+                <button
+                  onClick={() =>
+                    dispatch({ type: "SET_SEATS", payload: "inc" })
+                  }
+                >
+                  <LuPlusCircle size={22} className="text-blue-500" />
+                </button>
+              </div>
+            </div>
+
+            {/* SEARCH CONTAINER*/}
+            <div className="search-field flex flex-col gap-4 px-4">
+              {/* FROM - TO CONTAINER */}
+              <div className="from-to-container flex max-sm:flex-col gap-2 items-center border rounded-md mb-4 mt-5 px-4 py-2">
+                {/* FROM CONTAINER*/}
+                <div className="from-container flex items-center">
+                  {/* ROM INPUT CONTAINER */}
+                  <div className="from-input-container">
+                    {airportData.length > 0 && (
+                      <Autocomplete
+                        forcePopupIcon={false}
+                        options={airportData}
+                        getOptionLabel={(airport) =>
+                          `${airport?.cityCode} - ${airport?.city}, ${
                             airport?.country.toLowerCase() === "india"
                               ? "IN"
                               : airport?.country
-                          }`}
-                        </Box>
-                      )}
-                      isOptionEqualToValue={(option, value) =>
-                        option.id === value.id
-                      }
-                      onChange={(_, value) => {
-                        dispatch({
-                          type: "SET_FROM_INPUT",
-                          payload: value,
-                        });
-                        // console.log(value);
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="standard"
-                          InputProps={{
-                            ...params.InputProps,
+                          }`
+                        }
+                        renderOption={(props, airport) => (
+                          <Box
+                            component="li"
+                            sx={{
+                              "&:hover > div": {
+                                backgroundColor: "#0E6AFF",
+                                padding: ".2em",
+                                borderRadius: "2px",
+                                color: "white",
+                              },
+                              "& > div": {
+                                mr: 2,
+                                flexShrink: 0,
+                                transition: "background-color .4s",
+                              },
+                            }}
+                            {...props}
+                            key={airport.id}
+                          >
+                            <div>{airport.cityCode}</div>
+                            {`${airport?.cityCode} - ${airport?.city}, ${
+                              airport?.country.toLowerCase() === "india"
+                                ? "IN"
+                                : airport?.country
+                            }`}
+                          </Box>
+                        )}
+                        isOptionEqualToValue={(option, value) =>
+                          option.id === value.id
+                        }
+                        onChange={(_, value) => {
+                          dispatch({
+                            type: "SET_FROM_INPUT",
+                            payload: value,
+                          });
+                          // console.log(value);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="standard"
+                            InputProps={{
+                              ...params.InputProps,
 
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <MdFlightTakeoff className="text-2xl ml-4  text-stone-400" />
-                              </InputAdornment>
-                            ),
-                          }}
-                          size="small"
-                          id="from-input"
-                          className="w-[250px]  px-2 py-2"
-                          placeholder="Where from?"
-                          error={errors.fromInError !== ""}
-                          helperText={errors.fromInError || ""}
-                        />
-                      )}
-                    />
-                  )}
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <MdFlightTakeoff className="text-2xl ml-4  text-stone-400" />
+                                </InputAdornment>
+                              ),
+                            }}
+                            size="small"
+                            id="from-input"
+                            className="w-[250px]  px-2 py-2"
+                            placeholder="Where from?"
+                            error={errors.fromInError !== ""}
+                            helperText={errors.fromInError || ""}
+                          />
+                        )}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-              {/* ICON LEFT-RIGHT ARROW */}
-              <div className="left-right-arrow text-blue-500 max-sm:hidden">
-                <RightLeftArrow />
-              </div>
-              {/* TO CONTAINER*/}
-              <div className="to-container flex items-center">
-                {/* TO INPUT CONTAINER */}
-                <div className="to-input-container ">
-                  {airportData.length > 0 && (
-                    <Autocomplete
-                      forcePopupIcon={false}
-                      options={airportData}
-                      getOptionLabel={(airport) =>
-                        `${airport?.cityCode} - ${airport?.city}, ${
-                          airport?.country.toLowerCase() === "india"
-                            ? "IN"
-                            : airport?.country
-                        }`
-                      }
-                      renderOption={(props, airport) => (
-                        <Box
-                          component="li"
-                          sx={{
-                            "&:hover > div": {
-                              backgroundColor: "#0E6AFF",
-                              padding: ".2em",
-                              borderRadius: "2px",
-                              color: "white",
-                            },
-                            "& > div": {
-                              mr: 2,
-                              flexShrink: 0,
-                              transition: "background-color 0.3s",
-                            },
-                          }}
-                          {...props}
-                          key={airport.id}
-                        >
-                          <div>{airport?.cityCode}</div>
-                          {`${airport?.cityCode} - ${airport?.city}, ${
-                            airport.country.toLowerCase() === "india"
+                {/* ICON LEFT-RIGHT ARROW */}
+                <div className="left-right-arrow text-blue-500 max-sm:hidden">
+                  <RightLeftArrow />
+                </div>
+                {/* TO CONTAINER*/}
+                <div className="to-container flex items-center">
+                  {/* TO INPUT CONTAINER */}
+                  <div className="to-input-container ">
+                    {airportData.length > 0 && (
+                      <Autocomplete
+                        forcePopupIcon={false}
+                        options={airportData}
+                        getOptionLabel={(airport) =>
+                          `${airport?.cityCode} - ${airport?.city}, ${
+                            airport?.country.toLowerCase() === "india"
                               ? "IN"
-                              : airport.country
-                          }`}
-                        </Box>
-                      )}
-                      isOptionEqualToValue={(option, value) =>
-                        option.id === value.id
-                      }
-                      onChange={(option, value) => {
-                        dispatch({
-                          type: "SET_TO_INPUT",
-                          payload: value,
-                        });
-                        // console.log(value);
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="standard"
-                          InputProps={{
-                            ...params.InputProps,
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <MdFlightLand className="text-2xl ml-4 text-stone-400" />
-                              </InputAdornment>
-                            ),
-                          }}
-                          size="small"
-                          id="to-input"
-                          className="w-[250px]  px-2 py-2"
-                          placeholder="Where to?"
-                          error={errors.toInError !== ""}
-                          helperText={errors.toInError || ""}
-                        />
-                      )}
-                    />
-                  )}
+                              : airport?.country
+                          }`
+                        }
+                        renderOption={(props, airport) => (
+                          <Box
+                            component="li"
+                            sx={{
+                              "&:hover > div": {
+                                backgroundColor: "#0E6AFF",
+                                padding: ".2em",
+                                borderRadius: "2px",
+                                color: "white",
+                              },
+                              "& > div": {
+                                mr: 2,
+                                flexShrink: 0,
+                                transition: "background-color 0.3s",
+                              },
+                            }}
+                            {...props}
+                            key={airport.id}
+                          >
+                            <div>{airport?.cityCode}</div>
+                            {`${airport?.cityCode} - ${airport?.city}, ${
+                              airport.country.toLowerCase() === "india"
+                                ? "IN"
+                                : airport.country
+                            }`}
+                          </Box>
+                        )}
+                        isOptionEqualToValue={(option, value) =>
+                          option.id === value.id
+                        }
+                        onChange={(option, value) => {
+                          dispatch({
+                            type: "SET_TO_INPUT",
+                            payload: value,
+                          });
+                          // console.log(value);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="standard"
+                            InputProps={{
+                              ...params.InputProps,
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <MdFlightLand className="text-2xl ml-4 text-stone-400" />
+                                </InputAdornment>
+                              ),
+                            }}
+                            size="small"
+                            id="to-input"
+                            className="w-[250px]  px-2 py-2"
+                            placeholder="Where to?"
+                            error={errors.toInError !== ""}
+                            helperText={errors.toInError || ""}
+                          />
+                        )}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* SEARCH & DATE */}
-            <div className="date-search-btn">
-              <div className="flex justify-center items-center gap-6 w-full">
-                {/* DATE */}
-                <TextField
-                  type="date"
-                  label="Select Date"
-                  size="small"
-                  value={dateInput}
-                  onChange={(e) =>
-                    dispatch({ type: "SET_DATE", payload: e.target.value })
-                  }
-                  inputProps={{
-                    min: getCurrentDate(),
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  className="bg-[#F77727] text-white font-bold  hover:bg-[#f77e27f9] py-[7.4px] px-5 rounded"
-                  onClick={handleNavigate}
-                >
-                  Search
-                </Button>
+              {/* SEARCH & DATE */}
+              <div className="date-search-btn">
+                <div className="flex justify-center items-center gap-6 w-full">
+                  {/* DATE */}
+                  <TextField
+                    type="date"
+                    label="Select Date"
+                    size="small"
+                    value={dateInput}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_DATE", payload: e.target.value })
+                    }
+                    inputProps={{
+                      min: getCurrentDate(),
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    className="bg-[#F77727] text-white font-bold  hover:bg-[#f77e27f9] py-[7.4px] px-5 rounded"
+                    onClick={handleNavigate}
+                  >
+                    Search
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

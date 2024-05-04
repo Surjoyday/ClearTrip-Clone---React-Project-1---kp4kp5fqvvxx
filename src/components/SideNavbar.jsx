@@ -3,7 +3,7 @@ import { PiAirplaneTiltLight, PiAirplaneTiltFill } from "react-icons/pi";
 
 import { RiHotelLine, RiHotelFill } from "react-icons/ri";
 import { MdOutlineLocalOffer, MdLocalOffer } from "react-icons/md";
-import { RiLuggageDepositLine } from "react-icons/ri";
+import { PiSuitcaseLight } from "react-icons/pi";
 
 export default function SideNavbar() {
   const loaction = useLocation();
@@ -24,12 +24,16 @@ export default function SideNavbar() {
           >
             {loaction.pathname === "/flights" ? (
               <>
-                <PiAirplaneTiltFill size={24} className="text-[#0E6AFF]" />
-                <span className=" text-[#0E6AFF]">Flights</span>
+                <div className="flex gap-4">
+                  <PiAirplaneTiltFill size={24} className="text-[#0E6AFF]" />
+                  <p className=" text-[#0E6AFF]">Flights</p>
+                </div>
               </>
             ) : (
               <>
-                <PiAirplaneTiltLight size={24} /> <span>Flights</span>
+                <div className="flex gap-4">
+                  <PiAirplaneTiltLight size={24} /> <p>Flights</p>
+                </div>
               </>
             )}
           </NavLink>
@@ -45,12 +49,16 @@ export default function SideNavbar() {
           >
             {loaction.pathname === "/hotels" ? (
               <>
-                <RiHotelFill size={24} className="text-[#0E6AFF]" />
-                <span className=" text-[#0E6AFF] pr-2">Hotels</span>
+                <div className="flex gap-4">
+                  <RiHotelFill size={24} className="text-[#0E6AFF]" />
+                  <p className=" text-[#0E6AFF] pr-2">Hotels</p>
+                </div>
               </>
             ) : (
               <>
-                <RiHotelLine size={24} /> <span>Hotels</span>
+                <div className="flex gap-4">
+                  <RiHotelLine size={24} /> <p>Hotels</p>
+                </div>
               </>
             )}
           </NavLink>
@@ -60,7 +68,9 @@ export default function SideNavbar() {
             to={"offers"}
             className={`flex gap-1 p-3 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF] rounded-[4px]  transition transition-duration:1s `}
           >
-            <MdOutlineLocalOffer size={24} /> <span>Offers</span>
+            <div className="flex gap-4">
+              <MdOutlineLocalOffer size={24} /> <p>Offers</p>
+            </div>
           </Link>
         </li>
 
@@ -69,8 +79,10 @@ export default function SideNavbar() {
             to={"mytrips"}
             className={`flex gap-1 p-3 max-sm:pr-0 hover:bg-[#d5e7fc] hover:text-[#0E6AFF] rounded-[4px]  transition transition-duration:1s `}
           >
-            <RiLuggageDepositLine size={24} />{" "}
-            <span className="whitespace-nowrap">My trips</span>
+            <div className="flex gap-4">
+              <PiSuitcaseLight size={24} />
+              <p className="whitespace-nowrap">My trips</p>
+            </div>
           </Link>
         </li>
       </ul>

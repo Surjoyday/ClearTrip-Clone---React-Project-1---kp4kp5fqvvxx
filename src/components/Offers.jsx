@@ -50,7 +50,7 @@ function Offers() {
     if (item === "cabs" && cabOffers.length !== 0) return;
 
     const offerType = item.toUpperCase();
-    console.log(offerType);
+    // console.log(offerType);
     setIsLoading(true);
     try {
       const res = await fetch(
