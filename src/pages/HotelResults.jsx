@@ -31,6 +31,7 @@ const initialState = {
   page: 1,
   maxPrice: 0,
   minPrice: 0,
+  shouldShowNotFoundPage: false,
 };
 
 function reducer(state, action) {
@@ -51,6 +52,7 @@ function reducer(state, action) {
         hotelsResultantData,
         totalResults,
         isLoading: false,
+        shouldShowNotFoundPage: true,
       };
 
     case "SET_ISLOADING":
@@ -139,6 +141,7 @@ export default function HotelResults() {
     filtersAppliedList,
     maxPrice,
     minPrice,
+    shouldShowNotFoundPage,
   } = state;
 
   // console.log(hotelsResultantData);
@@ -639,7 +642,7 @@ export default function HotelResults() {
           {hotelsResultantData?.map((hotel) => (
             <HotelCard key={hotel._id} hotelData={hotel} />
           ))}
-          {hotelsResultantData.length === 0 && (
+          {hotelsResultantData.length === 0 && shouldShowNotFoundPage && (
             <NoDataFound onReset={handleReset} />
           )}
         </div>
