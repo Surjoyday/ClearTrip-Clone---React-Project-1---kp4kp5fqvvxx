@@ -10,6 +10,7 @@ import { PiNumberCircleOneFill } from "react-icons/pi";
 import { BiSolidOffer } from "react-icons/bi";
 import { act } from "react";
 import { ToastContainer } from "react-toastify";
+import NoDataFound from "../components/NoDataFound";
 
 const sortBy = {
   rating: 0,
@@ -155,6 +156,11 @@ export default function HotelResults() {
   const guests = searchParams.get("guests");
   const rooms = searchParams.get("rooms");
 
+  function handleReset() {
+    dispatch({ type: "RESET_ALL_FILTER" });
+    getHotelsByCity();
+  }
+
   function handlePageChange(_, value) {
     dispatch({ type: "CHANGE_PAGE", payload: value });
   }
@@ -275,6 +281,7 @@ export default function HotelResults() {
     ]
   );
 
+  /// THIS IS USED TO GET THE MIN AND MAX VALUE
   useEffect(function () {
     (async function () {
       const res = await fetch(
@@ -632,6 +639,9 @@ export default function HotelResults() {
           {hotelsResultantData?.map((hotel) => (
             <HotelCard key={hotel._id} hotelData={hotel} />
           ))}
+          {hotelsResultantData.length === 0 && (
+            <NoDataFound onReset={handleReset} />
+          )}
         </div>
         <Pagination
           count={Math.trunc(totalResults / 10)}

@@ -198,23 +198,23 @@ const airlineComapaniesForMyTrips = {
 
 const airlineImages = {
   "6E": [
-    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705554/6E_fw0stg.png",
+    "https://ucarecdn.com/5b934384-88e9-4ba3-9374-dc4b0e602fda/6E1.svg",
     "IndiGo",
   ],
   UK: [
-    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705630/UK_ibzova.png",
+    "https://ucarecdn.com/251a0c80-a094-4530-a7eb-8023f61d0c56/UK.svg",
     "Vistara",
   ],
   G8: [
-    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705557/G8_xfgcwx.png",
+    "https://ucarecdn.com/b419b851-0b6f-4d2a-99e4-84900fd9c307/G8_xfgcwx.png",
     "GoFirst",
   ],
   AI: [
-    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705555/AI_hbkfzu.png",
+    "https://ucarecdn.com/f952e714-cb13-4e14-92ff-f3a3a1a6281b/AI.svg",
     "AirIndia",
   ],
   SG: [
-    "https://res.cloudinary.com/dgu90b2i0/image/upload/v1713705558/SG_smxvmw.png",
+    "https://ucarecdn.com/b4a99dad-c856-4ef4-b82c-1b97c269771e/SG.svg",
     "SpiceJet",
   ],
 };

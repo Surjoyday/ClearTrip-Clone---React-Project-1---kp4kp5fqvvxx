@@ -166,7 +166,6 @@ export default function FlightResults() {
   async function getFlightDetails() {
     dispatch({ type: "SET_ISLOADING" });
 
-    // if (flightResultantData.length > flightCount) return;
     try {
       const res = await fetch(
         `${base_URL}/flight?search=
@@ -178,6 +177,8 @@ export default function FlightResults() {
       );
 
       const resData = await res.json();
+
+      console.log(resData);
 
       const flightsData = resData?.data?.flights;
       const totalResults = resData?.totalResults;
@@ -307,8 +308,8 @@ export default function FlightResults() {
     <>
       {isLoading && <Loader />}
       <section>
-        <div className="results-container flex max-sm:flex-col gap-12 mt-7 mb-20">
-          <div className="sort-filter-accordian w-1/4 max-sm:w-full ml-10 max-sm:ml-0 max-sm:px-2">
+        <div className="results-container  flex max-sm:flex-col gap-12 mt-7 mb-20">
+          <div className="sort-filter-accordian  w-1/4 max-sm:w-full ml-10 max-sm:ml-0 max-sm:px-2">
             {/* <div className="sort-filter-accordian sticky top-4 w-1/4 max-sm:w-full max-sm:left-0 max-sm:px-2"> */}
             <h1 className="px-2 pb-4 font-semibold">
               {flightResultantData?.length} of {flightCount} flights
@@ -605,7 +606,7 @@ export default function FlightResults() {
             </Accordion>
           </div>
 
-          <div className="flight-results w-full  flex flex-col gap-4 mr-10 p-2">
+          <div className="flight-results   w-full  flex flex-col gap-4 mr-10 p-2">
             <div className="card_col_heading max-sm:hidden px-6 py-1 sticky top-32 z-10 bg-[#F7F7F7] text-stone-600 text-sm flex justify-around border rounded-md">
               <p className="pr-10">Airline</p>
               <div className="flex gap-28 justify-center pr-20">
