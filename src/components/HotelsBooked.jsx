@@ -12,10 +12,19 @@ function HotelsBooked() {
         {hotelsBooked
           ?.slice(0)
           ?.reverse()
-          ?.map((hotelInfo) => (
+          ?.map((hotelInfo, index) => (
             <div key={hotelInfo?._id}>
               <div className="border rounded-md">
-                <div className="flex gap-3 items-center border p-3 bg-[#E8F6FF] shadow-md rounded-tl-md rounded-tr-md">
+                {index === 0 && (
+                  <p className="bg-green-500 text-white px-2 py-1 rounded-tl-md rounded-tr-md">
+                    Recently Booked Hotel
+                  </p>
+                )}
+                <div
+                  className={`${
+                    index === 0 ? "" : "rounded-tl-md rounded-tr-md"
+                  } flex gap-3 items-center border p-3 bg-[#E8F6FF] shadow-md `}
+                >
                   <div className="border rounded-full p-3 bg-white">
                     <RiHotelFill size={30} />
                   </div>

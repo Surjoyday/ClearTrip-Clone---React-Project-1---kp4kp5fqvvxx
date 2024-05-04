@@ -51,7 +51,7 @@ function TripProvider({ children }) {
   }
 
   // console.log("flights", flightsBooked);
-  console.log("hotels", hotelsBooked);
+  // console.log("hotels", hotelsBooked);
 
   return (
     <TripContext.Provider

@@ -146,7 +146,7 @@ export default function HotelConfirmation() {
 
         const resData = await res.json();
 
-        console.log(resData);
+        // console.log(resData);
         if (resData?.status === "success") {
           const bookedID = resData?.booking?._id;
           setBookingID(bookedID);
