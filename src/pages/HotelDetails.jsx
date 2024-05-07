@@ -128,7 +128,7 @@ export default function HotelDetails() {
   return (
     <>
       <div className="mb-10">
-        <div className="border-b pt-4 px-12 sticky top-28 max-sm:top-32 z-20 bg-white">
+        <div className="border-b pt-4 px-12 sticky top-24 max-sm:top-32 z-20 bg-white">
           <ul className="flex gap-7 px-7">
             <li>
               <button

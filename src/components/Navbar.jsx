@@ -219,7 +219,7 @@ function HotelSearchedSummary() {
   const city = searchParams.get("city");
   const checkInDate = searchParams.get("chk_in");
   const checkOutDate = searchParams.get("chk_out");
-  const guests = searchParams.get("guests");
+  const guests = JSON.parse(searchParams.get("guests"));
   const rooms = searchParams.get("rooms");
 
   // console.log(city);
@@ -227,6 +227,13 @@ function HotelSearchedSummary() {
   // console.log(checkOutDate);
   // console.log(guest);
   // console.log(rooms);
+
+  const totalGuest = guests.reduce(
+    (acc, curr) => acc + curr.adults + curr.children,
+    0
+  );
+
+  console.log(totalGuest);
 
   return (
     <div className="flex justify-center">
@@ -252,8 +259,8 @@ function HotelSearchedSummary() {
             +rooms === 1 ? "room" : "rooms"
           }`}</p>
           <span>,</span>
-          <p className="font-semibold">{`${guests} ${
-            +guests === 1 ? "guest" : "guests"
+          <p className="font-semibold">{`${totalGuest} ${
+            +totalGuest === 1 ? "guest" : "guests"
           }`}</p>
         </div>
       </div>

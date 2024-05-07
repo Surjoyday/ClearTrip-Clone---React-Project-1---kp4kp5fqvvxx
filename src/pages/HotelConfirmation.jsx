@@ -31,6 +31,7 @@ export default function HotelConfirmation() {
   const [isModalOpen, setIsModalOpen] = useState({
     paymetModal: false,
     paymentSuccessModal: false,
+    detailsModal: false,
   });
   const [addressingTitles, setAddressingTitles] = useState("");
   const [bookedForDetails, setBookedForDetails] = useState({
@@ -71,6 +72,24 @@ export default function HotelConfirmation() {
   const guests = searchParams.get("guests");
   const rooms = searchParams.get("rooms");
 
+  // console.log(JSON.parse(guests));
+
+  const totalGuest = JSON.parse(guests).reduce(
+    (acc, curr) => acc + curr.adults + curr.children,
+    0
+  );
+
+  const childrenCount = JSON.parse(guests).reduce(
+    (acc, curr) => acc + curr.children,
+    0
+  );
+
+  const adultCount = JSON.parse(guests).reduce(
+    (acc, curr) => acc + curr.adults,
+    0
+  );
+  // console.log(totalGuest);
+
   // console.log(roomSelected);
   // console.log(hotelData);
   // console.log(hotelID);
@@ -107,6 +126,18 @@ export default function HotelConfirmation() {
     setIsModalOpen((modal) => ({ ...modal, paymentSuccessModal: false }));
     clearTimeout(timeOutIDRef.current);
     clearInterval(countDownTimer.current);
+  }
+
+  /// HANDLE CLOSE DETAILS MODAL
+
+  function handleCloseDetailsModal() {
+    setIsModalOpen((modal) => ({ ...modal, detailsModal: false }));
+  }
+
+  /// HANDLE OPEN DETAILS MODAL
+
+  function handleOpenDetailsModal() {
+    setIsModalOpen((modal) => ({ ...modal, detailsModal: true }));
   }
 
   /// NAVIGATE TO MY TRIPS BY CLICK
@@ -329,21 +360,68 @@ export default function HotelConfirmation() {
                       {rooms} {+rooms === 1 ? " Room," : " Rooms,"}
                     </span>
                     <span>
-                      {guests} {+guests === 1 ? " Guest" : " Guests"}
+                      {totalGuest} {+totalGuest === 1 ? " Guest" : " Guests"}
                     </span>
                   </div>
-                  <p className="text-sm text-[#0E6AFF] cursor-pointer max-sm:self-start">
+                  <p
+                    className="text-sm text-[#0E6AFF] cursor-pointer max-sm:self-start"
+                    onClick={handleOpenDetailsModal}
+                  >
                     Details
                   </p>
+                  <Modal
+                    open={isModalOpen.detailsModal}
+                    onClose={handleCloseDetailsModal}
+                    aria-labelledby="payment-modal"
+                    aria-describedby="modal-for-payment"
+                  >
+                    <div className="flex flex-col gap-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 outline-none">
+                      <div
+                        className="bg-white px-2.5 py-1 rounded-[50%] cursor-pointer self-end"
+                        onClick={handleCloseDetailsModal}
+                      >
+                        &#10005;
+                      </div>
+
+                      <div className="bg-white p-10 rounded-lg shadow-lg">
+                        <p className="font-medium text-2xl">
+                          Guest information
+                        </p>
+
+                        <div className="flex gap-10 pt-10 items-center max-sm:text-sm whitespace-nowrap">
+                          <p className="font-semibold text-xl">Room {rooms}</p>
+
+                          <p>
+                            {adultCount} Adult{adultCount > 1 ? "s" : ""}
+                          </p>
+
+                          {childrenCount > 0 && (
+                            <p>
+                              {childrenCount} Children
+                              {childrenCount > 1 ? "s" : ""}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Modal>
                 </div>
                 <p className="text-xs text-stone-500">
-                  {guests} {+guests === 1 ? " Adult" : " Adults"}
+                  {/* {adultCount} {+adultCount === 1 ? " Adult" : " Adults"} */}
+                  <span>
+                    {adultCount} Adult{adultCount > 1 ? "s" : ""}
+                  </span>
+                  {childrenCount > 0 && (
+                    <span>
+                      , {childrenCount} Children{childrenCount > 1 ? "s" : ""}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* /// 2) Guest Details */}
+          {/* /// 2) Guest Details SECTION */}
           <div className="flex gap-3 items-center">
             <PiNumberCircleTwo size={30} />
             <p className="text-xl font-semibold">Guest Details</p>

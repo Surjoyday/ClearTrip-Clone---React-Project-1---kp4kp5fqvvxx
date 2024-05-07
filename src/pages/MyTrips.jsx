@@ -17,9 +17,12 @@ export default function MyTrips() {
 
   const { getBookingDetails, isLoading } = useTrip();
 
-  useEffect(function () {
-    getBookingDetails();
-  }, []);
+  useEffect(
+    function () {
+      getBookingDetails();
+    },
+    [token]
+  );
 
   return (
     <>
