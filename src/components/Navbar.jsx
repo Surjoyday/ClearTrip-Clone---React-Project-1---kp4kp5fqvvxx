@@ -176,7 +176,7 @@ function FlightSearchSummary({ urlState }) {
   // console.log(totalTravellers);
   return (
     <>
-      <div className="flight-search-criteria-summary flex">
+      <div className="flight-search-criteria-summary flex w-screen">
         <div className="font-normal flex gap-12 items-center text-sm pt-3 m-auto w-100 overflow-x-auto whitespace-nowrap max-sm:mt-2">
           <p className="border rounded-[4px] p-2">One way</p>
 

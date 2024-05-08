@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
-import { IoClose } from "react-icons/io5";
+import { VscClose } from "react-icons/vsc";
+
 import { Modal } from "@mui/material";
-import styles from "./LoginPage.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import SignupPage from "./SignupPage";
 
 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -58,56 +58,73 @@ export default function LoginPage() {
         aria-labelledby="login-modal"
         aria-describedby="modal-login-user"
       >
-        <div className={styles.loginModal}>
-          <div className={styles.modalLeft}>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border-none flex justify-between gap-4 font-sans rounded-lg outline-none">
+          <div className=" bg-[#ffeee8] rounded-l-lg py-20">
             <img
-              className={styles.img}
               src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_410,h_337,dpr_2/offermgmt/images/slider2.png"
               alt="login-left-photo"
-              width={"100%"}
+              className="w-72 max-sm:hidden"
             />
           </div>
 
-          <div className={styles.modalRight}>
-            <div className={styles.closeBtn}>
+          <div className="p-10 flex flex-col gap-4">
+            <div className="flex justify-end">
               <button
                 onClick={() => {
                   handleCloseModal();
                 }}
               >
-                <IoClose size={28} />
+                <VscClose
+                  size={22}
+                  style={{
+                    width: "1.5rem",
+                    transition: "color 0.3s",
+                    color: "black",
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.color = "#EF4444";
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.color = "black";
+                  }}
+                />
               </button>
             </div>
 
-            <div className={styles.form}>
-              <h2>Login</h2>
-              <form action="#">
-                <input
-                  type="text"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <input
-                  type="button"
-                  className={styles.button}
-                  value="Login"
-                  onClick={handleSubmit}
-                />
-              </form>
-              <div className={styles.signup}>
-                <span className={styles.signup}>
-                  Don't have an account?{" "}
-                  <button onClick={handleOpenModal}> Sign up</button>
-                </span>
+            <div className="flex flex-col">
+              <h2 className="text-xl font-medium text-center mb-3.5">Login</h2>
+              <div className="flex flex-col">
+                <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+                  <input
+                    className="border p-2 rounded-md mb-3 text-sm"
+                    type="text"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <input
+                    className="border p-2 rounded-md mb-3 text-sm"
+                    type="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <button
+                    className="w-full bg-[#1A1A1A] text-white rounded-md text-lg mt-7"
+                    onClick={handleSubmit}
+                  >
+                    Login
+                  </button>
+                </form>
+                <div className="text-sm flex whitespace-nowrap gap-1 mt-3 items-center">
+                  <p>Don't have an account? </p>
+                  <button onClick={handleOpenModal} className="text-[#3366CC]">
+                    {" "}
+                    Sign up
+                  </button>
+                </div>
               </div>
             </div>
           </div>
