@@ -31,7 +31,7 @@ export default function Navbar() {
 
   const urlState = location.state;
 
-  console.log(urlState?.tarvellers);
+  // console.log(urlState?.tarvellers);
 
   return (
     <>

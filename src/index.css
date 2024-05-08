@@ -40,25 +40,6 @@
 }
 
 .flight_medi__care {
-  /* background: linear-gradient(
-    45deg,
-    #fff1ee 0%,
-    rgba(232, 148, 46, 0) 19%,
-    rgba(232, 148, 46, 0) 100%
-  ); */
-
-  /* background: linear-gradient(
-    45deg,
-    rgba(245, 197, 157, 1) 0%,
-    rgba(245, 197, 157, 0) 24%,
-    rgba(245, 197, 157, 0) 36%,
-    rgba(245, 197, 157, 0) 51%,
-    rgba(245, 197, 157, 0) 69%,
-    rgba(245, 197, 157, 0) 70%,
-    rgba(245, 197, 157, 0) 99%,
-    rgba(232, 148, 46, 0) 100%
-  ); */
-
   background: linear-gradient(111.67deg, #fff1ed, #fff 53.4%);
 }
 

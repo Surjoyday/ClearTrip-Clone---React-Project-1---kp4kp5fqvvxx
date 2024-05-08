@@ -70,11 +70,14 @@ export default function FlightDetails() {
   const {
     fromLocation,
     toLocation,
+    travellers,
     numSeats,
     date = new Date(),
     travelClass,
     imageSrc,
   } = location.state || {};
+
+  console.log(travellers);
 
   // console.log(itinerary);
   // console.log(flightBookedData);
@@ -607,7 +610,26 @@ export default function FlightDetails() {
                   </p>
                 </div>
                 <p className="text-xs text-stone-500">
-                  {numSeats} {numSeats > 1 ? "adults" : "adult"}
+                  {/* {numSeats} {numSeats > 1 ? "adults" : "adult"} */}
+                  <span>{`${travellers.adults} adult${
+                    travellers.adults > 1 ? "s" : ""
+                  }`}</span>
+                  {travellers.children > 0 && (
+                    <span>
+                      ,{" "}
+                      {`${travellers.children} child${
+                        travellers.children > 1 ? "s" : ""
+                      }`}
+                    </span>
+                  )}
+                  {travellers.infants > 0 && (
+                    <span>
+                      ,{" "}
+                      {`${travellers.infants} infant${
+                        travellers.infants > 1 ? "s" : ""
+                      }`}
+                    </span>
+                  )}
                 </p>
               </div>
               <hr className="mt-7 mb-3" />

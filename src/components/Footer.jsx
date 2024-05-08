@@ -6,7 +6,7 @@ import { BsLinkedin } from "react-icons/bs";
 
 function Footer() {
   return (
-    <footer className="p-4 bg-[#F7F7F7] flex flex-col md:flex-row items-center justify-around mt-auto">
+    <footer className="p-4 bg-[#F7F7F7] flex flex-col md:flex-row items-center justify-evenly mt-auto">
       <div>
         <FooterLogo />
       </div>

@@ -240,7 +240,7 @@ export default function Hotels() {
 
   return (
     <>
-      <section>
+      <section className="">
         <div className="hotels-headings">
           <h1 className="text-3xl font-medium mt-1">Search Hotels</h1>
           <h2 className="font-medium text-base mt-1 text-stone-700">

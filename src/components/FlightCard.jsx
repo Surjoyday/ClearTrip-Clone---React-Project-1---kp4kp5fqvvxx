@@ -18,13 +18,18 @@ export default function FlightCard({ flight }) {
   const urlState = location.state;
   const fromLocation = urlState.origin;
   const toLocation = urlState.destination;
-  const numSeats = urlState.seats;
+  const travellers = urlState.tarvellers;
   const date = urlState.dateInput;
 
+  // console.log(travellers);
   // console.log(urlState);
   const { token } = useAuth();
 
   const imageSrc = flight?.flightID.split("-").at(0).slice(0, 2);
+
+  const numSeats = travellers.adults + travellers.children + travellers.infants;
+
+  console.log(numSeats);
 
   function handleNavigate() {
     if (token) {
@@ -32,6 +37,7 @@ export default function FlightCard({ flight }) {
         state: {
           fromLocation,
           toLocation,
+          travellers,
           numSeats,
           date,
           imageSrc,

@@ -206,7 +206,7 @@ export default function Flight() {
 
   return (
     <>
-      <section className="flex-grow ">
+      <section className="">
         <div className="flights__bi rounded-xl">
           <div className="flight-headings flex relative mx-5 ">
             <div className="mt-3">
