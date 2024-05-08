@@ -27,10 +27,14 @@ function reducer(state, action) {
       return { ...state, isLoggedIn: true };
 
     case "login/success":
-      const { token: tokenLogin, name: nameLogin } = action.payload;
+      const {
+        token: tokenLogin,
+        name: nameLogin,
+        email: emailLogin,
+      } = action.payload;
       return {
         ...state,
-        email: "",
+        email: emailLogin,
         password: "",
         token: tokenLogin,
         name: nameLogin,
@@ -39,10 +43,15 @@ function reducer(state, action) {
       };
 
     case "signup/success":
-      const { token: tokenSignup, name: nameSignup } = action.payload;
+      const {
+        token: tokenSignup,
+        name: nameSignup,
+        email: emailSignup,
+      } = action.payload;
       return {
         ...state,
         token: tokenSignup,
+        email: emailSignup,
         name: nameSignup,
         isSignedUp: false,
         isLoggedIn: false,
@@ -101,7 +110,7 @@ function AuthProvider({ children }) {
     toast.info("You have successfully logged out");
   }
 
-  // LOGIN USER
+  /// LOGIN USER
 
   async function fetchLoginDetails(loginPayload) {
     // console.log(loginPayload);
@@ -117,6 +126,8 @@ function AuthProvider({ children }) {
 
       const responseData = await response.json();
 
+      // console.log(responseData);
+
       if (responseData.status === "success") {
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("userDetails", JSON.stringify(responseData?.data));
@@ -128,6 +139,7 @@ function AuthProvider({ children }) {
           payload: {
             token: responseData.token,
             name: responseData?.data?.user?.name,
+            email: responseData?.data?.user?.email,
           },
         });
 
@@ -145,7 +157,7 @@ function AuthProvider({ children }) {
     }
   }
 
-  // SIGNUP USER
+  /// SIGNUP USER
 
   async function fetchSignupDetails(signupPayload) {
     console.log(signupPayload);
@@ -174,6 +186,7 @@ function AuthProvider({ children }) {
           payload: {
             token: responseData.token,
             name: responseData?.data?.user?.name,
+            email: responseData?.data?.user?.email,
           },
         });
 

@@ -28,7 +28,11 @@ export default function MyTrips() {
     <>
       {token && isLoading && <Loader />}
       {token ? <MyTripsAuthenticated /> : <MyTripsNotAuthenticated />}
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        pauseOnHover={false}
+      />
     </>
   );
 }

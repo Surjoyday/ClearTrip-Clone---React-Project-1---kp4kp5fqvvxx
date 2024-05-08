@@ -806,7 +806,11 @@ export default function HotelConfirmation() {
         </div>
       </Modal>
 
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        pauseOnHover={false}
+      />
     </>
   );
 }

@@ -531,7 +531,11 @@ export default function Hotels() {
           </div>
         </div>
       </section>
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        pauseOnHover={false}
+      />
     </>
   );
 }

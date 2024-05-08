@@ -701,7 +701,11 @@ export default function FlightDetails() {
         </>
       )}
 
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        pauseOnHover={false}
+      />
     </>
   );
 }

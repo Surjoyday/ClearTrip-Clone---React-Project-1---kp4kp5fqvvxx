@@ -23,12 +23,12 @@ export default function AboutSite() {
       navigate(
         `/flights/results?from=${"GAU"}&to=${cityCode}&depart_date=${getCurrentDate()}&day=${getDayOfWeek(
           new Date(getCurrentDate())
-        )}&travel_class=${"Economy"}&seats=${"1"}`,
+        )}&travel_class=${"Economy"}&seats=${1}`,
         {
           state: {
             origin: { cityCode: "GAU", city: "Gauwahati", country: "India" },
             destination: { cityCode, city, country },
-            seats: 1,
+            tarvellers: { adults: 1, children: 0, infants: 0 },
             dateInput: getCurrentDate(),
           },
         }
@@ -36,8 +36,11 @@ export default function AboutSite() {
     } else if (location.pathname === "/hotels") {
       const checkIn = getCurrentDate(new Date());
       const checkOut = getTommorrowsDate(new Date());
+      const guests = [{ adults: 1, children: 0 }];
       navigate(
-        `/hotels/results?city=${city}&chk_in=${checkIn}&chk_out=${checkOut}&guests=${1}&rooms=${1}`
+        `/hotels/results?city=${city}&chk_in=${checkIn}&chk_out=${checkOut}&guests=${JSON.stringify(
+          guests
+        )}&rooms=${1}`
       );
     }
   }

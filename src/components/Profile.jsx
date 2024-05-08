@@ -15,7 +15,7 @@ export default function Profile() {
         <hr className="border-dotted border-stone-500"></hr>
         <div>
           <p className="text-xs  text-stone-500">Email Address</p>
-          <p>{email || localStorage.getItem("email")}</p>
+          <p>{email}</p>
         </div>
       </div>
 

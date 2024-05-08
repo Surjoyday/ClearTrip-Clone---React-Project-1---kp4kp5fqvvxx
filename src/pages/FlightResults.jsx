@@ -626,7 +626,11 @@ export default function FlightResults() {
           </div>
         </div>
       </section>
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        pauseOnHover={false}
+      />
     </>
   );
 }

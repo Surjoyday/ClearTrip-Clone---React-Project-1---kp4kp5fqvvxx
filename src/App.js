@@ -88,7 +88,11 @@ export default function App() {
             </Suspense>
           </BrowserRouter>
           <Footer />
-          <ToastContainer position="top-center" autoClose={2000} />
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            pauseOnHover={false}
+          />
         </TripProvider>
       </AuthProvider>
     </div>

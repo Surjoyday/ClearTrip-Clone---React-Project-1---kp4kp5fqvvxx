@@ -29,7 +29,7 @@ export default function FlightCard({ flight }) {
 
   const numSeats = travellers.adults + travellers.children + travellers.infants;
 
-  console.log(numSeats);
+  // console.log(numSeats);
 
   function handleNavigate() {
     if (token) {
@@ -214,7 +214,11 @@ function FlightDetails({ flight, imageSrc }) {
           </div>
         </div>
       </div>
-      <ToastContainer position="top-center" autoClose={3000} />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        pauseOnHover={false}
+      />
     </>
   );
 }

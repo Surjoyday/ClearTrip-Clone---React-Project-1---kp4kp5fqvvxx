@@ -733,7 +733,7 @@ export default function Flight() {
         </div>
       </section>
 
-      <ToastContainer position="top-center" autoClose={1000} />
+      <ToastContainer position="top-center" autoClose={1000} pauseOnHover={false} />
     </>
   );
 }
