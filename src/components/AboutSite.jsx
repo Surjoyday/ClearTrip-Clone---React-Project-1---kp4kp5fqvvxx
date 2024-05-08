@@ -45,7 +45,7 @@ export default function AboutSite() {
   // console.log(location.pathname);
 
   return (
-    <aside className={`${location.pathname === "/offers" && "hidden"}`}>
+    <aside className={`${location.pathname === "/offers" && "hidden"} `}>
       <div className="popular-destinations mt-7 mb-20">
         <h2 className="text-2xl w-fit font-semibold max-sm:text-xl border-l-4 border-[#FF4F17] pl-2">
           Popular destinations
@@ -90,14 +90,14 @@ export default function AboutSite() {
 
 function AboutFlight() {
   return (
-    <div className="text-justify p-2 max-sm:hidden mb-8  text-sm">
+    <div className="text-justify p-2  mb-8  text-sm max-sm:text-xs max-sm:p-4">
       <div className="cleartrip-flight-info ">
         <h3 className=" font-bold text-base py-3">Why Cleartrip?</h3>
         <p>
           It is no longer an uphill battle to get the lowest airfare and book
           tickets online. Cleartrip is all about making travel &nbsp;
           <span className="font-bold ">easy, affordable</span>
-          &nbsp; and <span className="font-semibold">simple.</span> From
+          &nbsp;and <span className="font-semibold">simple.</span> From
           <span className="font-semibold">international</span> flights to
           <span className="font-semibold">domestic</span> flights; from early
           morning flights to late night flights, from cheap flights to luxurious
@@ -140,10 +140,10 @@ function AboutFlight() {
           </span>
         </div>
         <p>
-          And with our{" "}
+          And with our
           <span className="font-semibold">
             round-the-clock customer service,
-          </span>{" "}
+          </span>
           we ensure no queries or concerns regarding your flight tickets are
           left unresolved.
         </p>
@@ -259,7 +259,7 @@ function AboutFlight() {
 
 function AboutHotels() {
   return (
-    <div className="grid grid-cols-1 gap-y-8 text-justify max-sm:hidden mb-8  text-sm">
+    <div className="grid grid-cols-1 gap-y-8 text-justify mb-8  text-sm max-sm:text-xs">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
         <div className="p-4 bg-white rounded-lg">
           <p className="text-neutral-900 text-xl font-semibold">

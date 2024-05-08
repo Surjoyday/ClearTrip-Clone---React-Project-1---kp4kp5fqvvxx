@@ -22,6 +22,10 @@
   bottom: 0;
 } */
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 .active {
   /* cursor: pointer;
   border: none;

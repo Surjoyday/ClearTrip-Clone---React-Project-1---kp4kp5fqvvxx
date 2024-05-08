@@ -311,7 +311,7 @@ export default function HotelResults() {
     <>
       {isLoading && <Loader />}
 
-      <div className="whitespace-nowrap flex gap-5 items-center px-10 justify-start sticky top-28 max-sm:top-36 py-4 z-20 bg-white border-b overflow-x-scroll">
+      <div className="whitespace-nowrap flex gap-5 items-center px-10 justify-start sticky top-28 max-sm:top-34 py-4 z-20 bg-white border-b overflow-x-auto">
         <h1 className="text-[#0E6AFF] font-medium text-sm">All filters</h1>
         <div>
           <Button
@@ -597,7 +597,7 @@ export default function HotelResults() {
         {showFilltersApplied && (
           <>
             <div className="px-10 font-medium pb-10 flex max-sm:flex-col gap-3 items-center justify-between whitespace-nowrap">
-              <div className="flex gap-2 items-center overflow-x-scroll">
+              <div className="flex gap-2 items-center overflow-x-auto">
                 <p>Filters applied</p>
                 {Object.entries(filtersAppliedList)
                   .filter(([key, value]) => value !== "")

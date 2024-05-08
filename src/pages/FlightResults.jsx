@@ -178,7 +178,7 @@ export default function FlightResults() {
 
       const resData = await res.json();
 
-      console.log(resData);
+      // console.log(resData);
 
       const flightsData = resData?.data?.flights;
       const totalResults = resData?.totalResults;

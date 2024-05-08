@@ -5,13 +5,22 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
+import { Box, Popover } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import { LuMinusCircle, LuPlusCircle } from "react-icons/lu";
 import { MdFlightTakeoff, MdFlightLand } from "react-icons/md";
+import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
+import { FaRegUser, FaUser } from "react-icons/fa6";
+
+import {
+  PiArrowRightLight,
+  PiCaretDown,
+  PiCaretUp,
+  PiCheckLight,
+} from "react-icons/pi";
 
 import {
   base_URL,
@@ -20,7 +29,7 @@ import {
   getDayOfWeek,
 } from "../assets/helper";
 import { RightLeftArrow } from "../assets/icons";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   fromInput: null,
@@ -32,6 +41,9 @@ const initialState = {
   day: getDayOfWeek(new Date(getCurrentDate())),
   travelClass: "Economy",
   seats: 1,
+  adults: 1,
+  children: 0,
+  infants: 0,
   errors: {
     fromInError: "",
     toInError: "",
@@ -42,21 +54,6 @@ function reducer(state, action) {
   switch (action.type) {
     case "SET_AIRPORT_DATA":
       return { ...state, airportData: action.payload };
-
-    case "SET_CLASS_TYPE":
-      return { ...state, travelClass: action.payload };
-
-    case "SET_SEATS":
-      const calcFlag = action.payload;
-      return {
-        ...state,
-        seats:
-          calcFlag === "inc"
-            ? state.seats + 1
-            : state.seats > 1
-            ? state.seats - 1
-            : 1,
-      };
 
     case "SET_FROM_INPUT":
       return {
@@ -81,6 +78,29 @@ function reducer(state, action) {
         day: getDayOfWeek(new Date(action.payload)),
       };
 
+    case "SET_ADULTS":
+      return {
+        ...state,
+        adults: action.payload === "inc" ? state.adults + 1 : state.adults - 1,
+      };
+
+    case "SET_CHILDREN":
+      return {
+        ...state,
+        children:
+          action.payload === "inc" ? state.children + 1 : state.children - 1,
+      };
+
+    case "SET_INFANTS":
+      return {
+        ...state,
+        infants:
+          action.payload === "inc" ? state.infants + 1 : state.infants - 1,
+      };
+
+    case "SET_TRAVEL_CLASS":
+      return { ...state, travelClass: action.payload };
+
     case "SET_ERRORS":
       const [type, errorMsg] = action.payload;
       return { ...state, errors: { ...state.errors, [type]: errorMsg } };
@@ -91,11 +111,10 @@ function reducer(state, action) {
 }
 
 export default function Flight() {
-  const navigate = useNavigate();
-
-  // const loaction = useLocation();
-
+  const [anchorElTripType, setAnchorElTripType] = useState(null);
+  const [anchorElSeatsAndClass, setAnchorElSeatsAndClass] = useState(null);
   const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
 
   const {
     toInput,
@@ -109,20 +128,10 @@ export default function Flight() {
     day,
     origin,
     destination,
+    adults,
+    children,
+    infants,
   } = state;
-
-  // console.log(loaction);
-  // console.log(airportData);
-
-  // console.log(typeof fromInput === "string");
-
-  // console.log("EQUAL", toInput === fromInput);
-  // console.log(errors.fromInError);
-  // console.log(dateInput);
-  // console.log(day);
-
-  // console.log(fromInput);
-  // console.log(toInput);
 
   useEffect(function () {
     getAllAirportsData();
@@ -153,6 +162,8 @@ export default function Flight() {
     // console.log(airportDataReturned);
   }
 
+  const totalTravellers = adults + children + infants;
+
   function handleNavigate() {
     if (!fromInput || !toInput) {
       if (!fromInput)
@@ -178,10 +189,20 @@ export default function Flight() {
     }
 
     navigate(
-      `/flights/results?from=${fromInput}&to=${toInput}&depart_date=${dateInput}&day=${day}&travel_class=${travelClass}&seats=${seats}`,
-      { state: { origin, destination, seats, dateInput } }
+      `/flights/results?from=${fromInput}&to=${toInput}&depart_date=${dateInput}&day=${day}&travel_class=${travelClass}&seats=${totalTravellers}`,
+      {
+        state: {
+          origin,
+          destination,
+          tarvellers: { adults, children, infants },
+          dateInput,
+        },
+      }
     );
   }
+
+  //// TOTAL COUNT OF PEOPLE
+  const totalPeopleCount = adults + children;
 
   return (
     <>
@@ -202,12 +223,281 @@ export default function Flight() {
             </div>
           </div>
 
-          {/* FLIGHT BOOKING BOX */}
-          <div className="main-container-booking flex flex-col my-6  px-4 py-10 shadow-lg  rounded-xl  border bg-white">
-            {/* FLIGHT CLASS AND SEATS */}
+          {/* /// CONATINER */}
+          <div className="main-container-booking flex justify-center flex-col my-6  px-4 py-10 shadow-lg  rounded-xl  border bg-white">
+            {/* /// CLASS TYPE & SEATS */}
+            <div className="mb-6 flex gap-5 align-middle justify-start pl-4 max-sm:flex-col">
+              {/* /// ONE WAY TRIP  */}
 
-            <div className="mb-6 flex gap-5 align-middle justify-start pl-4">
-              <div>
+              <div className="flex gap-2 items-center max-sm:text-sm">
+                <PiArrowRightLight size={23} />
+                <p
+                  onClick={(e) => setAnchorElTripType(e.currentTarget)}
+                  className="cursor-pointer"
+                >
+                  One Way
+                </p>
+                {anchorElTripType ? <PiCaretUp /> : <PiCaretDown />}
+                <div>
+                  <Popover
+                    open={Boolean(anchorElTripType)}
+                    anchorEl={anchorElTripType}
+                    onClose={() => setAnchorElTripType(null)}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                  >
+                    <div className="p-4 font-medium">
+                      <div className="flex gap-2 items-center pb-4 pt-2">
+                        <PiCheckLight />
+                        <p>One way</p>
+                      </div>
+                      <p
+                        className="pl-6 cursor-progress"
+                        title="Round trip not available currently"
+                      >
+                        Round trip
+                      </p>
+                    </div>
+                  </Popover>
+                </div>
+              </div>
+
+              {/* /// SEATS & CLASS TYPE */}
+              <div className="flex items-center gap-2 max-sm:text-sm">
+                {anchorElSeatsAndClass ? (
+                  <FaUser size={16} className="self-center" />
+                ) : (
+                  <FaRegUser size={16} className="self-center" />
+                )}
+                <p
+                  onClick={(e) => setAnchorElSeatsAndClass(e.currentTarget)}
+                  className="cursor-pointer"
+                >
+                  {/* {adults} Adult,  {travelClass}  */}
+                  <span>{`${adults} Adult${adults > 1 ? "s," : ", "}`}</span>
+                  {+children >= 1 && (
+                    <span>
+                      {" "}
+                      {`${children} Children${children > 1 ? "s," : ", "}`}
+                    </span>
+                  )}
+
+                  {+infants >= 1 && (
+                    <span>
+                      {" "}
+                      {`${infants} Infant${infants > 1 ? "s," : ", "}`}
+                    </span>
+                  )}
+
+                  <span> {travelClass}</span>
+                </p>
+
+                {anchorElSeatsAndClass ? <PiCaretUp /> : <PiCaretDown />}
+                <Popover
+                  open={Boolean(anchorElSeatsAndClass)}
+                  onClose={() => setAnchorElSeatsAndClass(null)}
+                  anchorEl={anchorElSeatsAndClass}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                >
+                  <div className="w-60 p-4 max-sm:p-2 max-sm:w-48 flex flex-col gap-5">
+                    {/* /// ADULTS */}
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="font-medium">Adults</p>
+                        <p className="text-xs text-stone-500">(12+ Years)</p>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() =>
+                            dispatch({ type: "SET_ADULTS", payload: "dec" })
+                          }
+                          disabled={adults === 1}
+                        >
+                          <CiCircleMinus
+                            size={30}
+                            className={`${
+                              adults > 1 ? "text-[#3366CC]" : "text-stone-400"
+                            }`}
+                          />
+                        </button>
+                        <p>{adults}</p>
+                        <button
+                          disabled={totalPeopleCount >= 9}
+                          onClick={() =>
+                            dispatch({ type: "SET_ADULTS", payload: "inc" })
+                          }
+                        >
+                          <CiCirclePlus
+                            size={30}
+                            className={`${
+                              totalPeopleCount >= 9
+                                ? "text-stone-400"
+                                : "text-[#3366CC]"
+                            }`}
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* /// CHILDREN */}
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="font-medium">Children</p>
+                        <p className="text-xs text-stone-500">(2 - 12 yrs)</p>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() =>
+                            dispatch({ type: "SET_CHILDREN", payload: "dec" })
+                          }
+                          disabled={children <= 0}
+                        >
+                          <CiCircleMinus
+                            size={30}
+                            className={`${
+                              children <= 0
+                                ? "text-stone-400"
+                                : "text-[#3366CC]"
+                            }`}
+                          />
+                        </button>
+                        <p>{children}</p>
+                        <button
+                          disabled={totalPeopleCount >= 9}
+                          onClick={() =>
+                            dispatch({ type: "SET_CHILDREN", payload: "inc" })
+                          }
+                        >
+                          <CiCirclePlus
+                            size={30}
+                            className={`${
+                              totalPeopleCount >= 9
+                                ? "text-stone-400"
+                                : "text-[#3366CC]"
+                            }`}
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* /// INFANTS */}
+
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="font-medium">Infants</p>
+                        <p className="text-xs text-stone-500">(Below 2 yrs)</p>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() =>
+                            dispatch({ type: "SET_INFANTS", payload: "dec" })
+                          }
+                          disabled={infants <= 0}
+                        >
+                          <CiCircleMinus
+                            size={30}
+                            className={`${
+                              infants <= 0 ? "text-stone-400" : "text-[#3366CC]"
+                            }`}
+                          />
+                        </button>
+                        <p>{infants}</p>
+                        <button
+                          disabled={infants >= adults}
+                          onClick={() =>
+                            dispatch({ type: "SET_INFANTS", payload: "inc" })
+                          }
+                        >
+                          <CiCirclePlus
+                            size={30}
+                            className={`${
+                              infants >= adults
+                                ? "text-stone-400"
+                                : "text-[#3366CC]"
+                            }`}
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* /// TRAVEL CLASS */}
+
+                    <div className="text-xs flex flex-wrap gap-4 max-sm:gap-2 pt-3">
+                      <p
+                        className={`${
+                          travelClass === "Economy"
+                            ? "border-[#3366CC] bg-[#EFF5FB]"
+                            : ""
+                        }  border w-fit py-1 px-1.5 rounded-full cursor-pointer`}
+                        onClick={() =>
+                          dispatch({
+                            type: "SET_TRAVEL_CLASS",
+                            payload: "Economy",
+                          })
+                        }
+                      >
+                        Economy
+                      </p>
+                      <p
+                        className={`${
+                          travelClass === "Bussiness class"
+                            ? "border-[#3366CC] bg-[#EFF5FB]"
+                            : ""
+                        }  border w-fit py-1 px-1.5 rounded-full cursor-pointer`}
+                        onClick={() =>
+                          dispatch({
+                            type: "SET_TRAVEL_CLASS",
+                            payload: "Bussiness class",
+                          })
+                        }
+                      >
+                        Bussiness class
+                      </p>
+                      <p
+                        className={`${
+                          travelClass === "First class"
+                            ? "border-[#3366CC] bg-[#EFF5FB]"
+                            : ""
+                        }  border w-fit py-1 px-1.5 rounded-full cursor-pointer`}
+                        onClick={() =>
+                          dispatch({
+                            type: "SET_TRAVEL_CLASS",
+                            payload: "First class",
+                          })
+                        }
+                      >
+                        First class
+                      </p>
+                      <p
+                        className={`${
+                          travelClass === "Premium economy"
+                            ? "border-[#3366CC] bg-[#EFF5FB]"
+                            : ""
+                        }  border w-fit py-1 px-1.5 rounded-full cursor-pointer`}
+                        onClick={() =>
+                          dispatch({
+                            type: "SET_TRAVEL_CLASS",
+                            payload: "Premium economy",
+                          })
+                        }
+                      >
+                        Premium economy
+                      </p>
+                    </div>
+                  </div>
+                </Popover>
+              </div>
+
+              {/* /// CLASS TYPE */}
+              {/* <div>
                 <FormControl fullWidth>
                   <Select
                     size="small"
@@ -227,9 +517,10 @@ export default function Flight() {
                     <MenuItem value="Premium Economy">Premium Economy</MenuItem>
                   </Select>
                 </FormControl>
-              </div>
+              </div> */}
 
-              <div className="flex gap-2 items-center  py-1 border-stone-300 rounded px-2 ">
+              {/* /// SEATS */}
+              {/* <div className="flex gap-2 items-center  py-1 border-stone-300 rounded px-2 ">
                 <button
                   onClick={() =>
                     dispatch({ type: "SET_SEATS", payload: "dec" })
@@ -247,7 +538,7 @@ export default function Flight() {
                 >
                   <LuPlusCircle size={22} className="text-blue-500" />
                 </button>
-              </div>
+              </div> */}
             </div>
 
             {/* SEARCH CONTAINER*/}
@@ -430,10 +721,10 @@ export default function Flight() {
                   />
                   <Button
                     variant="contained"
-                    className="bg-[#F77727] text-white font-bold  hover:bg-[#f77e27f9] py-[7.4px] px-5 rounded"
+                    className="bg-[#F77727] text-white font-bold  hover:bg-[#f77e27f9] py-[7.4px] px-5 rounded normal-case"
                     onClick={handleNavigate}
                   >
-                    Search
+                    Search flights
                   </Button>
                 </div>
               </div>

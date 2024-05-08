@@ -12,7 +12,7 @@ export default function SideNavbar() {
 
   return (
     <nav className="flex flex-col max-sm:w-full w-40">
-      <ul className="list-none cursor-pointer flex flex-col gap-8 max-sm:flex-row font-medium overflow-x-scroll">
+      <ul className="list-none cursor-pointer flex flex-col gap-8 max-sm:flex-row font-medium overflow-x-auto">
         <li title="Flights">
           <NavLink
             to={"flights"}

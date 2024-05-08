@@ -31,6 +31,8 @@ export default function Navbar() {
 
   const urlState = location.state;
 
+  console.log(urlState?.tarvellers);
+
   return (
     <>
       <nav
@@ -166,6 +168,12 @@ export default function Navbar() {
 }
 
 function FlightSearchSummary({ urlState }) {
+  const totalTravellers =
+    urlState?.tarvellers?.adults +
+    urlState?.tarvellers?.children +
+    urlState?.tarvellers?.infants;
+
+  // console.log(totalTravellers);
   return (
     <>
       <div className="flight-search-criteria-summary flex">
@@ -204,8 +212,8 @@ function FlightSearchSummary({ urlState }) {
             {formatDates(new Date(urlState?.dateInput))}
           </p>
           <p className="border rounded-[4px] p-2">
-            {urlState?.seats}{" "}
-            {`${urlState?.seats > 1 ? "Travellers" : "Traveller"} `}
+            {totalTravellers}{" "}
+            {`${totalTravellers > 1 ? "Travellers" : "Traveller"} `}
           </p>
         </div>
       </div>
@@ -233,18 +241,18 @@ function HotelSearchedSummary() {
     0
   );
 
-  console.log(totalGuest);
+  // console.log(totalGuest);
 
   return (
-    <div className="flex justify-center">
-      <div className="flex gap-3 max-sm:py-0 border rounded-md max-sm:mt-5 max-sm:overflow-x-scroll">
+    <div className="flex justify-center max-sm:text-xs">
+      <div className="flex gap-3 max-sm:py-0 border rounded-md max-sm:mt-5 max-sm:overflow-x-auto">
         <div className="flex items-center gap-2 p-3  border-r-2">
           <CiLocationOn size={18} />
           <p className="font-semibold">{city}</p>
         </div>
         <div className="flex items-center gap-2 p-2 border-r-2">
           <PiCalendarBlankLight size={18} />
-          <div className="flex gap-3 max-sm:text-sm whitespace-nowrap">
+          <div className="flex gap-3  max-sm:text-xs whitespace-nowrap">
             <p className="font-semibold border-r-2 pr-3">
               {formatDates(new Date(checkInDate))}
             </p>
