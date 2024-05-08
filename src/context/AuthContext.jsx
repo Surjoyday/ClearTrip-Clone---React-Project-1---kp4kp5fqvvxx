@@ -160,7 +160,7 @@ function AuthProvider({ children }) {
   /// SIGNUP USER
 
   async function fetchSignupDetails(signupPayload) {
-    console.log(signupPayload);
+    // console.log(signupPayload);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/signup`, {
         method: "POST",
