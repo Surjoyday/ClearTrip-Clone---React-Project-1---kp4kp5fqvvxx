@@ -1,9 +1,7 @@
-import { memo } from "react";
-
 function RightLeftArrow() {
   return (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <rect width="32" height="32" rx="16" fill="white"></rect>
+      <rect width="32" height="40" rx="16" fill="white"></rect>
       <path
         d="M24.1666 14.8333H7.83325"
         stroke="#3366CC"

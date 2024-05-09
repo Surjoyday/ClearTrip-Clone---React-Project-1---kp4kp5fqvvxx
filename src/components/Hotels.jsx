@@ -6,7 +6,14 @@ import {
   HEADERS,
 } from "../assets/helper";
 
-import { Autocomplete, Box, TextField, Button, Popover } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  TextField,
+  Button,
+  Popover,
+  Typography,
+} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import { IoLocationSharp } from "react-icons/io5";
@@ -249,7 +256,7 @@ export default function Hotels() {
         </div>
 
         {/* HOTEL BOOKING BOX */}
-        <div className="container-hotel flex flex-col gap-6 my-6 px-4 py-14 shadow-lg  rounded-xl border">
+        <div className="container-hotel flex flex-col gap-6 my-6 px-4 py-6 shadow-lg  rounded-xl border">
           {/* DESTINATION - CITY INPUT*/}
           <div className="hotel-city-box">
             {cities.length > 0 && (
@@ -523,7 +530,7 @@ export default function Hotels() {
           <div className="flex justify-end max-sm:justify-center">
             <Button
               variant="contained"
-              className="normal-case hover:bg-[#D4581D] text-white font-bold  bg-[#FF4F17] mt-3 mr-3 py-4 px-14 rounded-lg"
+              className="normal-case hover:bg-[#D4581D] text-white text-sm font-bold  bg-[#FF4F17] mt-3 mr-3 py-4 px-16 rounded-lg"
               onClick={handleNavigate}
             >
               Search hotels

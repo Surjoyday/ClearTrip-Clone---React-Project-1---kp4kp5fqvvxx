@@ -224,9 +224,9 @@ export default function Flight() {
           </div>
 
           {/* /// CONATINER */}
-          <div className="main-container-booking flex justify-center flex-col my-6  px-4 py-10 shadow-lg  rounded-xl  border bg-white">
+          <div className="flex justify-center flex-col my-6  px-4 py-10 shadow-lg  rounded-xl  border bg-white">
             {/* /// CLASS TYPE & SEATS */}
-            <div className="mb-6 flex gap-5 align-middle justify-start pl-4 max-sm:flex-col">
+            <div className="mb-6 flex gap-5 align-middle justify-start pl-12 max-sm:pl-2">
               {/* /// ONE WAY TRIP  */}
 
               <div className="flex gap-2 items-center max-sm:text-sm">
@@ -237,7 +237,11 @@ export default function Flight() {
                 >
                   One Way
                 </p>
-                {anchorElTripType ? <PiCaretUp /> : <PiCaretDown />}
+                {anchorElTripType ? (
+                  <PiCaretUp color="#999999" />
+                ) : (
+                  <PiCaretDown color="#999999" />
+                )}
                 <div>
                   <Popover
                     open={Boolean(anchorElTripType)}
@@ -294,7 +298,11 @@ export default function Flight() {
                   <span> {travelClass}</span>
                 </p>
 
-                {anchorElSeatsAndClass ? <PiCaretUp /> : <PiCaretDown />}
+                {anchorElSeatsAndClass ? (
+                  <PiCaretUp color="#999999" />
+                ) : (
+                  <PiCaretDown color="#999999" />
+                )}
                 <Popover
                   open={Boolean(anchorElSeatsAndClass)}
                   onClose={() => setAnchorElSeatsAndClass(null)}
@@ -495,60 +503,16 @@ export default function Flight() {
                   </div>
                 </Popover>
               </div>
-
-              {/* /// CLASS TYPE */}
-              {/* <div>
-                <FormControl fullWidth>
-                  <Select
-                    size="small"
-                    labelId="travel-class-label"
-                    id="travel-class-select"
-                    value={travelClass}
-                    onChange={(e) =>
-                      dispatch({
-                        type: "SET_CLASS_TYPE",
-                        payload: e.target.value,
-                      })
-                    }
-                  >
-                    <MenuItem value="Economy">Economy</MenuItem>
-                    <MenuItem value="Bussiness">Bussiness</MenuItem>
-                    <MenuItem value="First Class">First Class</MenuItem>
-                    <MenuItem value="Premium Economy">Premium Economy</MenuItem>
-                  </Select>
-                </FormControl>
-              </div> */}
-
-              {/* /// SEATS */}
-              {/* <div className="flex gap-2 items-center  py-1 border-stone-300 rounded px-2 ">
-                <button
-                  onClick={() =>
-                    dispatch({ type: "SET_SEATS", payload: "dec" })
-                  }
-                >
-                  <LuMinusCircle size={22} className="text-blue-500" />
-                </button>
-                <span>
-                  {seats} Seat{seats > 1 && "s"}
-                </span>
-                <button
-                  onClick={() =>
-                    dispatch({ type: "SET_SEATS", payload: "inc" })
-                  }
-                >
-                  <LuPlusCircle size={22} className="text-blue-500" />
-                </button>
-              </div> */}
             </div>
 
             {/* SEARCH CONTAINER*/}
             <div className="search-field flex flex-col gap-4 px-4">
               {/* FROM - TO CONTAINER */}
-              <div className="from-to-container flex max-sm:flex-col gap-2 items-center border rounded-md mb-4 mt-5 px-4 py-2">
-                {/* FROM CONTAINER*/}
-                <div className="from-container flex items-center">
-                  {/* ROM INPUT CONTAINER */}
-                  <div className="from-input-container">
+              <div className=" flex items-center justify-center rounded-md mb-4 mt-5 px-4 py-2 relative">
+                {/* /// FROM CONTAINER*/}
+                <div className=" flex items-center w-full">
+                  {/* /// FROM INPUT CONTAINER */}
+                  <div className="">
                     {airportData.length > 0 && (
                       <Autocomplete
                         forcePopupIcon={false}
@@ -599,20 +563,27 @@ export default function Flight() {
                         }}
                         renderInput={(params) => (
                           <TextField
+                            variant="outlined"
                             {...params}
-                            variant="standard"
                             InputProps={{
                               ...params.InputProps,
 
                               startAdornment: (
                                 <InputAdornment position="start">
-                                  <MdFlightTakeoff className="text-2xl ml-4  text-stone-400" />
+                                  <MdFlightTakeoff className="text-2xl ml-4 max-sm:ml-2  text-stone-400" />
                                 </InputAdornment>
                               ),
+                              sx: {
+                                borderTopRightRadius: 0,
+                                borderBottomRightRadius: 0,
+                                borderTopLeftRadius: 6,
+                                borderBottomLeftRadius: 6,
+                                height: 50,
+                              },
                             }}
                             size="small"
                             id="from-input"
-                            className="w-[250px]  px-2 py-2"
+                            className="w-[280px] max-sm:w-44  pl-2 py-2"
                             placeholder="Where from?"
                             error={errors.fromInError !== ""}
                             helperText={errors.fromInError || ""}
@@ -622,13 +593,14 @@ export default function Flight() {
                     )}
                   </div>
                 </div>
-                {/* ICON LEFT-RIGHT ARROW */}
-                <div className="left-right-arrow text-blue-500 max-sm:hidden">
+                {/* /// ICON LEFT-RIGHT ARROW */}
+                {/* <div className="text-blue-500 max-sm:hidden absolute left-1/2 z-40 bg-white"> */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 top-full -mt-14 z-10 bg-white ">
                   <RightLeftArrow />
                 </div>
-                {/* TO CONTAINER*/}
-                <div className="to-container flex items-center">
-                  {/* TO INPUT CONTAINER */}
+                {/*/// TO CONTAINER*/}
+                <div className=" flex items-center ">
+                  {/* /// TO INPUT CONTAINER */}
                   <div className="to-input-container ">
                     {airportData.length > 0 && (
                       <Autocomplete
@@ -671,7 +643,7 @@ export default function Flight() {
                         isOptionEqualToValue={(option, value) =>
                           option.id === value.id
                         }
-                        onChange={(option, value) => {
+                        onChange={(_option, value) => {
                           dispatch({
                             type: "SET_TO_INPUT",
                             payload: value,
@@ -681,18 +653,24 @@ export default function Flight() {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            variant="standard"
                             InputProps={{
                               ...params.InputProps,
                               startAdornment: (
                                 <InputAdornment position="start">
-                                  <MdFlightLand className="text-2xl ml-4 text-stone-400" />
+                                  <MdFlightLand className="text-2xl ml-7 text-stone-400" />
                                 </InputAdornment>
                               ),
+                              sx: {
+                                borderTopRightRadius: 6,
+                                borderBottomRightRadius: 6,
+                                borderTopLeftRadius: 0,
+                                borderBottomLeftRadius: 0,
+                                height: 50,
+                              },
                             }}
                             size="small"
                             id="to-input"
-                            className="w-[250px]  px-2 py-2"
+                            className="w-[280px] max-sm:w-44  pr-2 py-2"
                             placeholder="Where to?"
                             error={errors.toInError !== ""}
                             helperText={errors.toInError || ""}
@@ -721,7 +699,7 @@ export default function Flight() {
                   />
                   <Button
                     variant="contained"
-                    className="bg-[#F77727] text-white font-bold  hover:bg-[#f77e27f9] py-[7.4px] px-5 rounded normal-case"
+                    className="bg-[#F77727] text-white font-bold  hover:bg-[#f77e27f9] py-[7.4px] px-5 rounded normal-case whitespace-nowrap"
                     onClick={handleNavigate}
                   >
                     Search flights
@@ -733,7 +711,11 @@ export default function Flight() {
         </div>
       </section>
 
-      <ToastContainer position="top-center" autoClose={1000} pauseOnHover={false} />
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        pauseOnHover={false}
+      />
     </>
   );
 }
