@@ -169,7 +169,7 @@ export default function FlightResults() {
     try {
       const res = await fetch(
         `${base_URL}/flight?search=
-      {"source":"${fromCity}","destination":"${toCity}"}&day=${day}`,
+      {"source":"${fromCity}","destination":"${toCity}"}&day=${day}&limit=30`,
         {
           method: "GET",
           headers: HEADERS,
@@ -243,11 +243,11 @@ export default function FlightResults() {
             let URL = "";
 
             if (filterParams && !toSortParams) {
-              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&${filterParams}`;
+              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&${filterParams}&limit=30`;
             } else if (toSortParams && !filterParams) {
-              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&sort={"${sortParamsType}":${sortParamsValue}}`;
+              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&sort={"${sortParamsType}":${sortParamsValue}}&limit=30`;
             } else if (filterParams && sortByParams) {
-              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&sort={"${sortParamsType}":${sortParamsValue}}&${filterParams}`;
+              URL = `${base_URL}/flight?search={"source":"${fromCity}","destination":"${toCity}"}&day=${day}&sort={"${sortParamsType}":${sortParamsValue}}&${filterParams}&limit=30`;
             }
 
             if (URL) {
