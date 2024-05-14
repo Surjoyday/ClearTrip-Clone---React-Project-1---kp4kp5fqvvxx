@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 
-const base_URL = "https://academics.newtonschool.co/api/v1/bookingportals";
+const base_URL = process.env.REACT_APP_API_URL;
 
 const PROJECT_ID = process.env.REACT_APP_PROJECT_ID;
 
