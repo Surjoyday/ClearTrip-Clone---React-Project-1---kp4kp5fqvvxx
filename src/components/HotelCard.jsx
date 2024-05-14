@@ -119,6 +119,7 @@ function HotelImages({ imagesArr, alt }) {
         src={imagesArr[imgIndex]}
         alt={alt}
       />
+
       <button
         onClick={handleMovetoNextImg}
         className="absolute z-10 top-1/2 right-3 transform -translate-y-1/2 p-1 bg-slate-200 rounded-full right-button"
