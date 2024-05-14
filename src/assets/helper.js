@@ -1,5 +1,3 @@
-import { TextField } from "@mui/material";
-
 const base_URL = process.env.REACT_APP_API_URL;
 
 const PROJECT_ID = process.env.REACT_APP_PROJECT_ID;
@@ -12,7 +10,7 @@ const HEADERS = {
 function getCurrentDate() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // ensuring that month have always has 2 digits
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const day = String(currentDate.getDate()).padStart(2, "0"); // ensuring that day have always has 2 digits
   return `${year}-${month}-${day}`;
 }
