@@ -24,7 +24,7 @@ function FlightsBooked() {
     <>
       {flightsBooked.length === 0 ? (
         <>
-          <div className="flex flex-col gap-10 items-center">
+          <div className="flex flex-col items-center gap-10">
             <h1 className="text-2xl font-normal text-center">
               Looks like you have not booked any trips yet.Start exploring!
             </h1>
@@ -41,15 +41,15 @@ function FlightsBooked() {
           {flightsBooked?.reverse()?.map((flightObj, index) => (
             <div
               key={flightObj["_id"]}
-              className="mb-10 border rounded-md text-ellipsis overflow-scroll"
+              className="mb-10 overflow-scroll border rounded-md text-ellipsis"
             >
               {index === 0 && (
-                <p className="bg-green-500 text-white px-2 py-1">
+                <p className="px-2 py-1 text-white bg-green-500">
                   Recently Booked Flight
                 </p>
               )}
               <div className="flex items-start gap-5 p-4 bg-[#E8F6FF] shadow-md rounded-tl-md rounded-tr-md">
-                <div className="border p-3 bg-white">
+                <div className="p-3 bg-white border">
                   <BiSolidPlaneAlt size={30} />
                 </div>
                 <div className="pt-1">
@@ -77,7 +77,7 @@ function FlightsBooked() {
                 </div>
               </div>
 
-              <div className="py-5 text-xs flex justify-around">
+              <div className="flex justify-around py-5 text-xs">
                 <div>
                   <p className="font-semibold">
                     {Object.keys(airlineComapaniesForMyTrips)?.find(
@@ -92,21 +92,21 @@ function FlightsBooked() {
                 <div className="text-center">
                   <p>
                     <span>{flightObj?.flight?.source} </span>
-                    <span className="font-semibold text-sm">
+                    <span className="text-sm font-semibold">
                       {flightObj?.flight?.departureTime}
                     </span>
                   </p>
                   <p>{formatDates(new Date(flightObj?.start_date))}</p>
                 </div>
 
-                <div className="text-center py-1">
+                <div className="py-1 text-center">
                   <GoClock size={15} />
                   <p>{flightObj?.flight?.duration}h</p>
                 </div>
 
                 <div className="text-center">
                   <p>
-                    <span className="font-semibold text-sm">
+                    <span className="text-sm font-semibold">
                       {flightObj?.flight?.arrivalTime}
                     </span>
                     <span> {flightObj?.flight?.destination}</span>

@@ -1,19 +1,19 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import "./index.css";
-import "react-toastify/dist/ReactToastify.css";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
 
 import { AuthProvider } from "./context/AuthContext";
 import { TripProvider } from "./context/TripsContext";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 import Flight from "./components/Flight";
-import Home from "./pages/Home";
-import Hotels from "./components/Hotels";
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Hotels from "./components/Hotels";
 import Loader from "./components/Loader";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 const Offers = lazy(() => import("./components/Offers"));
 const Profile = lazy(() => import("./components/Profile"));
 const HotelsBooked = lazy(() => import("./components/HotelsBooked"));

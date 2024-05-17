@@ -4,8 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import {
   HEADERS,
   airlineComapanies,
+  airlineImages,
   base_URL,
-  formatDates,
 } from "../assets/helper";
 import {
   Accordion,
@@ -308,9 +308,9 @@ export default function FlightResults() {
     <>
       {isLoading && <Loader />}
       <section>
-        <div className="results-container  flex max-sm:flex-col gap-12 mt-7 mb-20">
-          <div className="sort-filter-accordian  w-1/4 max-sm:w-full ml-10 max-sm:ml-0 max-sm:px-2">
-            {/* <div className="sort-filter-accordian sticky top-4 w-1/4 max-sm:w-full max-sm:left-0 max-sm:px-2"> */}
+        <div className="flex gap-12 mb-20 results-container max-sm:flex-col mt-7">
+          <div className="w-1/4 ml-10 sort-filter-accordian max-sm:w-full max-sm:ml-0 max-sm:px-2">
+            {/* <div className="sticky w-1/4 sort-filter-accordian top-4 max-sm:w-full max-sm:left-0 max-sm:px-2"> */}
             <h1 className="px-2 pb-4 font-semibold">
               {flightResultantData?.length} of {flightCount} flights
             </h1>
@@ -323,22 +323,22 @@ export default function FlightResults() {
                 aria-label="sort-panel"
                 id="sort-panel-header"
               >
-                <Typography className="pr-2 text-stone-600 uppercase text-lg">
+                <Typography className="pr-2 text-lg uppercase text-stone-600">
                   Sort By
                 </Typography>
               </AccordionSummary>
 
               <AccordionDetails>
-                <div className="sort-by-container flex flex-col">
-                  <div className="departure-time flex flex-col items-start">
+                <div className="flex flex-col sort-by-container">
+                  <div className="flex flex-col items-start departure-time">
                     <label
                       htmlFor="departure-time-sort-label"
-                      className="text-sm text-black font-semibold pl-1"
+                      className="pl-1 text-sm font-semibold text-black"
                     >
                       Departure
                     </label>
                     <select
-                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      className="w-full p-2 mt-1 border-2 rounded-md"
                       id="departure-time-sort-label"
                       value={sortByParams?.departureTime}
                       onChange={(e) =>
@@ -354,15 +354,15 @@ export default function FlightResults() {
                     </select>
                   </div>
 
-                  <div className="arrival-time flex flex-col mt-3 items-start">
+                  <div className="flex flex-col items-start mt-3 arrival-time">
                     <label
                       htmlFor="arrival-time-sort-label"
-                      className="text-sm text-black font-semibold pl-1"
+                      className="pl-1 text-sm font-semibold text-black"
                     >
                       Arrival
                     </label>
                     <select
-                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      className="w-full p-2 mt-1 border-2 rounded-md"
                       id="arrival-time-sort-label"
                       value={sortByParams?.arrivalTime}
                       onChange={(e) =>
@@ -378,15 +378,15 @@ export default function FlightResults() {
                     </select>
                   </div>
 
-                  <div className="ticket-price flex flex-col mt-3 items-start">
+                  <div className="flex flex-col items-start mt-3 ticket-price">
                     <label
                       htmlFor="ticket-price-sort-label"
-                      className="text-sm text-black font-semibold pl-1"
+                      className="pl-1 text-sm font-semibold text-black"
                     >
                       Price
                     </label>
                     <select
-                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      className="w-full p-2 mt-1 border-2 rounded-md"
                       id="ticket-price-sort-label"
                       value={sortByParams?.ticketPrice}
                       onChange={(e) =>
@@ -402,15 +402,15 @@ export default function FlightResults() {
                     </select>
                   </div>
 
-                  <div className="stops flex flex-col mt-3 items-start">
+                  <div className="flex flex-col items-start mt-3 stops">
                     <label
                       htmlFor="stops-sort-label"
-                      className="text-sm text-black font-semibold pl-1"
+                      className="pl-1 text-sm font-semibold text-black"
                     >
                       Stops
                     </label>
                     <select
-                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      className="w-full p-2 mt-1 border-2 rounded-md"
                       id="stops-sort-label"
                       value={sortByParams?.stops}
                       onChange={(e) =>
@@ -426,15 +426,15 @@ export default function FlightResults() {
                     </select>
                   </div>
 
-                  <div className="duration flex flex-col mt-3 items-start">
+                  <div className="flex flex-col items-start mt-3 duration">
                     <label
                       htmlFor="duration-sort-label"
-                      className="text-sm text-black font-semibold pl-1"
+                      className="pl-1 text-sm font-semibold text-black"
                     >
                       Duration
                     </label>
                     <select
-                      className="w-full mt-1 p-2 border-2 rounded-md"
+                      className="w-full p-2 mt-1 border-2 rounded-md"
                       id="duration-sort-label"
                       value={sortByParams?.duration}
                       onChange={(e) =>
@@ -461,13 +461,13 @@ export default function FlightResults() {
                 aria-label="sort-panel"
                 id="sort-panel-header"
               >
-                <Typography className="pr-2 text-stone-600 uppercase text-lg">
+                <Typography className="pr-2 text-lg uppercase text-stone-600">
                   Filter
                 </Typography>
               </AccordionSummary>
 
               <AccordionDetails>
-                <div className="filter-section flex flex-col gap-4">
+                <div className="flex flex-col gap-4 filter-section">
                   <div className="ticket-price-filter">
                     <div className="flex flex-col ">
                       <label
@@ -478,7 +478,7 @@ export default function FlightResults() {
                       </label>
                       <output
                         htmlFor="ticket-price-range"
-                        className="text-xs pb-2 pt-2"
+                        className="pt-2 pb-2 text-xs"
                       >
                         Up to &#8377; {ticketPriceValue}
                       </output>
@@ -498,7 +498,7 @@ export default function FlightResults() {
                         }
                       />
                     </div>
-                    <div className="flex justify-between text-xs text-stone-500 pt-2">
+                    <div className="flex justify-between pt-2 text-xs text-stone-500">
                       <p>&#8377; {minPrice}</p>
                       <p>&#8377; {maxPrice}</p>
                     </div>
@@ -508,7 +508,7 @@ export default function FlightResults() {
                     <div className="flex flex-col">
                       <label
                         htmlFor="trip-duration-range"
-                        className="text-sm font-semibold pb-2"
+                        className="pb-2 text-sm font-semibold"
                       >
                         Trip duration
                       </label>
@@ -527,7 +527,7 @@ export default function FlightResults() {
                         }
                       />
                     </div>
-                    <div className="flex justify-between text-xs text-stone-500 pt-4">
+                    <div className="flex justify-between pt-4 text-xs text-stone-500">
                       <p>{minTripDuration} hour</p>
                       <p>
                         {durationValue === 0 ? maxTripDuration : durationValue}{" "}
@@ -536,10 +536,10 @@ export default function FlightResults() {
                     </div>
                   </div>
 
-                  <div className="prefered-airlines-filter flex flex-col">
-                    <p className="text-sm font-semibold pb-2">Airlines</p>
+                  <div className="flex flex-col prefered-airlines-filter">
+                    <p className="pb-2 text-sm font-semibold">Airlines</p>
                     <form>
-                      <div className="flex gap-2 text-sm p-1">
+                      <div className="flex gap-2 p-1 text-sm">
                         <input
                           type="checkbox"
                           id="vistara"
@@ -549,9 +549,16 @@ export default function FlightResults() {
                           )}
                           onChange={handleCheckBox}
                         />
-                        <label htmlFor="vistara">Vistara</label>
+                        <img
+                          src={airlineImages["UK"].at(0)}
+                          alt={airlineImages["UK"].at(1)}
+                          className="h-4"
+                        />
+                        <label htmlFor="vistara">
+                          {airlineImages["UK"].at(1)}
+                        </label>
                       </div>
-                      <div className="flex gap-2 text-sm p-1">
+                      <div className="flex gap-2 p-1 text-sm">
                         <input
                           type="checkbox"
                           id="indigo"
@@ -561,9 +568,16 @@ export default function FlightResults() {
                           )}
                           onChange={handleCheckBox}
                         />
-                        <label htmlFor="indigo">IndiGo</label>
+                        <img
+                          src={airlineImages["6E"].at(0)}
+                          alt={airlineImages["6E"].at(1)}
+                          className="h-4"
+                        />
+                        <label htmlFor="indigo">
+                          {airlineImages["6E"].at(1)}
+                        </label>
                       </div>
-                      <div className="flex gap-2 text-sm p-1">
+                      <div className="flex gap-2 p-1 text-sm">
                         <input
                           type="checkbox"
                           id="spice-jet"
@@ -573,9 +587,16 @@ export default function FlightResults() {
                           )}
                           onChange={handleCheckBox}
                         />
-                        <label htmlFor="spice-jet">SpiceJet</label>
+                        <img
+                          src={airlineImages["SG"].at(0)}
+                          alt={airlineImages["SG"].at(1)}
+                          className="h-4"
+                        />
+                        <label htmlFor="spice-jet">
+                          {airlineImages["SG"].at(1)}
+                        </label>
                       </div>
-                      <div className="flex gap-2 text-sm p-1">
+                      <div className="flex items-center gap-2 p-1 text-sm">
                         <input
                           type="checkbox"
                           id="air-india"
@@ -585,9 +606,16 @@ export default function FlightResults() {
                           )}
                           onChange={handleCheckBox}
                         />
-                        <label htmlFor="air-india">Air India</label>
+                        <img
+                          src={airlineImages["AI"].at(0)}
+                          alt={airlineImages["AI"].at(1)}
+                          className="h-4"
+                        />
+                        <label htmlFor="air-india">
+                          {airlineImages["AI"].at(1)}
+                        </label>
                       </div>
-                      <div className="flex gap-2 text-sm p-1">
+                      <div className="flex gap-2 p-1 text-sm">
                         <input
                           type="checkbox"
                           id="go-first"
@@ -597,7 +625,14 @@ export default function FlightResults() {
                           )}
                           onChange={handleCheckBox}
                         />
-                        <label htmlFor="go-first">Go-First</label>
+                        <img
+                          src={airlineImages["G8"].at(0)}
+                          alt={airlineImages["G8"].at(1)}
+                          className="h-4"
+                        />
+                        <label htmlFor="go-first">
+                          {airlineImages["G8"].at(1)}
+                        </label>
                       </div>
                     </form>
                   </div>
@@ -606,10 +641,10 @@ export default function FlightResults() {
             </Accordion>
           </div>
 
-          <div className="flight-results   w-full  flex flex-col gap-4 mr-10 p-2">
+          <div className="flex flex-col w-full gap-4 p-2 mr-10 flight-results">
             <div className="card_col_heading max-sm:hidden px-6 py-1 sticky top-[6.6rem] z-10 bg-[#F7F7F7] text-stone-600 text-sm flex justify-around border rounded-md">
               <p className="pr-10">Airline</p>
-              <div className="flex gap-28 justify-center pr-20">
+              <div className="flex justify-center pr-20 gap-28">
                 <p>Departure</p>
                 <p>Duration</p>
                 <p>Arrival</p>

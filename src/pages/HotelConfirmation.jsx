@@ -268,16 +268,16 @@ export default function HotelConfirmation() {
 
   return (
     <>
-      <div className="flex gap-10 max-sm:flex-col px-14 max-sm:p-5 mt-10 mb-10">
-        <div className="flex flex-col w-8/12 max-sm:w-full gap-10">
+      <div className="flex gap-10 mt-10 mb-10 max-sm:flex-col px-14 max-sm:p-5">
+        <div className="flex flex-col w-8/12 gap-10 max-sm:w-full">
           {/* /// 1) Review your itinerary */}
-          <div className="flex gap-3 items-center">
+          <div className="flex items-center gap-3">
             <PiNumberCircleOne size={30} />
             <p className="text-xl font-semibold">Review your itinerary</p>
           </div>
 
           {/* /// BOOKED HOTEL DETAILS CARD */}
-          <div className="border border-t-1 border-l-1 border-r-1 border-b-0 rounded-lg shadow-sm">
+          <div className="border border-b-0 rounded-lg shadow-sm border-t-1 border-l-1 border-r-1">
             {/* /// HOTEL IMAGE AND NAME DETALS */}
             <div className="flex justify-between p-6 max-sm:items-center">
               <div className="flex flex-col gap-4">
@@ -290,22 +290,22 @@ export default function HotelConfirmation() {
               <img
                 src={hotelData?.images?.at(0)}
                 alt={hotelData?.name}
-                className="h-24 w-24 max-sm:h-20 max-sm:w-20 rounded-lg"
+                className="w-24 h-24 rounded-lg max-sm:h-20 max-sm:w-20"
               />
             </div>
 
             {/* /// Half-Circles Styles */}
-            <div className="circle__parent flex justify-between">
+            <div className="flex justify-between circle__parent">
               <div className="left__circle"></div>
-              <hr className="border-b border-dashed w-11/12 my-1" />
+              <hr className="w-11/12 my-1 border-b border-dashed" />
               <div className="right__circle"></div>
             </div>
 
             {/* /// Check-in Check-out details */}
-            <div className="mt-2 p-4 flex max-sm:text-xs justify-around items-center">
+            <div className="flex items-center justify-around p-4 mt-2 max-sm:text-xs">
               <div>
                 <p className="text-sm font-semibold text-stone-500">Check-in</p>
-                <p className="font-semibold text-lg">
+                <p className="text-lg font-semibold">
                   {new Date(checkInDate).toLocaleDateString("en-GB", {
                     month: "short",
                     day: "2-digit",
@@ -317,7 +317,7 @@ export default function HotelConfirmation() {
                 </p>
               </div>
 
-              <div className=" flex gap-1 text-xs bg-stone-200 py-1 px-4 rounded-md text-stone-500 relative">
+              <div className="relative flex gap-1 px-4 py-1 text-xs rounded-md bg-stone-200 text-stone-500">
                 <p>
                   {calcTotalNights(
                     new Date(checkInDate),
@@ -338,7 +338,7 @@ export default function HotelConfirmation() {
                 <p className="text-sm font-semibold text-stone-500">
                   Check-out
                 </p>
-                <p className="font-semibold text-lg">
+                <p className="text-lg font-semibold">
                   {new Date(checkOutDate).toLocaleDateString("en-GB", {
                     month: "short",
                     day: "2-digit",
@@ -350,11 +350,11 @@ export default function HotelConfirmation() {
                 </p>
               </div>
 
-              <div className="max-sm:ml-2 flex flex-col gap-2">
-                <p className="text-sm text-stone-500 font-medium">
+              <div className="flex flex-col gap-2 max-sm:ml-2">
+                <p className="text-sm font-medium text-stone-500">
                   Rooms & Guests
                 </p>
-                <div className="flex gap-4 items-center max-sm:flex-col justify-center">
+                <div className="flex items-center justify-center gap-4 max-sm:flex-col">
                   <div className="font-semibold">
                     <span>
                       {rooms} {+rooms === 1 ? " Room," : " Rooms,"}
@@ -375,7 +375,7 @@ export default function HotelConfirmation() {
                     aria-labelledby="payment-modal"
                     aria-describedby="modal-for-payment"
                   >
-                    <div className="flex flex-col gap-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 outline-none">
+                    <div className="absolute flex flex-col gap-5 transform -translate-x-1/2 -translate-y-1/2 outline-none top-1/2 left-1/2">
                       <div
                         className="bg-white px-2.5 py-1 rounded-[50%] cursor-pointer self-end"
                         onClick={handleCloseDetailsModal}
@@ -383,13 +383,13 @@ export default function HotelConfirmation() {
                         &#10005;
                       </div>
 
-                      <div className="bg-white p-10 rounded-lg shadow-lg">
-                        <p className="font-medium text-2xl">
+                      <div className="p-10 bg-white rounded-lg shadow-lg">
+                        <p className="text-2xl font-medium">
                           Guest information
                         </p>
 
-                        <div className="flex gap-10 pt-10 items-center max-sm:text-sm whitespace-nowrap">
-                          <p className="font-semibold text-xl">Room {rooms}</p>
+                        <div className="flex items-center gap-10 pt-10 max-sm:text-sm whitespace-nowrap">
+                          <p className="text-xl font-semibold">Room {rooms}</p>
 
                           <p>
                             {adultCount} Adult{adultCount > 1 ? "s" : ""}
@@ -422,7 +422,7 @@ export default function HotelConfirmation() {
           </div>
 
           {/* /// 2) Guest Details SECTION */}
-          <div className="flex gap-3 items-center">
+          <div className="flex items-center gap-3">
             <PiNumberCircleTwo size={30} />
             <p className="text-xl font-semibold">Guest Details</p>
           </div>
@@ -542,7 +542,7 @@ export default function HotelConfirmation() {
         </div>
 
         {/* /// Price breakup */}
-        <div className="border w-3/12 h-fit max-sm:w-full rounded-2xl sticky top-24 z-10 ">
+        <div className="sticky z-10 w-3/12 border h-fit max-sm:w-full rounded-2xl top-24 ">
           <div className="p-4">
             <div className="flex flex-col gap-6">
               <p className="text-xl font-semibold">Price breakup</p>
@@ -591,13 +591,13 @@ export default function HotelConfirmation() {
                 </div>
               </div>
             </div>
-            <hr className="border-1 border-dashed border-stone-300 mt-3" />
+            <hr className="mt-3 border-dashed border-1 border-stone-300" />
           </div>
 
           {/* /// TOTAL PRICE */}
-          <div className="px-4 pb-3 flex justify-between m">
+          <div className="flex justify-between px-4 pb-3 m">
             <div>
-              <p className="font-medium text-sm">Total</p>
+              <p className="text-sm font-medium">Total</p>
               <p className="text-xs text-stone-500">
                 <span>
                   {rooms} {+rooms === 1 ? "room" : "rooms"}
@@ -619,7 +619,7 @@ export default function HotelConfirmation() {
                 </span>
               </p>
             </div>
-            <p className="font-medium text-lg">
+            <p className="text-lg font-medium">
               &#8377;
               <span>
                 {roomSelected &&
@@ -639,7 +639,7 @@ export default function HotelConfirmation() {
             <HiOutlineCurrencyRupee size={24} />
             <p>
               <span> 12 months EMI available at </span>
-              <span className="text-md font-semibold">
+              <span className="font-semibold text-md">
                 {roomSelected &&
                 roomSelected.costPerNight &&
                 roomSelected.costDetails &&
@@ -669,7 +669,7 @@ export default function HotelConfirmation() {
         aria-labelledby="payment-modal"
         aria-describedby="modal-for-payment"
       >
-        <div className="p-10 flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md bg-white shadow-md">
+        <div className="absolute flex p-10 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-md top-1/2 left-1/2">
           <div className="">
             <p className="text-2xl font-semibold">Select payment method</p>
 
@@ -684,14 +684,14 @@ export default function HotelConfirmation() {
                 />
                 <label htmlFor="upi-option">UPI</label>
               </div>
-              <div className="ml-3 border p-4 rounded-md shadow-lg flex flex-col gap-3">
+              <div className="flex flex-col gap-3 p-4 ml-3 border rounded-md shadow-lg">
                 <label htmlFor="upi-ID">Enter UPI ID</label>
-                <div className=" flex max-sm:flex-col items-center gap-3">
+                <div className="flex items-center gap-3 max-sm:flex-col">
                   <input
                     id="upi-ID"
                     type="text"
                     placeholder="Enter your UPI ID"
-                    className="border border-stone-400 rounded-sm p-2"
+                    className="p-2 border rounded-sm border-stone-400"
                   />
                   <button
                     onClick={handlePaymentSuccessModal}
@@ -734,7 +734,7 @@ export default function HotelConfirmation() {
 
           <p
             onClick={handleClosePaymentModal}
-            className=" text-stone-600 font-bold text-xl cursor-pointer"
+            className="text-xl font-bold cursor-pointer text-stone-600"
           >
             <span className="hover:text-[red]">&#x2715;</span>
           </p>
@@ -748,7 +748,7 @@ export default function HotelConfirmation() {
         aria-labelledby="payment-modal"
         aria-describedby="modal-for-payment"
       >
-        <div className="p-7 flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md bg-white shadow-md">
+        <div className="absolute flex transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-md p-7 top-1/2 left-1/2">
           <div className="">
             <div className="flex flex-col items-center gap-6 text-[#2ECC70]">
               <p className="text-3xl font-light text-center">
@@ -756,7 +756,7 @@ export default function HotelConfirmation() {
               </p>
               <GoCheckCircle size={80} />
             </div>
-            <div className="flex flex-col gap-5 mt-14 text-sm">
+            <div className="flex flex-col gap-5 text-sm mt-14">
               <div className="flex justify-between">
                 <p className="text-stone-500">Payment type</p>
                 <p>UPI</p>
@@ -769,7 +769,7 @@ export default function HotelConfirmation() {
                 <p className="text-stone-500">Email</p>
                 <p>{bookedForDetails?.emailAddress}</p>
               </div>
-              <div className="flex justify-between font-semibold py-3">
+              <div className="flex justify-between py-3 font-semibold">
                 <p className="text-stone-500">Amount paid</p>
                 <p>
                   {roomSelected &&
@@ -789,7 +789,7 @@ export default function HotelConfirmation() {
                 <p className="text-xs">{bookingID}</p>
               </div>
             </div>
-            <p className="pt-7 text-xs">
+            <p className="text-xs pt-7">
               <span
                 onClick={handleNaviagte}
                 className="text-[#0F69FF] cursor-pointer"

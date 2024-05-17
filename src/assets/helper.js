@@ -7,6 +7,11 @@ const HEADERS = {
   projectId: process.env.REACT_APP_PROJECT_ID,
 };
 
+/**
+ *
+ * @returns year-month-day
+ */
+
 function getCurrentDate() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
