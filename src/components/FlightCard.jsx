@@ -9,6 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function FlightCard({ flight }) {
+  console.log(flight);
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ export default function FlightCard({ flight }) {
             width={50}
             height={50}
           />
-          <p className="font-semibold pt-1">{airlineImages[imageSrc].at(1)}</p>
+          <p className="pt-1 font-semibold">{airlineImages[imageSrc].at(1)}</p>
           <p className="text-sm text-stone-500">
             {flight.flightID.split("-").at(0)}
           </p>
@@ -79,18 +80,18 @@ export default function FlightCard({ flight }) {
           </p>
         </div>
 
-        <div className="departure-diration-arrival flex max-sm:flex-col items-center gap-24 max-sm:gap-10">
-          <div className="departure-time text-xl">
+        <div className="flex items-center gap-24 departure-diration-arrival max-sm:flex-col max-sm:gap-10">
+          <div className="text-xl departure-time">
             <p>{flight.departureTime}</p>
           </div>
 
-          <div className="duration-stops text-center w-20 ">
+          <div className="w-20 text-center duration-stops ">
             <p className="pb-1">{flight.duration}h</p>
-            <div className="border border-stone-400 relative flex justify-evenly">
+            <div className="relative flex border border-stone-400 justify-evenly">
               {[...Array(flight.stops)].map((_, index) => (
                 <span
                   key={index}
-                  className="absolute left-1/3 transform -translate-x-1/2 -translate-y-1/2"
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2 left-1/3"
                   style={{ marginLeft: `${index * 30}px` }}
                 >
                   <MdOutlineCircle
@@ -100,18 +101,18 @@ export default function FlightCard({ flight }) {
                 </span>
               ))}
             </div>
-            <p className="text-stone-400 pt-1">
+            <p className="pt-1 text-stone-400">
               {flight.stops === 0 ? "non-stop" : flight.stops + " stop"}
             </p>
           </div>
 
-          <div className="arrival-time text-xl">
+          <div className="text-xl arrival-time">
             <p>{flight.arrivalTime}</p>
           </div>
         </div>
 
-        <div className="seats-price-book-btn flex gap-7 items-center max-sm:flex-col">
-          <div className="price-seats flex flex-col w-20 whitespace-nowrap gap-2 ">
+        <div className="flex items-center seats-price-book-btn gap-7 max-sm:flex-col">
+          <div className="flex flex-col w-20 gap-2 price-seats whitespace-nowrap ">
             <p className="self-end text-2xl font-bold max-sm:text-xl">
               &#8377; {flight.ticketPrice}
             </p>
@@ -143,8 +144,8 @@ function FlightDetails({ flight, imageSrc }) {
   const urlState = loaction.state;
   return (
     <>
-      <div className="flight-details w-11/12 m-auto border p-2 rounded-md max-sm:hidden">
-        <div className="flight-details-row-1 flex gap-2 border-b-2 pb-1">
+      <div className="w-11/12 p-2 m-auto border rounded-md flight-details max-sm:hidden">
+        <div className="flex gap-2 pb-1 border-b-2 flight-details-row-1">
           <span className="font-semibold">{urlState?.origin?.city}</span>
           <span className="font-semibold">&rarr;</span>
           <span className="font-semibold">{urlState?.destination?.city}</span>
@@ -153,8 +154,8 @@ function FlightDetails({ flight, imageSrc }) {
           </span>
         </div>
 
-        <div className="flight-details-row-2 pt-4 flex items-start gap-2 justify-evenly">
-          <div className="details-col-1 flex flex-col gap-2">
+        <div className="flex items-start gap-2 pt-4 flight-details-row-2 justify-evenly">
+          <div className="flex flex-col gap-2 details-col-1">
             <img
               src={airlineImages[imageSrc].at(0)}
               alt={`${airlineImages[imageSrc].at(1)}-img`}
@@ -176,17 +177,17 @@ function FlightDetails({ flight, imageSrc }) {
               <p>{urlState?.origin?.cityCode}</p>
               <p className="font-semibold">{flight?.departureTime}</p>
             </div>
-            <p className="text-xs mt-1 text-stone-600">
+            <p className="mt-1 text-xs text-stone-600">
               {formatDates(new Date(urlState?.dateInput))}{" "}
               {new Date().getFullYear()}
             </p>
-            <p className="text-xs mt-1 text-stone-600 w-min ">
+            <p className="mt-1 text-xs text-stone-600 w-min ">
               {urlState?.origin?.airportName}
             </p>
           </div>
-          <div className="details-col-3 flex flex-col pt-2 items-center">
+          <div className="flex flex-col items-center pt-2 details-col-3">
             <GoClock size={18} />
-            <p className="text-sm pt-1">{flight?.duration}:00h</p>
+            <p className="pt-1 text-sm">{flight?.duration}:00h</p>
           </div>
 
           <div className="details-col-4">
@@ -194,21 +195,21 @@ function FlightDetails({ flight, imageSrc }) {
               <p>{urlState?.destination?.cityCode}</p>
               <p className="font-semibold">{flight?.arrivalTime}</p>
             </div>
-            <p className="text-xs mt-1 text-stone-600">
+            <p className="mt-1 text-xs text-stone-600">
               {formatDates(new Date(urlState?.dateInput))}{" "}
               {new Date().getFullYear()}
             </p>
-            <p className="text-xs mt-1 text-stone-600 w-min">
+            <p className="mt-1 text-xs text-stone-600 w-min">
               {urlState?.destination?.airportName}
             </p>
           </div>
 
           <div className="details-col-5">
-            <p className="text-xs flex justify-between gap-2">
+            <p className="flex justify-between gap-2 text-xs">
               Check-In Baggage{" "}
               <span className="text-stone-500">{`15kg(1 piece) / adult`}</span>
             </p>
-            <p className="text-xs flex justify-between gap-2">
+            <p className="flex justify-between gap-2 text-xs">
               Cabin Baggage <span className="text-stone-500">7kg / adult</span>
             </p>
           </div>

@@ -29,11 +29,11 @@ const HotelConfirmation = lazy(() => import("./pages/HotelConfirmation"));
 
 export default function App() {
   return (
-    <div className="app min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen app">
       <AuthProvider>
         <TripProvider>
           <BrowserRouter>
-            {/*  /// Needs to be inside BrowserRouter because its uses useLoaction and other router-hooks */}
+            {/*  /// Needs to be inside BrowserRouter because its uses useLocation and other router-hooks */}
             <Navbar />
             <Suspense fallback={<Loader />}>
               <Routes>

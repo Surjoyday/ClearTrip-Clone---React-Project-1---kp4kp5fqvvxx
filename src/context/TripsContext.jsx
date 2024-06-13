@@ -35,9 +35,7 @@ function TripProvider({ children }) {
         );
 
         /// FILTERING HOTELS BOOKED DATA
-        const hotels = resData?.data?.filter(
-          (type) => type["booking_type"] === "hotel"
-        );
+        const hotels = resData?.data?.filter((type) => type["booking_type"] === "hotel");
 
         setAllBookingDetails(detailsOfAllBookings);
         setFlightsBooked(flights);
@@ -53,7 +51,7 @@ function TripProvider({ children }) {
   // console.log("flights", flightsBooked);
   // console.log("hotels", hotelsBooked);
 
-  console.log(hotelsBooked);
+  // console.log(hotelsBooked);
 
   return (
     <TripContext.Provider
@@ -72,8 +70,7 @@ function TripProvider({ children }) {
 
 function useTrip() {
   const context = useContext(TripContext);
-  if (context === undefined)
-    throw new Error("TripContext used outside TripProvider");
+  if (context === undefined) throw new Error("TripContext used outside TripProvider");
 
   return context;
 }
