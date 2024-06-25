@@ -34,6 +34,8 @@ export default function LoginPage() {
             toast.success(message, { theme: "colored" });
           } else {
             toast.error(message, { theme: "colored" });
+            setEmail("");
+            setPassword("");
           }
         }
       );
@@ -48,7 +50,9 @@ export default function LoginPage() {
     }
   }
 
-  if (isSignedUp) return <SignupPage />;
+  if (isSignedUp) {
+    return <SignupPage />;
+  }
 
   return (
     <div>
@@ -120,8 +124,14 @@ export default function LoginPage() {
                 </form>
                 <div className="text-sm flex whitespace-nowrap gap-1 mt-3 items-center">
                   <p>Don't have an account? </p>
-                  <button onClick={handleOpenModal} className="text-[#3366CC]">
-                    {" "}
+                  <button
+                    onClick={() => {
+                      setEmail("");
+                      setPassword("");
+                      handleOpenModal();
+                    }}
+                    className="text-[#3366CC]"
+                  >
                     Sign up
                   </button>
                 </div>

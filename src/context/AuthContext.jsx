@@ -124,9 +124,16 @@ function AuthProvider({ children }) {
         body: JSON.stringify({ ...loginPayload, appType: "bookingportals" }),
       });
 
+      // console.log(response);
+
+      if (!response.ok) {
+        return { loginSuccess: false, message: "Invalid email or password" };
+        // throw new Error(response.json());
+      }
+
       const responseData = await response.json();
 
-      // console.log(responseData);
+      console.log(responseData);
 
       if (responseData.status === "success") {
         localStorage.setItem("token", responseData.token);
@@ -147,10 +154,6 @@ function AuthProvider({ children }) {
           loginSuccess: true,
           message: "You have logged in successfully ",
         };
-      }
-
-      if (responseData.status === "fail") {
-        return { loginSuccess: false, message: responseData?.message };
       }
     } catch (error) {
       console.log("Couldn't fetch LOGIN api", error);
