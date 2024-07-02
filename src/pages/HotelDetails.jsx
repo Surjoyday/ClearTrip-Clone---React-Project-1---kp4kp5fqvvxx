@@ -168,9 +168,14 @@ export default function HotelDetails() {
             <li>
               <button
                 onClick={() => {
-                  roomsRef.current?.scrollIntoView({
+                  // roomsRef.current?.scrollIntoView({
+                  //   behavior: "smooth",
+                  //   block: "start",
+                  // });
+                  if (!roomsRef) return;
+                  window.scroll({
+                    top: roomsRef.current.offsetTop - 150,
                     behavior: "smooth",
-                    block: "start",
                   });
 
                   setActiveTab("rooms");
@@ -280,7 +285,12 @@ export default function HotelDetails() {
               </div>
               <button
                 onClick={() => {
-                  roomsRef.current?.scrollIntoView({
+                  // roomsRef.current?.scrollIntoView({
+                  //   behavior: "smooth",
+                  // });
+                  if (!roomsRef) return;
+                  window.scroll({
+                    top: roomsRef.current.offsetTop - 150,
                     behavior: "smooth",
                   });
                   setActiveTab("rooms");
