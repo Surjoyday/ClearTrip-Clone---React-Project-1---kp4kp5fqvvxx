@@ -150,9 +150,14 @@ export default function HotelDetails() {
             <li>
               <button
                 onClick={() => {
-                  amenitiesRef.current?.scrollIntoView({
+                  // amenitiesRef.current?.scrollIntoView({
+                  //   behavior: "smooth",
+                  //   block: "end",
+                  // });
+                  if (!roomsRef) return;
+                  window.scroll({
+                    top: amenitiesRef.current.offsetTop - 150,
                     behavior: "smooth",
-                    block: "end",
                   });
 
                   setActiveTab("amenities");
