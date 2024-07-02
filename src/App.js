@@ -14,6 +14,7 @@ import Hotels from "./components/Hotels";
 import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import ComingSoon from "./pages/ComingSoon";
 const Offers = lazy(() => import("./components/Offers"));
 const Profile = lazy(() => import("./components/Profile"));
 const HotelsBooked = lazy(() => import("./components/HotelsBooked"));
@@ -83,11 +84,13 @@ export default function App() {
                   <Route path="profile" element={<Profile />} />
                 </Route>
 
+                <Route path="/comingsoon" element={<ComingSoon />} />
+
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
+              <Footer />
             </Suspense>
           </BrowserRouter>
-          <Footer />
           <ToastContainer
             position="top-center"
             autoClose={2000}

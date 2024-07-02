@@ -7,7 +7,8 @@ import { useState } from "react";
 import SignupPage from "./SignupPage";
 
 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#])[A-Za-z\d@#]{8,}$/;
+const passRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,}$/;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

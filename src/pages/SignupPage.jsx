@@ -6,7 +6,9 @@ import { Modal } from "@mui/material";
 import { VscClose } from "react-icons/vsc";
 
 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#])[A-Za-z\d@#]{8,}$/;
+
+const passRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,}$/;
 
 export default function SignupPage() {
   const [name, setName] = useState("");

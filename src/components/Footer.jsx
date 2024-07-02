@@ -3,6 +3,7 @@ import { FooterLogo } from "./Logo";
 import { FaFacebook } from "react-icons/fa";
 import { AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
 import { BsLinkedin } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -14,11 +15,21 @@ function Footer() {
       <div className="flex flex-col gap-3 cursor-pointer max-sm:items-center text-md max-sm:text-xs">
         <div>
           <ul className="flex justify-between max-sm:justify-start max-sm:gap-2">
-            <li className="hover:underline">About Us</li>
-            <li className="hover:underline">Careers</li>
-            <li className="hover:underline">FAQs</li>
-            <li className="hover:underline">Support</li>
-            <li className="hover:underline">Collection</li>
+            <li className="hover:underline">
+              <Link to={"/comingsoon"}>About Us</Link>
+            </li>
+            <li className="hover:underline">
+              <Link to={"/comingsoon"}>Careers</Link>
+            </li>
+            <li className="hover:underline">
+              <Link to={"/comingsoon"}>FAQs</Link>
+            </li>
+            <li className="hover:underline">
+              <Link to={"/comingsoon"}>Support</Link>
+            </li>
+            <li className="hover:underline">
+              <Link to={"/comingsoon"}>Collection</Link>
+            </li>
           </ul>
         </div>
 
