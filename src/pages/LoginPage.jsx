@@ -27,20 +27,18 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (regex.test(email) && passRegex.test(password)) {
-      fetchLoginDetails({ email, password })
-        .then((message) => {
+      (async () => {
+        try {
+          const message = await fetchLoginDetails({ email, password });
           setEmail("");
           setPassword("");
           toast.success(message, { theme: "colored" });
-        })
-        .catch((error) => {
-          // console.log("1", error.loginSuccess);
-          // console.log("2", error.message);
-          // console.log("3", JSON.parse(error.message));
+        } catch (error) {
           toast.error(error.message, { theme: "colored" });
           setEmail("");
           setPassword("");
-        });
+        }
+      })();
     } else if (email && !regex.test(email)) {
       toast.error("Email is invalid", { theme: "colored" });
     } else if (password && !passRegex.test(password)) {

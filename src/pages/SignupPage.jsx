@@ -22,18 +22,27 @@ export default function SignupPage() {
     e.preventDefault();
 
     if (name && regex.test(email) && passRegex.test(password)) {
-      fetchSignupDetails({ name, email, password }).then(
-        ({ signupSuccess, message }) => {
-          if (signupSuccess) {
-            toast.success(message, { theme: "colored" });
-          } else {
-            toast.error(message, { theme: "colored" });
-          }
-          setEmail("");
-          setName("");
-          setPassword("");
+      // fetchSignupDetails({ name, email, password }).then(
+      //   ({ signupSuccess, message }) => {
+      //     if (signupSuccess) {
+      //       toast.success(message, { theme: "colored" });
+      //     } else {
+      //       toast.error(message, { theme: "colored" });
+      //     }
+      //     setEmail("");
+      //     setName("");
+      //     setPassword("");
+      //   }
+      // );
+
+      (async () => {
+        try {
+          const message = await fetchSignupDetails({ name, email, password });
+          toast.success(message, { theme: "colored" });
+        } catch (error) {
+          toast.error(error.message, { theme: "colored" });
         }
-      );
+      })();
     } else if (email && !regex.test(email)) {
       toast.error("Email is invalid !", { theme: "colored" });
       setEmail("");

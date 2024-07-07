@@ -148,15 +148,9 @@ function AuthProvider({ children }) {
           },
         });
 
-        // return {
-        //   loginSuccess: true,
-        //   message: "You have logged in successfully ",
-        // };
-
         return "You have logged in successfully "; // SUCCESS MEESSAGE
       }
     } catch (error) {
-      // console.log("Couldn't fetch LOGIN api", error);
       throw error;
     }
   }
@@ -194,20 +188,14 @@ function AuthProvider({ children }) {
           },
         });
 
-        return {
-          signupSuccess: true,
-          message: "You have registered successfully",
-        };
+        return "You have registered successfully"; // SUCCESS
       }
 
       if (responseData.status === "fail") {
-        return {
-          signupSuccess: false,
-          message: "Already have and account, login please !",
-        };
+        throw new Error("Already have and account, login please !");
       }
     } catch (error) {
-      console.log("Couldn/t fetch SIGNUP api", error);
+      throw error; // DIRECTLY RETURN AN ERROR FROM HERE
     }
   }
 
