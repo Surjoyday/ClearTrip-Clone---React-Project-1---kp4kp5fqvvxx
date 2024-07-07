@@ -27,19 +27,20 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (regex.test(email) && passRegex.test(password)) {
-      fetchLoginDetails({ email, password }).then(
-        ({ loginSuccess, message }) => {
-          if (loginSuccess) {
-            setEmail("");
-            setPassword("");
-            toast.success(message, { theme: "colored" });
-          } else {
-            toast.error(message, { theme: "colored" });
-            setEmail("");
-            setPassword("");
-          }
-        }
-      );
+      fetchLoginDetails({ email, password })
+        .then((message) => {
+          setEmail("");
+          setPassword("");
+          toast.success(message, { theme: "colored" });
+        })
+        .catch((error) => {
+          // console.log("1", error.loginSuccess);
+          // console.log("2", error.message);
+          // console.log("3", JSON.parse(error.message));
+          toast.error(error.message, { theme: "colored" });
+          setEmail("");
+          setPassword("");
+        });
     } else if (email && !regex.test(email)) {
       toast.error("Email is invalid", { theme: "colored" });
     } else if (password && !passRegex.test(password)) {

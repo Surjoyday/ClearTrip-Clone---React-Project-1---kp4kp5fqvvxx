@@ -125,15 +125,13 @@ function AuthProvider({ children }) {
       });
 
       // console.log(response);
-
       if (!response.ok) {
-        return { loginSuccess: false, message: "Invalid email or password" };
-        // throw new Error(response.json());
+        throw new Error("Invalid email or password"); // ERROR MESSAGE FOR UNREGISTERED USER
       }
 
       const responseData = await response.json();
 
-      console.log(responseData);
+      // console.log(responseData);
 
       if (responseData.status === "success") {
         localStorage.setItem("token", responseData.token);
@@ -150,13 +148,16 @@ function AuthProvider({ children }) {
           },
         });
 
-        return {
-          loginSuccess: true,
-          message: "You have logged in successfully ",
-        };
+        // return {
+        //   loginSuccess: true,
+        //   message: "You have logged in successfully ",
+        // };
+
+        return "You have logged in successfully "; // SUCCESS MEESSAGE
       }
     } catch (error) {
-      console.log("Couldn't fetch LOGIN api", error);
+      // console.log("Couldn't fetch LOGIN api", error);
+      throw error;
     }
   }
 
