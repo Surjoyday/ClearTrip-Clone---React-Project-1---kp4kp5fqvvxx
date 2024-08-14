@@ -73,7 +73,7 @@ export default function AboutSite() {
                 {destinationsCard.properties}
               </p>
               <img
-                className="rounded hover:contrast-125  cursor-pointer max-sm:w-[130px]"
+                className="rounded hover:contrast-125  cursor-pointer max-sm:w-[130px] max-sm:h-[130px] h-[176px] max-w-[176px]"
                 src={destinationsCard?.src}
                 alt={destinationsCard?.alt}
               />

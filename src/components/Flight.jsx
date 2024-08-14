@@ -253,16 +253,16 @@ export default function Flight() {
                     }}
                   >
                     <div className="p-4 font-medium">
-                      <div className="flex gap-2 items-center pb-4 pt-2">
+                      <div className="flex gap-2 items-center ">
                         <PiCheckLight />
                         <p>One way</p>
                       </div>
-                      <p
+                      {/* <p
                         className="pl-6 cursor-progress"
                         title="Round trip not available currently"
                       >
                         Round trip
-                      </p>
+                      </p> */}
                     </div>
                   </Popover>
                 </div>

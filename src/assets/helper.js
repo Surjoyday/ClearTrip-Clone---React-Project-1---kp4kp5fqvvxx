@@ -124,13 +124,13 @@ const moreOffers = [
 
 const popularDestinationsImages = [
   {
-    src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/goa.jpg",
-    alt: "goa-popular-destination-img",
-    place: "Goa",
+    src: "https://ucarecdn.com/3ec4bcc7-7487-40ba-84cf-d20a3abcc67a/AmritsarDestinationImg.png",
+    alt: "amritsaroa-popular-destination-img",
+    place: "Amritsar",
     properties: "3051", /// fights to the destination that are available through the Cleartrip API.
     id: crypto.randomUUID(),
-    cityCode: "GOI",
-    city: "Goa",
+    cityCode: "ATQ",
+    city: "Amritsar",
     country: "India",
   },
   {
@@ -164,11 +164,14 @@ const popularDestinationsImages = [
     country: "India",
   },
   {
-    src: "https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/Pattaya.png",
-    alt: "Pattaya-popular-destination-img",
-    place: "Pattaya",
+    src: "https://ucarecdn.com/a091c2b0-c446-4363-8f48-23006e703eb2/CoimbatoreDestinationImg.png",
+    alt: "Coimbatore-popular-destination-img",
+    place: "Coimbatore",
     properties: "1805",
     id: crypto.randomUUID(),
+    cityCode: "CJB",
+    city: "Coimbatore",
+    country: "India",
   },
 ];
 
