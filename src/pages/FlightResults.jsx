@@ -496,6 +496,12 @@ export default function FlightResults() {
                             payload: e.target.value,
                           })
                         }
+                        onTouchEnd={(e) =>
+                          dispatch({
+                            type: "SET_FILTER_PRICE",
+                            payload: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     <div className="flex justify-between pt-2 text-xs text-stone-500">

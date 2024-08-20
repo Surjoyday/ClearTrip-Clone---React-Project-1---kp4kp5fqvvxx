@@ -9,7 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function FlightCard({ flight }) {
-  console.log(flight);
+  // console.log(flight);
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();

@@ -579,6 +579,12 @@ export default function HotelResults() {
                         payload: e.target.value,
                       });
                     }}
+                    onTouchEnd={(e) => {
+                      dispatch({
+                        type: "SET_PRICE_FILTER_VALUE",
+                        payload: e.target.value,
+                      });
+                    }}
                   />
 
                   <div className="flex justify-between text-xs pt-2">
