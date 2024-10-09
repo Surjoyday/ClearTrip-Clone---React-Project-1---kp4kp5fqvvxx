@@ -10,11 +10,13 @@ import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 import Flight from "./components/Flight";
 import Footer from "./components/Footer";
-import Hotels from "./components/Hotels";
+// import Hotels from "./components/Hotels";
+const Hotels = lazy(() => import("./components/Hotels"));
 import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import ComingSoon from "./pages/ComingSoon";
+// import ComingSoon from "./pages/ComingSoon";
+const ComingSoon = lazy(() => import("./pages/ComingSoon"));
 const Offers = lazy(() => import("./components/Offers"));
 const Profile = lazy(() => import("./components/Profile"));
 const HotelsBooked = lazy(() => import("./components/HotelsBooked"));
